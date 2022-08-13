@@ -1,0 +1,40 @@
+version: "3"
+services:
+  database:
+    image: mariadb:latest
+    restart: unless-stopped
+    volumes: 
+      - ./monoard_database:/var/lib/mysql
+    env_file: .env
+    logging:
+      driver: none
+    
+
+  api:
+    build:
+      context: ./monoard_api
+    image: vogelvlug/monoard_api:latest
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./monoard_api/src:/monoard_api/src
+      - ./monoard_api/data_types:/monoard_api/data_types
+      - ./monoard_api/package.json:/monoard_api/package.json
+      - ./monoard_api/tsconfig.json:/monoard_api/tsconfig.json
+      - ./monoard_api/yarn.lock:/monoard_api/yarn.lock
+    depends_on:
+      - database
+
+  ui:
+    build:
+      context: ./monoard_ui
+    image: vogelvlug/monoard_ui:latest
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - ./monoard_ui/src:/monoard_ui/src
+      - ./monoard_ui/public:/monoard_ui/public
+      - ./monoard_ui/package.json:/monoard_ui/package.json
+      - ./monoard_ui/tsconfig.json:/monoard_ui/tsconfig.json
+      - ./monoard_ui/yarn.lock:/monoard_ui/yarn.lock
+      - ./monoard_ui/.eslintrc.js:/monoard_ui/.eslintrc.js

@@ -1,0 +1,61 @@
+import React, { ReactNode } from 'react'
+
+import BankAccountIcon from '@mui/icons-material/AccountBalance'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import SettingsIcon from '@mui/icons-material/Settings'
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+
+const Dashboard = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ './pages/Dashboard/DashboardPage'))
+const Konten = React.lazy(() => import(/* webpackChunkName: 'Konten' */ './pages/BankAccounts/BankAccountPage'))
+const Settings = React.lazy(() => import(/* webpackChunkName: 'Settings' */ './pages/Settings/SettingsPage'))
+const BankAccountListPage = React.lazy(() => import(/* webpackChunkName: 'BankAccountListPage' */ './pages/BankAccounts/BankAccountListPage/BankAccountListPage')) 
+const BankAccountDetailPage = React.lazy(() => import(/* webpackChunkName: 'BankAccountDetailPage' */ './pages/BankAccounts/BankAccountDetailPage/BankAccountDetailPage'))
+const MonthOverview = React.lazy(() => import(/* webpackChunkName: 'MonthOverview Page' */ './pages/MonthOverview/MonthOverviewPage'))
+
+export interface PageRoute {
+  path: string
+  title: string
+  element: ReactNode
+  hideInMenu?: boolean
+  icon?: ReactNode
+  subroutes?: PageRoute[]
+}
+
+export const routes: PageRoute[] = [
+  {
+    path: '',
+    title: 'Dashboard',
+    element: <Dashboard />,
+    icon: <DashboardIcon />,
+  },
+  {
+    path: 'month',
+    title: 'Monatsübersicht',
+    element: <MonthOverview />,
+    icon: <CalendarMonthIcon />,
+  },
+  {
+    path: 'bankaccount',
+    title: 'Konten',
+    element: <Konten />,
+    icon: <BankAccountIcon />,
+    subroutes: [
+      {
+        path: '',
+        title: 'Kontenliste',
+        element: <BankAccountListPage />,
+      },
+      {
+        path: 'detail/:slug',
+        title: 'Kontendetails',
+        element: <BankAccountDetailPage />,
+      },
+    ],
+  },
+  {
+    path: 'settings',
+    title: 'Einstellungen',
+    element: <Settings />,
+    icon: <SettingsIcon />,
+  },
+]

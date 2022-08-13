@@ -1,0 +1,11 @@
+.idea/
+.vscode/
+
+*/yarn-error.log
+
+monoard_database/*
+
+monoard_api/node_modules
+monoard_api/coverage
+
+monoard_ui/node_modules

@@ -1,0 +1,13 @@
+version: "3"
+services:
+  database:
+    ports:
+      - 3306:3306
+
+  api:
+    ports:
+      - 3001:3001
+
+  ui:
+    ports:
+      - 3000:3000

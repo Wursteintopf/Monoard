@@ -1,0 +1,60 @@
+import { Dialog, DialogContent, DialogTitle, MenuItem, Select } from '@mui/material'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useBudgets } from '../../data/Budgets/BudgetHooks'
+import { useMoneyMoves } from '../../data/MoneyMoves/MoneyMovesHooks'
+import { moneyMoveApi } from '../../data/MoneyMoves/MoneyMovesReducer'
+import { MoneyMoveWithFoundBudget } from '../../data/MoneyMoves/MoneyMoveTypes'
+import { MoneyMove } from '../../data_types/MoneyMove'
+import Form from '../../design/components/FormElements/Form'
+import FormButton from '../../design/components/FormElements/FormButton'
+import { ModalProps } from '../../types/ModalProps'
+
+interface EditMoneyMoveModalProps extends ModalProps {
+  move: MoneyMoveWithFoundBudget
+}
+
+const EditMoneyMoveModal: React.FC<EditMoneyMoveModalProps> = ({ open, onClose, move }) => {
+  const { budgets } = useBudgets()
+
+  const budgetOptions = useMemo(() => {
+    return budgets.map(b => ({
+      label: b.name,
+      value: b.id!,
+    }))
+  }, [budgets])
+
+  const [selectedBudget, setSelectedBudget] = useState<number>(0)
+
+  const [editMoneyMoveMutation] = moneyMoveApi.endpoints.editOwn.useMutation()
+
+  const handleBudgetSave = () => {
+    const moveWithBudget: MoneyMove = { ...move, manualBudget: selectedBudget }
+    editMoneyMoveMutation(moveWithBudget)
+    onClose()
+  }
+
+  useEffect(() => {
+    if (budgetOptions[0]) setSelectedBudget(budgetOptions[0].value)
+  }, [budgetOptions])
+
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>Budget manuell bearbeiten</DialogTitle>
+      <DialogContent>
+        <Form>
+          <Select
+            value={selectedBudget}
+            onChange={event => setSelectedBudget(+event.target.value)}
+          >
+            {budgetOptions.map(b => (
+              <MenuItem key={b.value} value={b.value}>{b.label}</MenuItem>
+            ))}
+          </Select>
+          <FormButton onClick={handleBudgetSave} label='Speichern' />
+        </Form>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+export default EditMoneyMoveModal

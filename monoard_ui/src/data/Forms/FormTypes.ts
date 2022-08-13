@@ -1,0 +1,78 @@
+import { BankAccount, EMPTY_BANKACCOUNT } from '../../data_types/BankAccount'
+import { Budget, EMPTY_BUDGET } from '../../data_types/Budget'
+import { CSVHeaderConfig } from '../../data_types/CSVHeaderConfig'
+
+export type DefaultFormTypes = {
+  isDirty: boolean
+}
+
+export const defaultForm: DefaultFormTypes = {
+  isDirty: false,
+}
+
+export type LoginForm = DefaultFormTypes & {
+  username: string
+  password: string
+}
+
+export const defaultLoginForm: LoginForm = {
+  username: '',
+  password: '',
+  ...defaultForm,
+}
+
+export type AddBankAccountForm = DefaultFormTypes & Omit<BankAccount, 'connectedBankAccount'> & {
+  connectedBankAccount: number
+}
+
+export const defaultAddBankAccountForm: AddBankAccountForm = {
+  ...EMPTY_BANKACCOUNT,
+  connectedBankAccount: -1,
+  ...defaultForm,
+}
+
+export type AddBudgetForm = Budget & DefaultFormTypes
+
+export const defaultAddBudgetForm: AddBudgetForm = {
+  ...EMPTY_BUDGET,
+  ...defaultForm,
+}
+
+export type SelectHeaderForm = CSVHeaderConfig & DefaultFormTypes
+
+export const defaultSelectHeaderForm: SelectHeaderForm = {
+  date: '',
+  dateFormat: '',
+  foreignBankAccount: '',
+  foreignBankAccountIban: '',
+  purpose: '',
+  amount: '',
+  ...defaultForm,
+}
+
+export type SidebarForm = DefaultFormTypes & {
+  currentMonth: Date
+  hideInternal: boolean
+}
+
+export const defaultCurrentMonthForm: SidebarForm = {
+  currentMonth: new Date(),
+  hideInternal: true,
+  ...defaultForm,
+}
+
+export interface FormState {
+  loginForm: LoginForm
+  addBankAccountForm: AddBankAccountForm
+  addBudgetForm: AddBudgetForm
+  selectHeaderForm: SelectHeaderForm
+  sidebarForm: SidebarForm
+}
+
+export const defaultFormState: FormState = {
+  loginForm: defaultLoginForm,
+  addBankAccountForm: defaultAddBankAccountForm,
+  addBudgetForm: defaultAddBudgetForm,
+  selectHeaderForm: defaultSelectHeaderForm,
+  sidebarForm: defaultCurrentMonthForm,
+}
