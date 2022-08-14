@@ -10,9 +10,10 @@ import { UserController } from './UserController'
 
 export const userRouter = () => {
   const repository = appDataSource.getRepository(UserModel)
+  const controller = new UserController(UserModel)
 
   const userRouter = baseRouter(
-    new UserController(UserModel),
+    controller,
     {
       createAccess: [Role.ADMIN],
       readAccess: [Role.ADMIN],
@@ -23,6 +24,35 @@ export const userRouter = () => {
       '/create',
     ],
   )
+
+  userRouter.put('/firstSetUp', async (req, res) => {
+    const userRepoLength = await controller.getLength()
+    if (userRepoLength !== 0) res.send(403)
+    else {
+      const account = new UserModel()
+      account.setAll(req.body)
+
+      const { salt, hash } = generateSaltAndHash(req.body.password)
+
+      account.salt = salt
+      account.password = hash
+
+      account.role = Role.ADMIN
+
+      repository
+        .save(account)
+        .then(user => {
+          req.session.regenerate(() => {
+            req.session.role = user.role
+            req.session.username = user.username
+            req.session.userId = user.id
+
+            res.send({ id: user.id, username: user.username, role: user.role })
+          })
+        })
+        .catch(e => catchErrors(e, res))
+    }
+  })
 
   userRouter.put('/create', authenticate([Role.ADMIN]), (req, res) => {
     const account = new UserModel()
@@ -63,8 +93,10 @@ export const userRouter = () => {
       .catch(() => res.sendStatus(403))
   })
 
-  userRouter.get('/checkSession', (req, res) => {
+  userRouter.get('/checkSession', async (req, res) => {
+    const userRepoLength = await controller.getLength()
     if (req.session.username) res.send({ id: req.session.id, username: req.session.username, role: req.session.role })
+    else if (userRepoLength === 0) res.send({ id: -1, username: 'FIRST_LOGIN', role: Role.UNAUTHENTICATED })
     else res.sendStatus(403)
   })
 

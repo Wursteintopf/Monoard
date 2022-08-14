@@ -61,12 +61,26 @@ export const defaultCurrentMonthForm: SidebarForm = {
   ...defaultForm,
 }
 
+export type FirstSetUpForm = DefaultFormTypes & {
+  username: string
+  password: string
+  passwordAgain: string
+}
+
+export const defaultFirstSetUpForm: FirstSetUpForm = {
+  username: '',
+  password: '',
+  passwordAgain: '',
+  ...defaultForm,
+}
+
 export interface FormState {
   loginForm: LoginForm
   addBankAccountForm: AddBankAccountForm
   addBudgetForm: AddBudgetForm
   selectHeaderForm: SelectHeaderForm
   sidebarForm: SidebarForm
+  firstSetUpForm: FirstSetUpForm
 }
 
 export const defaultFormState: FormState = {
@@ -75,4 +89,5 @@ export const defaultFormState: FormState = {
   addBudgetForm: defaultAddBudgetForm,
   selectHeaderForm: defaultSelectHeaderForm,
   sidebarForm: defaultCurrentMonthForm,
+  firstSetUpForm: defaultFirstSetUpForm,
 }

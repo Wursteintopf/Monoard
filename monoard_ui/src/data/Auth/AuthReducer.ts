@@ -1,3 +1,4 @@
+import { FirstSetUpForm } from './../Forms/FormTypes'
 import { defaultSelf } from '../User/UserTypes'
 import { defaultAuthState } from './AuthTypes'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
@@ -12,6 +13,9 @@ export const authApi = createApi({
     credentials: 'include',
   }),
   endpoints: builder => ({
+    firstSetUp: builder.mutation<User, Omit<FirstSetUpForm, 'isDirty' | 'passwordAgain'>>({
+      query: user => ({ url: 'firstSetUp', method: 'PUT', body: user }),
+    }),
     login: builder.mutation<User, Omit<LoginForm, 'isDirty'>>({
       query: form => ({ url: 'login', method: 'POST', body: { username: form.username, password: form.password } }),
     }),
@@ -37,6 +41,12 @@ export const authSlice = createSlice({
     )
     builder.addMatcher(
       authApi.endpoints.checkSession.matchFulfilled,
+      (state, { payload }) => {
+        state.self = payload
+      },
+    )
+    builder.addMatcher(
+      authApi.endpoints.firstSetUp.matchFulfilled,
       (state, { payload }) => {
         state.self = payload
       },

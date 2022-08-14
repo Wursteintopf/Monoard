@@ -6,10 +6,9 @@ import { Role } from '../../data_types/Role'
 import BackgroundGradient from '../../design/components/BackgroundGradient/BackgroundGradient'
 import Card from '../../design/components/Card/Card'
 import Center from '../../design/components/LayoutElements/Center'
-import Form from '../../design/components/FormElements/Form'
-import FormButton from '../../design/components/FormElements/FormButton'
-import FormTextInput from '../../design/components/FormElements/FormTextInput'
 import LoadingIndicator from '../../design/components/LoadingIndicator/LoadingIndicator'
+import LoginForm from '../../components/Forms/LoginForm'
+import FirstSetUpForm from '../../components/Forms/FirstSetUpForm'
 
 const Login: React.FC = () => {
   const navigate = useNavigate()
@@ -19,33 +18,15 @@ const Login: React.FC = () => {
     checkSession()
   }, [])
 
-  const auth = rootLens.auth.self.role.select()
+  const auth = rootLens.auth.self
+  const role = auth.role.select()
+  const username = auth.username.select()
 
   useEffect(() => {
-    if (auth !== Role.UNAUTHENTICATED) navigate('/')
-  }, [auth])
+    if (role !== Role.UNAUTHENTICATED) navigate('/')
+  }, [role])
 
-  const loginForm = rootLens.form.loginForm
-  const [login, loginResult] = authApi.endpoints.login.useMutation()
-
-  const doLogin = () => {
-    const username = loginForm.username.get()
-    const password = loginForm.password.get()
-
-    login({ username, password })
-      .unwrap()
-      .then(() => {
-        loginForm.username.set('')
-        loginForm.password.set('')
-        navigate('/')
-      })
-      // TODO: Add some sort of error catching here
-      .catch(() => {
-        loginForm.username.set('')
-        loginForm.password.set('')
-        console.log('some meaningfull log')
-      })
-  }
+  const loginResult = authApi.endpoints.login.useMutation()[1]
 
   const isLoading = checkSessionResult.isLoading || loginResult.isLoading
 
@@ -55,21 +36,7 @@ const Login: React.FC = () => {
     <BackgroundGradient>
       <Center>
         <Card>
-          <Form>
-            <FormTextInput
-              lens={loginForm.username}
-              label='Benutzername'
-            />
-            <FormTextInput 
-              lens={loginForm.password}
-              label='Passwort'
-              password
-            />
-            <FormButton 
-              label='Login'
-              onClick={doLogin}
-            />
-          </Form>
+          {username === 'FIRST_LOGIN' ? <FirstSetUpForm /> : <LoginForm />}
         </Card>
       </Center>
     </BackgroundGradient>

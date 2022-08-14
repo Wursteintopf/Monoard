@@ -7,10 +7,12 @@ import { FormInputElement } from './FormTypes'
 interface FormTextInputProps extends FormInputElement<string> {
   placeholder?: string
   password?: boolean
+  inputInvalid?: boolean
+  errorText?: string
 }
 
 const FormTextInput: React.FC<FormTextInputProps> = (props) => {
-  const { lens, label, placeholder, password, onChangeSideEffect, disabled, variant = 'outlined', setDirty } = props
+  const { lens, label, placeholder, password, onChangeSideEffect, disabled, variant = 'outlined', setDirty, inputInvalid, errorText } = props
   const [hide, setHide] = useState(true)
 
   const value = lens.select()
@@ -46,6 +48,8 @@ const FormTextInput: React.FC<FormTextInputProps> = (props) => {
       label={label}
       placeholder={placeholder}
       disabled={disabled}
+      error={inputInvalid}
+      helperText={inputInvalid && errorText}
       type={!password ? 'text' : (hide ? 'password' : 'text')}
       {...additionalOptions}
     />
