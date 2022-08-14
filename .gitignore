@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 .env
+docker-compose.override.yaml
 
 */yarn-error.log
 
