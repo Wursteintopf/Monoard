@@ -7,7 +7,7 @@ import { BaseWithUserModel } from './BaseWithUserModel'
 export class BaseWithUserController<Model extends BaseWithUserModel> extends BaseController<Model> {
   public async createOwn (params: Nullable<Model>, userId: number) {
     const model = new this.ModelConstructor()
-    model.setAll(params)
+    model.set(params)
     model.user = userId as unknown as BaseUserModel
     await this.repository.save(model)
   }
@@ -15,7 +15,7 @@ export class BaseWithUserController<Model extends BaseWithUserModel> extends Bas
   public async createMultipleOwn (params: Nullable<Model>[], userId: number) {
     const models = params.map(param => {
       const model = new this.ModelConstructor()
-      model.setAll(param)
+      model.set(param)
       model.user = userId as unknown as BaseUserModel
       return model
     })
@@ -46,7 +46,7 @@ export class BaseWithUserController<Model extends BaseWithUserModel> extends Bas
   
   public async updateOwn (params: Nullable<Model> & { id: number }, userId: number) {
     const model = await this.read(params.id)
-    model.setAll(params)
+    model.set(params)
     model.user = userId as unknown as BaseUserModel
     await this.repository.save(model)
   }

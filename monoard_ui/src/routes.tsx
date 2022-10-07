@@ -4,6 +4,8 @@ import BankAccountIcon from '@mui/icons-material/AccountBalance'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import SettingsIcon from '@mui/icons-material/Settings'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import AssessmentIcon from '@mui/icons-material/Assessment'
+import SavingsIcon from '@mui/icons-material/Savings'
 
 const Dashboard = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ './pages/Dashboard/DashboardPage'))
 const Konten = React.lazy(() => import(/* webpackChunkName: 'Konten' */ './pages/BankAccounts/BankAccountPage'))
@@ -29,10 +31,22 @@ export const routes: PageRoute[] = [
     icon: <DashboardIcon />,
   },
   {
+    path: 'reports',
+    title: 'Reports',
+    element: <></>,
+    icon: <AssessmentIcon />,
+  },
+  {
     path: 'month',
     title: 'Monatsübersicht',
     element: <MonthOverview />,
     icon: <CalendarMonthIcon />,
+  },
+  {
+    path: 'budget',
+    title: 'Budgets',
+    element: <></>,
+    icon: <SavingsIcon />,
   },
   {
     path: 'bankaccount',

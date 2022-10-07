@@ -1,13 +1,13 @@
-import { CSVHeaderConfigModel } from './../../models/CSVHeaderConfig/CSVHeaderConfigModel';
+import { CSVHeaderConfigModel } from './../../models/CSVHeaderConfig/CSVHeaderConfigModel'
 import { BudgetModel } from './../../models/Budget/BudgetModel'
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 import { UserModel } from '../../models/User/UserModel'
 import { BankAccountModel } from '../../models/BankAccount/BankAccountModel'
 import { MoneyMoveModel } from '../../models/MoneyMove/MoneyMoveModel'
-import { TestModel } from '../../models/BaseModel/TestModel';
-import { TestWithUserModel } from '../../models/BaseModel/TestWithUserModel';
-import { TestUserModel } from '../../models/BaseModel/TestUserModel';
+import { TestModel } from '../../models/BaseModel/__mock__/TestModel'
+import { TestWithUserModel } from '../../models/BaseModel/__mock__/TestWithUserModel'
+import { TestUserModel } from '../../models/BaseModel/__mock__/TestUserModel'
 
 export const appDataSource = new DataSource({
   type: 'better-sqlite3',

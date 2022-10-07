@@ -24,7 +24,7 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
           // Its not a PayPal Account, just add it
           if (!bankAccount.paypalType) {
             const model = new this.ModelConstructor()
-            model.setAll(moneyMove)
+            model.set(moneyMove)
 
             // Check if its an internal move
             if (ibans.includes(model.foreignBankAccountIban)) model.isInternalMove = true
@@ -56,7 +56,7 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
           if (bankAccount.paypalType) {
             // Add the move itself as usual
             const model = new this.ModelConstructor()
-            model.setAll(moneyMove)
+            model.set(moneyMove)
             model.user = userId as unknown as UserModel
             modelArray.push(model)
 
@@ -84,6 +84,12 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
         }
       }),
     )
+    // Update the balance on the related bankAccounts
+    for (const moneyMove of modelArray) {
+      const bankAccount = await bankAccountController.read(moneyMove.bankAccount as unknown as number)
+      bankAccount.balance += moneyMove.amount
+      await bankAccountController.update(bankAccount)
+    }
     return await this.repository.save(modelArray)
   }
 

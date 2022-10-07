@@ -1,11 +1,11 @@
-import { BaseWithUserController } from './BaseWithUserController'
+import { BaseWithUserController } from '../BaseWithUserController'
 import { Repository, EntityNotFoundError } from 'typeorm'
-import { appDataSource } from './../../config/typeOrmDataSource'
+import { appDataSource } from '../../../config/typeOrmDataSource'
 import Database from 'better-sqlite3'
-import { TestWithUserModel } from './TestWithUserModel'
-import { TestUserModel } from './TestUserModel'
+import { TestWithUserModel } from '../__mock__/TestWithUserModel'
+import { TestUserModel } from '../__mock__/TestUserModel'
 
-jest.mock('../../config/typeOrmDataSource')
+jest.mock('../../../config/typeOrmDataSource')
 
 describe('Test BaseWithUserController', () => {
   let testdb: any

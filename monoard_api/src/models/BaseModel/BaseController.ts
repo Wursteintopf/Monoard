@@ -16,14 +16,14 @@ export class BaseController<Model extends BaseModel> {
 
   public async create (params: Nullable<Model>) {
     const model = new this.ModelConstructor()
-    model.setAll(params)
+    model.set(params)
     return await this.repository.save(model)
   }
 
   public async createMultiple (params: Nullable<Model>[]) {
     const models = params.map(param => {
       const model = new this.ModelConstructor()
-      model.setAll(param)
+      model.set(param)
       return model
     })
     return await this.repository.save(models)
@@ -51,7 +51,7 @@ export class BaseController<Model extends BaseModel> {
 
   public async update (params: Nullable<Model> & { id: number }) {
     const model = await this.read(params.id)
-    model.setAll(params)
+    model.set(params)
     await this.repository.save(model)
   }
 

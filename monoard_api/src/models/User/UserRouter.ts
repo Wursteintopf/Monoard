@@ -30,7 +30,7 @@ export const userRouter = () => {
     if (userRepoLength !== 0) res.send(403)
     else {
       const account = new UserModel()
-      account.setAll(req.body)
+      account.set(req.body)
 
       const { salt, hash } = generateSaltAndHash(req.body.password)
 
@@ -57,7 +57,7 @@ export const userRouter = () => {
   userRouter.put('/create', authenticate([Role.ADMIN]), (req, res) => {
     const account = new UserModel()
     // TODO: Check for some parameters, account shouldnt be created without password eg
-    account.setAll(req.body)
+    account.set(req.body)
 
     const { salt, hash } = generateSaltAndHash(req.body.password)
 

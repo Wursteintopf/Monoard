@@ -9,17 +9,14 @@ export class BudgetModel extends BaseWithUserModel implements Budget {
   @Column()
     name: string
 
+  @Column()
+    slug: string
+
   @Column('text')
     keywords: string
   
   @ManyToOne(() => UserModel, user => user.budgets)
     user?: UserModel
-  
-  @Column('datetime')
-    startMonth: Date
-
-  @Column('datetime')
-    endMonth: Date
   
   @OneToMany(() => MoneyMoveModel, moneyMove => moneyMove.manualBudget)
     manualBudgets: MoneyMoveModel[]

@@ -31,9 +31,8 @@ describe('Test BudgetController', () => {
     const model = new BudgetModel()
     model.user = user
     model.name = 'Budget1'
+    model.slug = 'budget1'
     model.keywords = ''
-    model.startMonth = new Date('1995-02-24T00:00:00')
-    model.endMonth = new Date('1995-02-24T00:00:00')
     model.amount = 0
 
     await repository.save(model)
@@ -41,9 +40,8 @@ describe('Test BudgetController', () => {
     const model2 = new BudgetModel()
     model2.user = user
     model2.name = 'Budget2'
+    model2.slug = 'budget2'
     model2.keywords = ''
-    model2.startMonth = new Date('1995-03-24T00:00:00')
-    model2.endMonth = new Date('1995-03-24T00:00:00')
     model2.amount = 0
 
     await repository.save(model2)
@@ -54,9 +52,7 @@ describe('Test BudgetController', () => {
     appDataSource.destroy()
   })
 
-  it('should only load budgets in a specific month', async () => {
-    const models = await controller.readInMonth(1, new Date('1995-02-24T00:00:00'))
-    expect(models.length).toEqual(1)
-    expect(models[0].name).toEqual('Budget1')
+  it('placeholder test', () => {
+    expect(1).toEqual(1)
   })
 })

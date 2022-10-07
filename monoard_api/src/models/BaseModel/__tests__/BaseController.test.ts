@@ -1,13 +1,13 @@
-import { BaseController } from './BaseController';
-import { Repository, EntityNotFoundError } from 'typeorm';
-import { appDataSource } from './../../config/typeOrmDataSource';
-import Database from 'better-sqlite3';
-import { TestModel } from './TestModel';
+import { BaseController } from '../BaseController'
+import { Repository, EntityNotFoundError } from 'typeorm'
+import { appDataSource } from '../../../config/typeOrmDataSource'
+import Database from 'better-sqlite3'
+import { TestModel } from '../__mock__/TestModel'
 
-jest.mock('../../config/typeOrmDataSource');
+jest.mock('../../../config/typeOrmDataSource')
 
 describe('Test BaseController', () => {
-  let testdb: any;
+  let testdb: any
   let repository: Repository<TestModel>
   let controller: BaseController<TestModel>
 

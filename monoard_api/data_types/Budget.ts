@@ -1,17 +1,17 @@
+import { BudgetCategory } from './BudgetCategory'
 import { Base } from './Base'
 
 export interface Budget extends Base {
   name: string
+  slug: string
   keywords: string
-  startMonth: Date
-  endMonth: Date
   amount: number
+  category?: BudgetCategory | number
 }
 
 export const EMPTY_BUDGET: Budget = {
   name: '',
+  slug: '',
   keywords: '',
-  startMonth: new Date(),
-  endMonth: new Date(),
   amount: 0,
 }
