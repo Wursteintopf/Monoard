@@ -1,7 +1,6 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from '@reduxjs/toolkit/dist/query'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
 import { Base } from '../../data_types/Base'
-import { Nullable } from '../../data_types/UtilTypes'
 
 export const getBaseCrudOwnEndpoints = <Type extends Base, ReducerPath extends string>(
   builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, Record<string, unknown>, FetchBaseQueryMeta>, any, ReducerPath>,
@@ -16,7 +15,7 @@ export const getBaseCrudOwnEndpoints = <Type extends Base, ReducerPath extends s
       query: () => 'readAllOwn',
       providesTags: tagTypes,
     }),
-    readOneByOwn: builder.query<Type, Nullable<Type>>({
+    readOneByOwn: builder.query<Type, Partial<Type>>({
       query: model => `readOneByOwn?search=${JSON.stringify(model)}`,
       providesTags: tagTypes,
     }),

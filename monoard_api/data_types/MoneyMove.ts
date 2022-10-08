@@ -1,6 +1,8 @@
+import { Year } from './Year'
 import { BankAccount } from './BankAccount'
 import { Base } from './Base'
 import { Budget } from './Budget'
+import { User } from './User'
 
 export interface MoneyMove extends Base {
   date: Date
@@ -11,4 +13,6 @@ export interface MoneyMove extends Base {
   isInternalMove: boolean
   manualBudget?: Budget | number
   bankAccount?: BankAccount | number
+  year?: Year | number
+  user?: User | number
 }

@@ -1,7 +1,6 @@
 import { UserModel } from './../User/UserModel'
 import { MoneyMoveModel } from './MoneyMoveModel'
 import { BaseWithUserController } from './../BaseModel/BaseWithUserController'
-import { Nullable } from '../../../data_types/UtilTypes'
 import { Between } from 'typeorm'
 import { BankAccountController } from '../BankAccount/BankAccountController'
 import { BankAccountModel } from '../BankAccount/BankAccountModel'
@@ -9,7 +8,7 @@ import moment from 'moment'
 
 export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> {
   public async createMultipleOwn (
-    moneyMoves: Nullable<MoneyMoveModel>[],
+    moneyMoves: Partial<MoneyMoveModel>[],
     userId: number,
   ) {
     const modelArray: MoneyMoveModel[] = []

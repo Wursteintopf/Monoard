@@ -1,5 +1,6 @@
 import { CSVHeaderConfig } from './CSVHeaderConfig'
 import { Base } from './Base'
+import { User } from './User'
 
 export interface BankAccount extends Base {
   name: string
@@ -7,6 +8,7 @@ export interface BankAccount extends Base {
   balance: number
   iban: string
   paypalType: boolean
+  user?: User | number
   connectedBankAccount?: BankAccount | number
   csvHeaderConfig?: CSVHeaderConfig
 }

@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import React, { PropsWithChildren } from 'react'
-import { Nullable } from '../../../data_types/UtilTypes'
 import { Color, Size, Spacing } from '../../types'
 import colors from '../../variables/colors'
 import spacings from '../../variables/spacings'
@@ -22,7 +21,7 @@ const StyledCard = styled(Box)<CardProps>`
   ${props => props.variant === 'outlined' && `border: 1px solid ${props.borderColor}`}
 `
 
-const Card: React.FC<PropsWithChildren<Nullable<CardProps>>> = (props) => {
+const Card: React.FC<PropsWithChildren<Partial<CardProps>>> = (props) => {
   const {
     children,
     pv = 'l',

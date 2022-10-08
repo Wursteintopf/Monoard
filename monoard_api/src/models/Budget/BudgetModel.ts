@@ -19,8 +19,11 @@ export class BudgetModel extends BaseWithUserModel implements Budget {
     user?: UserModel
   
   @OneToMany(() => MoneyMoveModel, moneyMove => moneyMove.manualBudget)
-    manualBudgets: MoneyMoveModel[]
+    manualBudgets?: MoneyMoveModel[]
 
+  @Column('decimal', { precision: 10, scale: 2 })
+    base: number
+  
   @Column('decimal', { precision: 10, scale: 2 })
     amount: number
 }
