@@ -28,13 +28,13 @@ describe('Test BudgetController', () => {
   })
 
   it('should return the active year', async () => {
-    const activeYear = await controller.getActiveYear(1)
+    const activeYear = await controller.readActiveYear(1)
     expect(activeYear.year).toBe(1995)
   })
 
   it('should create and return the current year as active, if there is no other active year', async () => {
     await controller.deactivateYear(1)
-    const activeYear = await controller.getActiveYear(1)
+    const activeYear = await controller.readActiveYear(1)
     expect(activeYear.year).toBe(moment().year())
   })
 

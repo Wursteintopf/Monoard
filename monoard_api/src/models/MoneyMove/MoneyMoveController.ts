@@ -5,6 +5,8 @@ import { Between } from 'typeorm'
 import { BankAccountController } from '../BankAccount/BankAccountController'
 import { BankAccountModel } from '../BankAccount/BankAccountModel'
 import moment from 'moment'
+import { YearController } from '../Year/YearController'
+import { YearModel } from '../Year/YearModel'
 
 export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> {
   public async createMultipleOwn (
@@ -13,10 +15,13 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
   ) {
     const modelArray: MoneyMoveModel[] = []
     const bankAccountController = new BankAccountController(BankAccountModel)
+    const yearController = new YearController(YearModel)
+
     const ibans = await bankAccountController.readAllIBans(userId)
+    const activeYear = await yearController.readActiveYear(userId)
 
     await Promise.all(
-      moneyMoves.map(async (moneyMove) => {
+      moneyMoves.filter(m => moment(m.date).year() === activeYear.year).map(async (moneyMove) => {
         // Existing moneyMoves should not be overwritten
         const checkExisting = await this.readByOwn(moneyMove, userId)
         if (checkExisting.length === 0) {

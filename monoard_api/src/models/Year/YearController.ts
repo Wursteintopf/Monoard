@@ -4,7 +4,7 @@ import { BaseWithUserController } from './../BaseModel/BaseWithUserController'
 import { YearModel } from './YearModel'
 
 export class YearController extends BaseWithUserController<YearModel> {
-  public async getActiveYear (userId: number): Promise<YearModel> {
+  public async readActiveYear (userId: number): Promise<YearModel> {
     try {
       const yearModel = await this.readOneByOwn({ active: true }, userId)
       return yearModel

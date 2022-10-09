@@ -5,6 +5,7 @@ import { MoneyMoveModel } from '../MoneyMoveModel'
 import { MoneyMoveController } from '../MoneyMoveController'
 import { BankAccountModel } from '../../BankAccount/BankAccountModel'
 import { getMockMoneyMoves } from '../__mock__/mockMoneyMoveData'
+import { getMockYears } from '../../Year/__mock__/mockYearData'
 
 jest.mock('../../../config/typeOrmDataSource')
 
@@ -20,6 +21,7 @@ describe('Test MoneyMoveController', () => {
     repository = appDataSource.getRepository<MoneyMoveModel>(MoneyMoveModel)
     controller = new MoneyMoveController(MoneyMoveModel)
     await getMockMoneyMoves()
+    await getMockYears()
   })
 
   afterEach(async () => {
@@ -118,5 +120,24 @@ describe('Test MoneyMoveController', () => {
       appDataSource.getRepository<BankAccountModel>(BankAccountModel)
     const bankAccount = await bankAccountRepository.findOne({ where: { id: 1 } })
     expect(bankAccount?.balance).toEqual(-42)
+  })
+
+  it('should only add moneymoves within the active year', async () => {
+    await controller.createMultipleOwn(
+      [
+        {
+          amount: -42,
+          date: new Date('1996-02-24T00:00:00'),
+          foreignBankAccount: 'PayPal',
+          foreignBankAccountIban: '',
+          purpose: 'somepurpose',
+          isInternalMove: false,
+          bankAccount: 1 as unknown as BankAccountModel,
+        },
+      ],
+      1,
+    )
+    const models = await repository.find()
+    expect(models.length).toEqual(3)
   })
 })
