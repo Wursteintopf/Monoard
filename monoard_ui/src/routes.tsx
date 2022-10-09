@@ -13,6 +13,8 @@ const Settings = React.lazy(() => import(/* webpackChunkName: 'Settings' */ './p
 const BankAccountListPage = React.lazy(() => import(/* webpackChunkName: 'BankAccountListPage' */ './pages/BankAccounts/BankAccountListPage/BankAccountListPage')) 
 const BankAccountDetailPage = React.lazy(() => import(/* webpackChunkName: 'BankAccountDetailPage' */ './pages/BankAccounts/BankAccountDetailPage/BankAccountDetailPage'))
 const MonthOverview = React.lazy(() => import(/* webpackChunkName: 'MonthOverview Page' */ './pages/MonthOverview/MonthOverviewPage'))
+const Budget = React.lazy(() => import(/* webpackChunkName: 'Budget Page' */ './pages/Budget/BudgetPage'))
+const Report = React.lazy(() => import(/* webpackChunkName: 'Report Page' */ './pages/Report/ReportPage'))
 
 export interface PageRoute {
   path: string
@@ -33,7 +35,7 @@ export const routes: PageRoute[] = [
   {
     path: 'reports',
     title: 'Reports',
-    element: <></>,
+    element: <Report />,
     icon: <AssessmentIcon />,
   },
   {
@@ -45,7 +47,7 @@ export const routes: PageRoute[] = [
   {
     path: 'budget',
     title: 'Budgets',
-    element: <></>,
+    element: <Budget />,
     icon: <SavingsIcon />,
   },
   {
