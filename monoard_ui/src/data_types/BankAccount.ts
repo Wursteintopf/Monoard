@@ -14,7 +14,6 @@ export interface BankAccount extends Base {
 }
 
 export const EMPTY_BANKACCOUNT: BankAccount = {
-  id: -1,
   name: '',
   slug: '',
   balance: 0,

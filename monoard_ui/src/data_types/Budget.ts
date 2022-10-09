@@ -8,7 +8,18 @@ export interface Budget extends Base {
   slug: string
   keywords: string
   base: number
-  amount: number
+  amountJan?: number
+  amountFeb?: number
+  amountMar?: number
+  amountApr?: number
+  amountMay?: number
+  amountJun?: number
+  amountJul?: number
+  amountAug?: number
+  amountSept?: number
+  amountOct?: number
+  amountNov?: number
+  amountDec?: number
   manualBudgets?: MoneyMove[] | number[]
   category?: BudgetCategory | number
   user?: User | number
@@ -19,5 +30,4 @@ export const EMPTY_BUDGET: Budget = {
   slug: '',
   keywords: '',
   base: 0,
-  amount: 0,
 }

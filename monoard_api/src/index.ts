@@ -12,6 +12,8 @@ import session from 'express-session'
 import * as http from 'http'
 import { connection } from './config/databaseConnection'
 import { bankAccountRouter } from './models/BankAccount/BankAccountRouter'
+import { yearRouter } from './models/Year/YearRouter'
+import Database from 'better-sqlite3'
 
 declare module 'express-session' {
   export interface SessionData {
@@ -23,6 +25,7 @@ declare module 'express-session' {
 
 const startApi = async () => {
   // Initialize TypeORM
+  const db = new Database(':memory:', { verbose: console.log })
   await appDataSource.initialize().catch(e => console.log(e))
 
   // Initialize Express and Server
@@ -58,6 +61,7 @@ const startApi = async () => {
   app.use('/bankAccount', bankAccountRouter())
   app.use('/budget', budgetRouter())
   app.use('/moneyMove', moneyMoveRouter())
+  app.use('/year', yearRouter())
 
   // Start server
   server.listen(3001, () => {

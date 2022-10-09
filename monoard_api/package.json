@@ -37,7 +37,7 @@
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "ts-jest": "^28.0.5",
-    "typeorm": "^0.3.6"
+    "typeorm": "^0.3.10"
   },
   "scripts": {
     "start": "ts-node-dev src/index.ts",

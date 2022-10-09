@@ -21,9 +21,42 @@ export class BudgetModel extends BaseWithUserModel implements Budget {
   @OneToMany(() => MoneyMoveModel, moneyMove => moneyMove.manualBudget)
     manualBudgets?: MoneyMoveModel[]
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('real', { precision: 10, scale: 2 })
     base: number
   
-  @Column('decimal', { precision: 10, scale: 2 })
-    amount: number
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountJan?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountFeb?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountMar?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountApr?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountMay?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountJun?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountJul?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountAug?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountSept?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountOct?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountNov?: number
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
+    amountDev?: number
 }

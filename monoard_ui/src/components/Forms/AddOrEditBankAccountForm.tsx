@@ -4,6 +4,7 @@ import { useBankAccounts } from '../../data/BankAccounts/BankAccountHooks'
 import { bankAccountApi } from '../../data/BankAccounts/BankAccountReducer'
 import { defaultAddBankAccountForm } from '../../data/Forms/FormTypes'
 import { rootLens } from '../../data/RootLens'
+import { BankAccount } from '../../data_types/BankAccount'
 import ConditionalElement from '../../design/components/ConditionalElement/ConditionalElement'
 import Form, { FormComponentProps } from '../../design/components/FormElements/Form'
 import FormButton from '../../design/components/FormElements/FormButton'
@@ -65,7 +66,8 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
 
   const submit = async () => {
     try {
-      const account = addBankAccountForm.get()
+      const account: BankAccount = { ...addBankAccountForm.get() }
+      account.connectedBankAccount = account.connectedBankAccount === -1 ? undefined : account.connectedBankAccount
 
       if (editMode) {
         await editBankAccountMutation(account).unwrap()
@@ -98,7 +100,7 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
     return (value: string) => {
       let snakeCase = value
         .replace(/\W+/g, ' ')
-        .split(/ |\B(?=[A-Z])/)
+        .split(/ |\B(?=[A-Z][a-z])/)
         .map((word) => word.toLowerCase())
         .join('_')
 
@@ -128,7 +130,7 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
       </ConditionalElement>
       <FormNumberInput
         lens={addBankAccountForm.balance}
-        label='Initialer Kontostand'
+        label='Kontostand'
       />
       <FormButton onClick={submit} label='Konto hinzufügen' disabled={!canBeSubmitted} />
     </Form>

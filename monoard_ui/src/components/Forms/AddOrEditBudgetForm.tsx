@@ -7,7 +7,6 @@ import { rootLens } from '../../data/RootLens'
 import Form, { FormComponentProps } from '../../design/components/FormElements/Form'
 import FormButton from '../../design/components/FormElements/FormButton'
 import FormKeywords from '../../design/components/FormElements/FormKeywords'
-import FormMonthPicker from '../../design/components/FormElements/FormMonthPicker'
 import FormNumberInput from '../../design/components/FormElements/FormNumberInput'
 import FormTextInput from '../../design/components/FormElements/FormTextInput'
 
@@ -70,8 +69,6 @@ const AddOrEditBudgetForm: React.FC<AddOrEditBankAccountFormProps> = ({
     <Form>
       <FormTextInput lens={addBudgetForm.name} label='Name' />
       <FormKeywords lens={addBudgetForm.keywords} header='Filtern nach:' label='Neuer Filter' />
-      <FormMonthPicker lens={addBudgetForm.startMonth} label='Start Monat' />
-      <FormMonthPicker lens={addBudgetForm.endMonth} label='End Monat' />
       <FormNumberInput lens={addBudgetForm.amount} label='Betrag' min={0} valueModifier={(value) => isBudget ? -value : value} />
       <FormButton onClick={submit} label='Speichern' />
     </Form>

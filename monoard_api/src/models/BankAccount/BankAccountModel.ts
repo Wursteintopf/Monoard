@@ -13,7 +13,7 @@ export class BankAccountModel extends BaseWithUserModel implements BankAccount {
   @Column({ unique: true })
     slug: string
   
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('real', { precision: 10, scale: 2 })
     balance: number
   
   @Column({ unique: true, nullable: true })

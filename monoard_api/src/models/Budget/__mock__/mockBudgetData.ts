@@ -12,7 +12,6 @@ export const getMockBudgets = async () => {
     name: 'Budget1',
     slug: 'budget1',
     keywords: '',
-    amount: 0,
     base: 0,
   })
 
@@ -21,7 +20,6 @@ export const getMockBudgets = async () => {
     name: 'Budget2',
     slug: 'budget2',
     keywords: '',
-    amount: 0,
     base: 0,
   })
 

@@ -40,7 +40,7 @@ export class BaseWithUserController<Model extends BaseWithUserModel> extends Bas
   public async readOneByOwn (params: Partial<Model>, userId: number): Promise<Model> {
     const model = await this.repository.findOne({ where: { user: { id: userId }, ...params } as any, relations: ['user'] })
     if (!model) throw new EntityNotFoundError(this.ModelConstructor, '')
-    return { ...model, user: undefined }
+    return new this.ModelConstructor().set({ ...model, user: undefined })
   }
   
   public async updateOwn (params: Partial<Model> & { id: number }, userId: number) {

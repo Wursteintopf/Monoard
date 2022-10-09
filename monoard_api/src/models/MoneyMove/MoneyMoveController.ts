@@ -14,6 +14,7 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
     const modelArray: MoneyMoveModel[] = []
     const bankAccountController = new BankAccountController(BankAccountModel)
     const ibans = await bankAccountController.readAllIBans(userId)
+
     await Promise.all(
       moneyMoves.map(async (moneyMove) => {
         // Existing moneyMoves should not be overwritten
@@ -83,12 +84,14 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
         }
       }),
     )
+
     // Update the balance on the related bankAccounts
     for (const moneyMove of modelArray) {
       const bankAccount = await bankAccountController.read(moneyMove.bankAccount as unknown as number)
       bankAccount.balance += moneyMove.amount
       await bankAccountController.update(bankAccount)
     }
+
     return await this.repository.save(modelArray)
   }
 
