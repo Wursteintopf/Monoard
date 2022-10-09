@@ -55,7 +55,8 @@ const IncomeBar: React.FC<BudgetGaugeProps> = ({
   color,
   onClick,
 }) => {
-  const percentage = (budget.calculatedAmount / budget.amount) * 100
+  // const percentage = (budget.calculatedAmount / budget.amount) * 100
+  const percentage = 50 // TODO: Fix this
 
   return (
     <Flex flexDirection='column'>
@@ -70,7 +71,7 @@ const IncomeBar: React.FC<BudgetGaugeProps> = ({
           <CalculatedAmount overspent={percentage > 100}>
             {Math.abs(budget.calculatedAmount).toFixed(2)}€/
           </CalculatedAmount>
-          <Amount>{Math.abs(budget.amount).toFixed(2)}€</Amount>
+          <Amount>{Math.abs(50).toFixed(2)}€</Amount> {/** Fix this */}
         </BarContent>
       </StyledIncomeBar>
     </Flex>

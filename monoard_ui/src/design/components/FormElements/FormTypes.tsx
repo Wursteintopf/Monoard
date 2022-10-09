@@ -5,7 +5,7 @@ export interface FormElement {
 }
 
 export interface FormInputElement<A> extends FormElement {
-  lens: Lens<A>
+  lens: Lens<A> | Lens<A | undefined>
   disabled?: boolean
   onChangeSideEffect?: (value: A) => void
   variant?: 'outlined' | 'filled' | 'standard'

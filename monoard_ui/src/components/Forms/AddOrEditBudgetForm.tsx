@@ -69,7 +69,7 @@ const AddOrEditBudgetForm: React.FC<AddOrEditBankAccountFormProps> = ({
     <Form>
       <FormTextInput lens={addBudgetForm.name} label='Name' />
       <FormKeywords lens={addBudgetForm.keywords} header='Filtern nach:' label='Neuer Filter' />
-      <FormNumberInput lens={addBudgetForm.amount} label='Betrag' min={0} valueModifier={(value) => isBudget ? -value : value} />
+      <FormNumberInput lens={addBudgetForm.amountJan} label='Betrag' min={0} valueModifier={(value) => isBudget ? -value : value} />
       <FormButton onClick={submit} label='Speichern' />
     </Form>
   )

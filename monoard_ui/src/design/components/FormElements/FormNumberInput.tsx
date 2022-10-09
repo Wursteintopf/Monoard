@@ -16,7 +16,7 @@ const FormNumberInput: React.FC<FormNumberInputProps> = (props) => {
 
   return (
     <TextField 
-      value={valueModifier ? valueModifier(value) : value}
+      value={valueModifier ? valueModifier(value || 0) : value} // TODO: Find a better solution than a fixed 0
       onChange={e => {
         lens.set(valueModifier ? valueModifier(parseFloat(e.target.value)) : parseFloat(e.target.value))
         if (setDirty) setDirty.set(true)

@@ -56,6 +56,7 @@ const FormKeywords: React.FC<FormTextInputProps> = (props) => {
   const value = lens.select()
 
   const keywords = useMemo(() => {
+    if (!value) return []
     return value.split(',').filter(e => e !== '')
   }, [value])
 

@@ -29,8 +29,8 @@ const BudgetList: React.FC = () => {
   const [editMode, setEditMode] = useState(false)
   const [budgetToEdit, setBudgetToEdit] = useState(-1)
 
-  const filteredBudgets = useMemo(() => budgets.filter(b => b.amount < 0), [budgets])
-  const budgetSumShould = useMemo(() => filteredBudgets.reduce((prev, budget) => prev - budget.amount, 0), [filteredBudgets])
+  const filteredBudgets = useMemo(() => budgets.filter(b => 50 < 0), [budgets]) // TODO: Fix this
+  const budgetSumShould = useMemo(() => filteredBudgets.reduce((prev, budget) => prev - 50, 0), [filteredBudgets]) // TODO: Fix this
   const budgetSumIs = useMemo(() => filteredBudgets.reduce((prev, budget) => prev - budget.calculatedAmount, 0), [filteredBudgets])
 
   return (
@@ -38,7 +38,7 @@ const BudgetList: React.FC = () => {
       <Headline>Budgets ({budgetSumIs.toFixed(2)}€/{budgetSumShould.toFixed(2)}€)</Headline>
       
       <StyledBudgetList>
-        {budgets.filter(b => b.amount < 0).map((budget, index) => (
+        {budgets.filter(b => 50 < 0).map((budget, index) => ( // TODO: Fix this
           <BudgetGauge
             key={index}
             budget={budget}

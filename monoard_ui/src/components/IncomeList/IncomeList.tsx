@@ -29,8 +29,8 @@ const IncomeList: React.FC = () => {
   const [editMode, setEditMode] = useState(false)
   const [budgetToEdit, setBudgetToEdit] = useState(-1)
 
-  const incomes = useMemo(() => budgets.filter(b => b.amount > 0), [budgets])
-  const incomeSumShould = useMemo(() => incomes.reduce((prev, budget) => prev + budget.amount, 0), [incomes])
+  const incomes = useMemo(() => budgets.filter(b => 50 > 0), [budgets]) // TODO: Fix this
+  const incomeSumShould = useMemo(() => incomes.reduce((prev, budget) => prev + 50, 0), [incomes]) // TODO: Fix this
   const incomeSumIs = useMemo(() => incomes.reduce((prev, budget) => prev + budget.calculatedAmount, 0), [incomes])
 
   return (
