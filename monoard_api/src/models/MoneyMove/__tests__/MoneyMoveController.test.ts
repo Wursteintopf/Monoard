@@ -134,10 +134,22 @@ describe('Test MoneyMoveController', () => {
           isInternalMove: false,
           bankAccount: 1 as unknown as BankAccountModel,
         },
+        {
+          amount: -1337,
+          date: new Date('1995-02-24T00:00:00'),
+          foreignBankAccount: 'PayPal',
+          foreignBankAccountIban: '',
+          purpose: 'searchpurpose',
+          isInternalMove: false,
+          bankAccount: 1 as unknown as BankAccountModel,
+        },
       ],
       1,
     )
     const models = await repository.find()
-    expect(models.length).toEqual(3)
+    expect(models.length).toEqual(4)
+
+    const newModel = await repository.findOneOrFail({ where: { purpose: 'searchpurpose' }, relations: ['year'] })
+    expect(newModel.year.active).toBe(true)
   })
 })

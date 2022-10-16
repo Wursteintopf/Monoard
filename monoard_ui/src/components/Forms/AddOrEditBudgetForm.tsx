@@ -19,7 +19,6 @@ import {
   HorizontalDivider,
   HorizontalDividerWrapper,
 } from '../../design/components/HorizontalDivider/HorizontalDivider'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import { CopyDownIcon } from '../../design/icons/CopyDownIcon'
 import { IconButton, Tooltip } from '@mui/material'
 import Flex from '../../design/components/LayoutElements/Flex'

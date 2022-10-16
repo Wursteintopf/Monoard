@@ -4,6 +4,7 @@ import { BankAccountModel } from '../BankAccount/BankAccountModel'
 import { BaseWithUserModel } from '../BaseModel/BaseWithUserModel'
 import { BudgetModel } from '../Budget/BudgetModel'
 import { UserModel } from '../User/UserModel'
+import { YearModel } from '../Year/YearModel'
 
 @Entity()
 export class MoneyMoveModel extends BaseWithUserModel implements MoneyMove {
@@ -33,4 +34,7 @@ export class MoneyMoveModel extends BaseWithUserModel implements MoneyMove {
   
   @ManyToOne(() => BankAccountModel, bankAccount => bankAccount.moneyMoves)
     bankAccount: BankAccountModel
+  
+  @ManyToOne(() => YearModel, year => year.moneyMoves)
+    year: YearModel
 }

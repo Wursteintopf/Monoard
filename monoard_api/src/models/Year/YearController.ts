@@ -6,7 +6,7 @@ import { YearModel } from './YearModel'
 export class YearController extends BaseWithUserController<YearModel> {
   public async readActiveYear (userId: number): Promise<YearModel> {
     try {
-      const yearModel = await this.repository.findOneOrFail({ where: { active: true, user: { id: userId } }, relations: ['user', 'budgets'] })
+      const yearModel = await this.repository.findOneOrFail({ where: { active: true, user: { id: userId } }, relations: ['user', 'budgets', 'moneyMoves'] })
       yearModel.set({ user: undefined })
       return yearModel
     } catch (e) {

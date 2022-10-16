@@ -8,7 +8,7 @@ export const useActiveYear = () => {
 
   useEffect(() => {
     fetch()
-  })
+  }, [])
 
   const activeYear = rootLens.year.activeYear.select()
 
