@@ -57,14 +57,27 @@ export const BudgetPlanMatrix: React.FC = () => {
               <TableRow>
                 <FirstCell>Summe Eingänge</FirstCell>
                 {monthArray.map(month => (
-                  <MonthCell key={month} />
+                  <MonthCell key={month}>
+                    {activeYear.sumIncomes[month].toFixed(2)} €
+                  </MonthCell>
                 ))}
                 <ButtonCell />
               </TableRow>
               <TableRow>
                 <FirstCell>Summe Budgets</FirstCell>
                 {monthArray.map(month => (
-                  <MonthCell key={month} />
+                  <MonthCell key={month}>
+                    {activeYear.sumBudgets[month].toFixed(2)} €
+                  </MonthCell>
+                ))}
+                <ButtonCell />
+              </TableRow>
+              <TableRow>
+                <FirstCell>Differenz</FirstCell>
+                {monthArray.map(month => (
+                  <MonthCell key={month}>
+                    {activeYear.sumDifference[month].toFixed(2)} €
+                  </MonthCell>
                 ))}
                 <ButtonCell />
               </TableRow>
