@@ -9,6 +9,7 @@ import Flex from '../../../design/components/LayoutElements/Flex'
 import { StepProp } from '../CSVUploadModal'
 import moment from 'moment'
 import { useMoneyMovesByBankAccount } from '../../../data/MoneyMoves/MoneyMovesHooks'
+import { monthArray } from '../../../data_types/Month'
 
 const CSVUploadStep3: React.FC<StepProp & { onClose: () => void }> = ({ setStep, onClose }) => {
   const parsedCsv = rootLens.csv.parsedData.select()
@@ -27,8 +28,8 @@ const CSVUploadStep3: React.FC<StepProp & { onClose: () => void }> = ({ setStep,
     return output
   }
 
-  const parseDate = (input: string, format: string): Date => {
-    return moment(input, format).toDate()
+  const parseDate = (input: string, format: string) => {
+    return moment(input, format)
   }
 
   useEffect(() => {
@@ -40,7 +41,8 @@ const CSVUploadStep3: React.FC<StepProp & { onClose: () => void }> = ({ setStep,
             : csv[headers.foreignBankAccount].substring(0, 255)
 
         return {
-          date: parseDate(csv[headers.date], headers.dateFormat),
+          date: parseDate(csv[headers.date], headers.dateFormat).toDate(),
+          month: monthArray[parseDate(csv[headers.date], headers.dateFormat).month()],
           foreignBankAccount: foreignBankAccount || '',
           foreignBankAccountIban: headers.foreignBankAccountIban ? csv[headers.foreignBankAccountIban].substring(0, 255) : '',
           purpose: csv[headers.purpose].substring(0, 255),
