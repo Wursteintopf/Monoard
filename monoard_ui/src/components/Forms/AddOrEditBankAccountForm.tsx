@@ -30,8 +30,8 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
 
   const addBankAccountForm = rootLens.form.addBankAccountForm
 
-  const [addBankAccountMutation] = bankAccountApi.endpoints.addOwn.useMutation()
-  const [editBankAccountMutation] = bankAccountApi.endpoints.editOwn.useMutation()
+  const [addBankAccountMutation] = bankAccountApi.endpoints.createOwn.useMutation()
+  const [editBankAccountMutation] = bankAccountApi.endpoints.updateOwn.useMutation()
   const [loadBankAccount] = bankAccountApi.endpoints.readOneByOwn.useLazyQuery()
   const [reloadBankAccounts] = bankAccountApi.endpoints.readAllOwn.useLazyQuery()
   const { data, isLoading } = bankAccountApi.endpoints.usedSlugs.useQuery()

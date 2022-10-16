@@ -3,6 +3,7 @@ import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
 import { Budget } from '../../../data_types/Budget'
 import { BaseWithUserModel } from '../BaseModel/BaseWithUserModel'
 import { MoneyMoveModel } from '../MoneyMove/MoneyMoveModel'
+import { YearModel } from '../Year/YearModel'
 
 @Entity()
 export class BudgetModel extends BaseWithUserModel implements Budget {
@@ -21,42 +22,48 @@ export class BudgetModel extends BaseWithUserModel implements Budget {
   @OneToMany(() => MoneyMoveModel, moneyMove => moneyMove.manualBudget)
     manualBudgets?: MoneyMoveModel[]
 
-  @Column('real', { precision: 10, scale: 2 })
+  @ManyToOne(() => YearModel, year => year.budgets)
+    year?: YearModel
+  
+  @Column()
+    isIncome: boolean
+  
+  @Column('real', { precision: 10, scale: 2, nullable: true })
     base: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountJan?: number
+    january: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountFeb?: number
+    february: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountMar?: number
+    march: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountApr?: number
+    april: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountMay?: number
+    may: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountJun?: number
+    june: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountJul?: number
+    july: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountAug?: number
+    august: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountSept?: number
+    september: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountOct?: number
+    october: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountNov?: number
+    november: number
   
   @Column('real', { precision: 10, scale: 2, nullable: true })
-    amountDev?: number
+    december: number
 }

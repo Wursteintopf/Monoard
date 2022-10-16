@@ -1,6 +1,6 @@
 import React from 'react'
 import BudgetList from '../../components/BudgetList/BudgetList'
-import IncomeList from '../../components/IncomeList/IncomeList'
+import IncomeMonthList from '../../components/IncomeMonthList/IncomeMonthList'
 import MoneyMoveList from '../../components/MoneyMoveList/MoneyMoveList'
 import MonthInputSidebar from '../../components/MonthInputSidebar/MonthInputSidebar'
 import PageHeader from '../../components/PageHeader/PageHeader'
@@ -13,7 +13,7 @@ const MonthOverview: React.FC = () => {
   return (
     <>
       <Box mb='l'>
-        <IncomeList />
+        <IncomeMonthList />
       </Box>
 
       <Box mb='l'>

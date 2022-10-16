@@ -46,7 +46,7 @@ export const routes: PageRoute[] = [
   },
   {
     path: 'budget',
-    title: 'Budgets',
+    title: 'Budgetplanung',
     element: <Budget />,
     icon: <SavingsIcon />,
   },

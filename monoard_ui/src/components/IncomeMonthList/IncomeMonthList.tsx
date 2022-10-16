@@ -21,7 +21,7 @@ const IncomeAddButton = styled(IconButton)`
   border: 1px dotted ${() => colors.darkGrey};
 `
 
-const IncomeList: React.FC = () => {
+const IncomeMonthList: React.FC = () => {
   const { budgets } = useMoneyMoves()
   const { variousColors } = colors
 
@@ -52,18 +52,8 @@ const IncomeList: React.FC = () => {
         ))}
         <IncomeAddButton onClick={() => setAddModalOpen(true)}><AddIcon /></IncomeAddButton>
       </StyledIconList>
-
-      <AddOrEditBudgetModal
-        open={addModalOpen}
-        budgetToEdit={budgetToEdit}
-        editMode={editMode}
-        onClose={() => {
-          setAddModalOpen(false)
-          setEditMode(false)
-        }}
-      />
     </>
   )
 }
 
-export default IncomeList
+export default IncomeMonthList

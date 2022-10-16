@@ -1,26 +1,25 @@
 import { Dialog, DialogContent, DialogTitle } from '@mui/material'
 import React from 'react'
+import { Budget } from '../../data_types/Budget'
 import { ModalProps } from '../../types/ModalProps'
 import AddOrEditBudgetForm from '../Forms/AddOrEditBudgetForm'
 
 interface AddOrEditBudgetModalProps extends ModalProps {
-  editMode?: boolean
-  budgetToEdit: number
-  isBudget?: boolean
+  budgetToEdit?: Budget
+  isIncome?: boolean
 }
 
 const AddOrEditBudgetModal: React.FC<AddOrEditBudgetModalProps> = ({
   open,
   onClose,
-  editMode,
   budgetToEdit,
-  isBudget,
+  isIncome,
 }) => {
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Budget hinzufügen</DialogTitle>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth='md'>
+      <DialogTitle>{isIncome ? 'Geplanten Eingang hinzufügen' : 'Budget hinzufügen'}</DialogTitle>
       <DialogContent>
-        <AddOrEditBudgetForm additionalSubmitAction={onClose} editMode={editMode} budgetToEdit={budgetToEdit} isBudget={isBudget} />
+        <AddOrEditBudgetForm additionalSubmitAction={onClose} budgetToEdit={budgetToEdit} isIncome={isIncome} />
       </DialogContent>
     </Dialog>
   )

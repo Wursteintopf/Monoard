@@ -39,6 +39,11 @@ describe('Test BaseController', () => {
     expect(models.length).toEqual(3)
   })
 
+  it('should return the id of the newly created model', async () => {
+    const model = await controller.create({ test: 'somecontent' })
+    expect(model.id).toEqual(3)
+  })
+
   it('should create multiple models', async () => {
     await controller.createMultiple([{ test: 'somecontent' }, { test: 'morecontent' }])
     const models = await repository.find()

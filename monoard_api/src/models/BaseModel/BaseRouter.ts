@@ -27,7 +27,7 @@ export const baseRouter = <Model extends BaseModel>(
     router.put('/create', authenticate(accessRights.createAccess), (req, res) => {
       controller
         .create(req.body)
-        .then(() => res.status(200).send({ status: 'OK' }))
+        .then(model => res.status(200).send(model))
         .catch(e => catchErrors(e, res))
     })
   }
@@ -36,7 +36,7 @@ export const baseRouter = <Model extends BaseModel>(
     router.put('/createMultiple', authenticate(accessRights.createAccess), (req, res) => {
       controller
         .createMultiple(req.body)
-        .then(() => res.status(200).send({ status: 'OK' }))
+        .then(models => res.status(200).send(models))
         .catch(e => catchErrors(e, res))
     })
   }
@@ -77,7 +77,7 @@ export const baseRouter = <Model extends BaseModel>(
   if (!overrideRoutes.includes('/update')) {
     router.post('/update', authenticate(accessRights.updateAccess), checkForId, (req, res) => {
       controller.update(req.body)
-        .then(() => res.status(200).send({ status: 'OK' }))
+        .then(model => res.status(200).send(model))
         .catch(e => catchErrors(e, res))
     })
   }
@@ -85,7 +85,7 @@ export const baseRouter = <Model extends BaseModel>(
   if (!overrideRoutes.includes('/delete')) {
     router.delete('/delete', authenticate(accessRights.deleteAccess), checkForId, (req, res) => {
       controller.delete(req.body.id)
-        .then(() => res.status(200).send({ status: 'OK' }))
+        .then(id => res.status(200).send({ id }))
         .catch(e => catchErrors(e, res))
     })
   }

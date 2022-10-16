@@ -68,7 +68,7 @@ const DetailCell = styled(TableCell) <{ showTooltip: boolean, detail: string }>`
 `
 
 const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, shortened, linkToDetailpage, hideColumns }) => {
-  const hideInternal = rootLens.form.sidebarForm.hideInternal.select()
+  const hideInternal = rootLens.form.monthSidebarForm.hideInternal.select()
 
   const data = useMemo(() => {
     const moves = shortened ? moneyMoves.slice(0, 3) : moneyMoves

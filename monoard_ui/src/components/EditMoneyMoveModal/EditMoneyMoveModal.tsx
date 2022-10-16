@@ -25,7 +25,7 @@ const EditMoneyMoveModal: React.FC<EditMoneyMoveModalProps> = ({ open, onClose, 
 
   const [selectedBudget, setSelectedBudget] = useState<number>(0)
 
-  const [editMoneyMoveMutation] = moneyMoveApi.endpoints.editOwn.useMutation()
+  const [editMoneyMoveMutation] = moneyMoveApi.endpoints.updateOwn.useMutation()
 
   const handleBudgetSave = () => {
     const moveWithBudget: MoneyMove = { ...move, manualBudget: selectedBudget }

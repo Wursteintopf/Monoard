@@ -13,13 +13,13 @@ export class BaseController<Model extends BaseModel> {
     this.repository = appDataSource.getRepository<Model>(ModelConstructor)
   }
 
-  public async create (params: Partial<Model>) {
+  public async create (params: Partial<Model>): Promise<Model> {
     const model = new this.ModelConstructor()
     model.set(params)
     return await this.repository.save(model)
   }
 
-  public async createMultiple (params: Partial<Model>[]) {
+  public async createMultiple (params: Partial<Model>[]): Promise<Model[]> {
     const models = params.map(param => {
       const model = new this.ModelConstructor()
       model.set(param)
@@ -48,13 +48,14 @@ export class BaseController<Model extends BaseModel> {
     return model
   }
 
-  public async update (params: Partial<Model> & { id: number }) {
+  public async update (params: Partial<Model> & { id: number }): Promise<Model> {
     const model = await this.read(params.id)
     model.set(params)
-    await this.repository.save(model)
+    return await this.repository.save(model)
   }
 
-  public async delete (id: number) {
+  public async delete (id: number): Promise<number> {
     await this.repository.delete({ id: id as any })
+    return id
   }
 }

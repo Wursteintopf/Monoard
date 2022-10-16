@@ -70,7 +70,7 @@ const CSVUploadStep2: React.FC<StepProp> = ({ setStep }) => {
   const isDirty = rootLens.form.selectHeaderForm.isDirty.select()
 
   const { data, isFetching } = useCurrentBankAccount()
-  const [saveBankaccountMutation] = bankAccountApi.endpoints.editOwn.useMutation()
+  const [saveBankaccountMutation] = bankAccountApi.endpoints.updateOwn.useMutation()
 
   const savePreset = () => {
     if (data) {

@@ -17,7 +17,7 @@ const CSVUploadStep3: React.FC<StepProp & { onClose: () => void }> = ({ setStep,
 
   const { bankAccount, refetchCurrentBankAccount } = useCurrentBankAccount()
   const { refetchCurrentMoneyMoves } = useMoneyMovesByBankAccount()
-  const [addMultipleMoneyMovesMutation] = moneyMoveApi.endpoints.addMultipleOwn.useMutation()
+  const [addMultipleMoneyMovesMutation] = moneyMoveApi.endpoints.createMultipleOwn.useMutation()
 
   const parseAsNumber = (input: string): number => {
     const output = Number(input.replace('.', '').replace(',', '.'))

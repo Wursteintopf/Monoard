@@ -52,17 +52,6 @@ const BudgetList: React.FC = () => {
         ))}
         <BudgetAddButton onClick={() => setAddModalOpen(true)}><AddIcon /></BudgetAddButton>
       </StyledBudgetList>
-
-      <AddOrEditBudgetModal
-        open={addModalOpen}
-        budgetToEdit={budgetToEdit}
-        editMode={editMode}
-        isBudget
-        onClose={() => {
-          setAddModalOpen(false)
-          setEditMode(false)
-        }}
-      />
     </>
   )
 }

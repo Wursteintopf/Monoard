@@ -4,14 +4,14 @@ import { BaseUserModel } from './BaseUserModel'
 import { BaseWithUserModel } from './BaseWithUserModel'
 
 export class BaseWithUserController<Model extends BaseWithUserModel> extends BaseController<Model> {
-  public async createOwn (params: Partial<Model>, userId: number) {
+  public async createOwn (params: Partial<Model>, userId: number): Promise<Model> {
     const model = new this.ModelConstructor()
     model.set(params)
     model.user = userId as unknown as BaseUserModel
-    await this.repository.save(model)
+    return await this.repository.save(model)
   }
 
-  public async createMultipleOwn (params: Partial<Model>[], userId: number) {
+  public async createMultipleOwn (params: Partial<Model>[], userId: number): Promise<Model[]> {
     const models = params.map(param => {
       const model = new this.ModelConstructor()
       model.set(param)
@@ -43,14 +43,15 @@ export class BaseWithUserController<Model extends BaseWithUserModel> extends Bas
     return new this.ModelConstructor().set({ ...model, user: undefined })
   }
   
-  public async updateOwn (params: Partial<Model> & { id: number }, userId: number) {
+  public async updateOwn (params: Partial<Model> & { id: number }, userId: number): Promise<Model> {
     const model = await this.read(params.id)
     model.set(params)
     model.user = userId as unknown as BaseUserModel
-    await this.repository.save(model)
+    return await this.repository.save(model)
   }
   
-  public async deleteOwn (id: number, userId: number) {
+  public async deleteOwn (id: number, userId: number): Promise<number> {
     await this.repository.delete({ id, user: { id: userId } } as any)
+    return id
   }
 }

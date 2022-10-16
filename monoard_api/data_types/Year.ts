@@ -8,3 +8,9 @@ export interface Year extends Base {
   budgets?: Budget[] | number[]
   user?: User | number
 }
+
+export const EMPTY_YEAR: Year = {
+  year: 0,
+  active: false,
+  budgets: [],
+}

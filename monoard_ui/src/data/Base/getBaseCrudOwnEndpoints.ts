@@ -19,19 +19,19 @@ export const getBaseCrudOwnEndpoints = <Type extends Base, ReducerPath extends s
       query: model => `readOneByOwn?search=${JSON.stringify(model)}`,
       providesTags: tagTypes,
     }),
-    addOwn: builder.mutation<void, Type>({
+    createOwn: builder.mutation<Type, Type>({
       query: model => ({ url: 'createOwn', method: 'PUT', body: model }),
       invalidatesTags: tagTypes,
     }),
-    addMultipleOwn: builder.mutation<void, Type[]>({
+    createMultipleOwn: builder.mutation<Type[], Type[]>({
       query: modelArray => ({ url: 'createMultipleOwn', method: 'PUT', body: modelArray }),
       invalidatesTags: tagTypes,
     }),
-    editOwn: builder.mutation<void, Type>({
+    updateOwn: builder.mutation<Type, Type>({
       query: model => ({ url: 'updateOwn', method: 'POST', body: model }),
       invalidatesTags: tagTypes,
     }),
-    deleteOwn: builder.mutation<void, number>({
+    deleteOwn: builder.mutation<{ id: number }, number>({
       query: id => ({ url: 'deleteOwn', method: 'DELETE', body: { id } }),
       invalidatesTags: tagTypes,
     }),

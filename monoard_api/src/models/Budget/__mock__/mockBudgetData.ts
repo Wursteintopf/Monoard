@@ -12,7 +12,20 @@ export const getMockBudgets = async () => {
     name: 'Budget1',
     slug: 'budget1',
     keywords: '',
+    isIncome: false,
     base: 0,
+    january: 0,
+    february: 0,
+    march: 0,
+    april: 0,
+    may: 0,
+    june: 0,
+    july: 0,
+    august: 0,
+    september: 0,
+    october: 0,
+    november: 0,
+    december: 0,
   })
 
   const budget2 = new BudgetModel().set({
@@ -20,7 +33,20 @@ export const getMockBudgets = async () => {
     name: 'Budget2',
     slug: 'budget2',
     keywords: '',
+    isIncome: false,
     base: 0,
+    january: 0,
+    february: 0,
+    march: 0,
+    april: 0,
+    may: 0,
+    june: 0,
+    july: 0,
+    august: 0,
+    september: 0,
+    october: 0,
+    november: 0,
+    december: 0,
   })
 
   await repository.save([budget1, budget2])

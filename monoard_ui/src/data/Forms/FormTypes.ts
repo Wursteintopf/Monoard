@@ -1,6 +1,8 @@
+import moment from 'moment'
 import { BankAccount, EMPTY_BANKACCOUNT } from '../../data_types/BankAccount'
 import { Budget, EMPTY_BUDGET } from '../../data_types/Budget'
 import { CSVHeaderConfig } from '../../data_types/CSVHeaderConfig'
+import { ReversePartial } from '../../data_types/UtilTypes'
 
 export type DefaultFormTypes = {
   isDirty: boolean
@@ -50,14 +52,23 @@ export const defaultSelectHeaderForm: SelectHeaderForm = {
   ...defaultForm,
 }
 
-export type SidebarForm = DefaultFormTypes & {
+export type MonthSidebarForm = DefaultFormTypes & {
   currentMonth: Date
   hideInternal: boolean
 }
 
-export const defaultCurrentMonthForm: SidebarForm = {
+export const defaultMonthSidebarForm: MonthSidebarForm = {
   currentMonth: new Date(),
   hideInternal: true,
+  ...defaultForm,
+}
+
+export type YearSidebarForm = DefaultFormTypes & {
+  year: number
+}
+
+export const defaultYearSidebarForm: YearSidebarForm = {
+  year: moment().year(),
   ...defaultForm,
 }
 
@@ -79,7 +90,8 @@ export interface FormState {
   addBankAccountForm: AddBankAccountForm
   addBudgetForm: AddBudgetForm
   selectHeaderForm: SelectHeaderForm
-  sidebarForm: SidebarForm
+  monthSidebarForm: MonthSidebarForm
+  yearSidebarForm: YearSidebarForm
   firstSetUpForm: FirstSetUpForm
 }
 
@@ -88,6 +100,7 @@ export const defaultFormState: FormState = {
   addBankAccountForm: defaultAddBankAccountForm,
   addBudgetForm: defaultAddBudgetForm,
   selectHeaderForm: defaultSelectHeaderForm,
-  sidebarForm: defaultCurrentMonthForm,
+  monthSidebarForm: defaultMonthSidebarForm,
+  yearSidebarForm: defaultYearSidebarForm,
   firstSetUpForm: defaultFirstSetUpForm,
 }

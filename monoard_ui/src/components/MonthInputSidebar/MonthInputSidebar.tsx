@@ -7,7 +7,7 @@ import FormMonthPicker from '../../design/components/FormElements/FormMonthPicke
 import Box from '../../design/components/LayoutElements/Box'
 
 const Sidebar: React.FC = () => {
-  const sidebarForm = rootLens.form.sidebarForm
+  const sidebarForm = rootLens.form.monthSidebarForm
   const value = sidebarForm.currentMonth.select()
   const { refetchCurrentMoneyMoves, refetchCurrentBudgets } = useMoneyMovesByBankAccount()
 

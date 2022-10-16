@@ -44,9 +44,9 @@ const calculateBudgetAmount = (moneyMoves: MoneyMoveWithFoundBudget[], budgets: 
 
 export const useMoneyMovesByBankAccount = (): MoneyMovesAndBudgets => {
   const { slug } = useParams<{ slug: string }>()
-  const from = startOfMonth(rootLens.form.sidebarForm.currentMonth.get())
-  const to = endOfMonth(rootLens.form.sidebarForm.currentMonth.get())
-  const month = rootLens.form.sidebarForm.currentMonth.get()
+  const from = startOfMonth(rootLens.form.monthSidebarForm.currentMonth.get())
+  const to = endOfMonth(rootLens.form.monthSidebarForm.currentMonth.get())
+  const month = rootLens.form.monthSidebarForm.currentMonth.get()
   const { isFetching: isFetchingMoneyMoves, isLoading: isLoadingMoneyMoves, refetch: refetchCurrentMoneyMoves } = moneyMoveApi.endpoints.readByBankAccountInRange.useQuery({ slug: slug as string, from, to })
   const { isFetching: isFetchingBudgets, isLoading: isLoadingBudgets, refetch: refetchCurrentBudgets } = budgetApi.endpoints.readInMonth.useQuery({ month })
   const moneyMoves = rootLens.moneyMove.moneyMovesByBankAccount.select()
@@ -67,9 +67,9 @@ export const useMoneyMovesByBankAccount = (): MoneyMovesAndBudgets => {
 }
 
 export const useMoneyMoves = (): MoneyMovesAndBudgets => {
-  const from = startOfMonth(rootLens.form.sidebarForm.currentMonth.get())
-  const to = endOfMonth(rootLens.form.sidebarForm.currentMonth.get())
-  const month = rootLens.form.sidebarForm.currentMonth.get()
+  const from = startOfMonth(rootLens.form.monthSidebarForm.currentMonth.get())
+  const to = endOfMonth(rootLens.form.monthSidebarForm.currentMonth.get())
+  const month = rootLens.form.monthSidebarForm.currentMonth.get()
   const { isFetching: isFetchingMoneyMoves, isLoading: isLoadingMoneyMoves, refetch: refetchCurrentMoneyMoves } = moneyMoveApi.endpoints.readInRange.useQuery({ from, to })
   const { isFetching: isFetchingBudgets, isLoading: isLoadingBudgets, refetch: refetchCurrentBudgets } = budgetApi.endpoints.readInMonth.useQuery({ month })
   const moneyMoves = rootLens.moneyMove.moneyMovesByBankAccount.select()

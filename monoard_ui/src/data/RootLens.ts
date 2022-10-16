@@ -29,6 +29,7 @@ const lensAtPath = <A>(path: string[]): Lens<A> => {
 
   const value = getValue()
 
+  // eslint-disable-next-line
   const select = () => useSelector(createSelector((state: RootState) => state, state => view(lens, state)))
 
   let subLenses = {}

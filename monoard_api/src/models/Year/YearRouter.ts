@@ -1,4 +1,5 @@
-import { Role } from '../../../data_types/Role'
+import { authenticate } from '../../middleware/authenticate'
+import { catchErrors } from '../../middleware/catchErrors'
 import { baseWithUserRouter } from '../BaseModel/BaseWithUserRouter'
 import { YearController } from './YearController'
 import { YearModel } from './YearModel'
@@ -10,9 +11,9 @@ export const yearRouter = () => {
     controller,
     YearModel,
     {
-      createAccess: [Role.UNAUTHENTICATED],
-      readAccess: [Role.UNAUTHENTICATED],
-      updateAccess: [Role.UNAUTHENTICATED],
+      createAccess: [],
+      readAccess: [],
+      updateAccess: [],
       deleteAccess: [],
       createOwn: true,
       readOwn: true,
@@ -21,9 +22,11 @@ export const yearRouter = () => {
     },
   )
 
-  router.get('/deactivateYear', async (req, res) => {
-    await controller.deactivateYear(1)
-    res.send('Done')
+  router.get('/readActive', authenticate([], true), (req, res) => {
+    controller
+      .readActiveYear(req.session.userId as number)
+      .then(activeYear => res.send(activeYear))
+      .catch(e => catchErrors(e, res))
   })
 
   return router
