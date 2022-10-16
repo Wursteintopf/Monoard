@@ -152,4 +152,24 @@ describe('Test MoneyMoveController', () => {
     const newModel = await repository.findOneOrFail({ where: { purpose: 'searchpurpose' }, relations: ['year'] })
     expect(newModel.year.active).toBe(true)
   })
+
+  it('should add the month to an added moneymove', async () => {
+    await controller.createMultipleOwn(
+      [
+        {
+          amount: -1337,
+          date: new Date('1995-02-24T00:00:00'),
+          foreignBankAccount: 'PayPal',
+          foreignBankAccountIban: '',
+          purpose: 'searchpurpose',
+          isInternalMove: false,
+          bankAccount: 1 as unknown as BankAccountModel,
+        },
+      ],
+      1,
+    )
+
+    const model = await repository.findOneByOrFail({ purpose: 'searchpurpose' })
+    expect(model.month).toBe('february')
+  })
 })

@@ -7,6 +7,7 @@ import { BankAccountModel } from '../BankAccount/BankAccountModel'
 import moment from 'moment'
 import { YearController } from '../Year/YearController'
 import { YearModel } from '../Year/YearModel'
+import { monthArray } from '../../../data_types/Month'
 
 export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> {
   public async createMultipleOwn (
@@ -31,6 +32,10 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
             // Create the model and attach it to the active year
             const model = new this.ModelConstructor()
             model.year = activeYear
+
+            // Add the month to the year
+            const monthIndex = moment(moneyMove.date).month()
+            model.month = monthArray[monthIndex]
 
             const bankAccount = await bankAccountController.readOneByOwn({ id: moneyMove.bankAccount as unknown as number }, userId)
             // Its not a PayPal Account, just add it

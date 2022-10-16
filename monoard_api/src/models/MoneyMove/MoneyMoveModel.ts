@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne } from 'typeorm'
 import { MoneyMove } from '../../../data_types/MoneyMove'
+import { Month } from '../../../data_types/Month'
 import { BankAccountModel } from '../BankAccount/BankAccountModel'
 import { BaseWithUserModel } from '../BaseModel/BaseWithUserModel'
 import { BudgetModel } from '../Budget/BudgetModel'
@@ -25,6 +26,9 @@ export class MoneyMoveModel extends BaseWithUserModel implements MoneyMove {
   
   @Column()
     isInternalMove: boolean
+  
+  @Column()
+    month: Month
     
   @ManyToOne(() => BudgetModel, budget => budget.manualBudgets)
     manualBudget?: BudgetModel
