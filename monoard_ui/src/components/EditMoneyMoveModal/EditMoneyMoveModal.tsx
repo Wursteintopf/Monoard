@@ -1,19 +1,19 @@
 import { Dialog, DialogContent, DialogTitle, MenuItem, Select } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useBudgets } from '../../data/Budgets/BudgetHooks'
 import { moneyMoveApi } from '../../data/MoneyMoves/MoneyMovesReducer'
-import { MoneyMoveWithFoundBudget } from '../../data/MoneyMoves/MoneyMoveTypes'
+import { rootLens } from '../../data/RootLens'
+import { MoneyMoveWithSubs } from '../../data/Year/YearTypes'
 import { MoneyMove } from '../../data_types/MoneyMove'
 import Form from '../../design/components/FormElements/Form'
 import FormButton from '../../design/components/FormElements/FormButton'
 import { ModalProps } from '../../types/ModalProps'
 
 interface EditMoneyMoveModalProps extends ModalProps {
-  move: MoneyMoveWithFoundBudget
+  move: MoneyMoveWithSubs
 }
 
 const EditMoneyMoveModal: React.FC<EditMoneyMoveModalProps> = ({ open, onClose, move }) => {
-  const { budgets } = useBudgets()
+  const budgets = rootLens.year.activeYear.budgets.select()
 
   const budgetOptions = useMemo(() => {
     return budgets.map(b => ({

@@ -13,7 +13,7 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
   public async createMultipleOwn (
     moneyMoves: Partial<MoneyMoveModel>[],
     userId: number,
-  ) {
+  ): Promise<MoneyMoveModel[]> {
     const modelArray: MoneyMoveModel[] = []
     const bankAccountController = new BankAccountController(BankAccountModel)
     const yearController = new YearController(YearModel)

@@ -1,24 +1,17 @@
-import { Button, IconButton, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { IconButton, styled, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import moment from 'moment'
-import React, { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { rootLens } from '../../../data/RootLens'
-import Flex from '../../../design/components/LayoutElements/Flex'
-import { Bold } from '../../../design/components/Typography/Typography'
-import { clampText } from '../../../utils/stringUtils'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import colors from '../../../design/variables/colors'
-import { MoneyMoveWithFoundBudget } from '../../../data/MoneyMoves/MoneyMoveTypes'
-import EditMoneyMoveModal from '../../EditMoneyMoveModal/EditMoneyMoveModal'
+import React, { useState } from 'react'
+import { Bold } from '../../design/components/Typography/Typography'
+import { clampText } from '../../utils/stringUtils'
+import colors from '../../design/variables/colors'
+import EditMoneyMoveModal from '../EditMoneyMoveModal/EditMoneyMoveModal'
 import EditIcon from '@mui/icons-material/Edit'
-import { MoneyMoveWithSubs } from '../../../data/Year/YearTypes'
+import { MoneyMoveWithSubs } from '../../data/Year/YearTypes'
 
 type MoneyMoveListColumns = 'date' | 'iban' | 'bankAccount' | 'purpose' | 'budget' | 'amount' | 'edit'
 
 interface MoneyMoveListProps {
   moneyMoves: MoneyMoveWithSubs[]
-  shortened?: boolean
-  linkToDetailpage?: boolean
   hideColumns?: MoneyMoveListColumns[]
 }
 
@@ -68,17 +61,9 @@ const DetailCell = styled(TableCell) <{ showTooltip: boolean, detail: string }>`
   }
 `
 
-const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, shortened, linkToDetailpage, hideColumns }) => {
-  const hideInternal = rootLens.form.monthSidebarForm.hideInternal.select()
-
-  const data = useMemo(() => {
-    const moves = shortened ? moneyMoves.slice(0, 3) : moneyMoves
-    if (hideInternal) return moves.filter(m => !m.isInternalMove)
-    return moves
-  }, [hideInternal, moneyMoves])
-
+const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, hideColumns }) => {
   const [isOpenEditModal, setIsOpenEditModal] = useState(false)
-  const [moveToEdit, setMoveToEdit] = useState<MoneyMoveWithFoundBudget>()
+  const [moveToEdit, setMoveToEdit] = useState<MoneyMoveWithSubs>()
 
   return (
     <>
@@ -96,7 +81,7 @@ const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, shortened, li
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((move, index) => (
+            {moneyMoves?.map((move, index) => (
               <TableRow key={index}>
                 {!hideColumns?.includes('date') && <TableCell>{moment(move.date).format('DD.MM.YYYY')}</TableCell>}
                 {!hideColumns?.includes('iban') && <TableCell>{move.foreignBankAccountIban}</TableCell>}
@@ -110,7 +95,7 @@ const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, shortened, li
                       size='small'
                       onClick={() => {
                         setIsOpenEditModal(true)
-                        // setMoveToEdit(move) // TODO: Fix this
+                        setMoveToEdit(move)
                       }}
                     >
                       <EditIcon />
@@ -118,33 +103,9 @@ const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, shortened, li
                   </TableCell>}
               </TableRow>
             ))}
-            {shortened && (
-              <TableRow>
-                {!hideColumns?.includes('date') && <TableCell>...</TableCell>}
-                {!hideColumns?.includes('iban') && <TableCell>...</TableCell>}
-                {!hideColumns?.includes('bankAccount') && <TableCell>...</TableCell>}
-                {!hideColumns?.includes('purpose') && <TableCell>...</TableCell>}
-                {!hideColumns?.includes('budget') && <TableCell>...</TableCell>}
-                {!hideColumns?.includes('amount') && <TableCell>...</TableCell>}
-                {!hideColumns?.includes('edit') && <TableCell>...</TableCell>}
-              </TableRow>
-            )}
-
           </TableBody>
         </Table>
       </TableContainer>
-      {linkToDetailpage && (
-        <Flex>
-          <Button
-            style={{ marginLeft: 'auto' }}
-            component={Link}
-            to='money_move_list'
-            endIcon={<ArrowForwardIcon />}
-          >
-            Alle anzeigen
-          </Button>
-        </Flex>
-      )}
       <EditMoneyMoveModal
         open={isOpenEditModal}
         onClose={() => setIsOpenEditModal(false)}

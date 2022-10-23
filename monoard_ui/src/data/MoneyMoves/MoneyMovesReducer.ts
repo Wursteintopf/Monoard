@@ -1,8 +1,7 @@
-import { defaultMoneyMoveState, MoneyMoveApiReducerPath, moneyMoveApiReducerPath, moneyMoveReducerPath, SearchInRangeParams } from './MoneyMoveTypes'
+import { MoneyMoveApiReducerPath, moneyMoveApiReducerPath } from './MoneyMoveTypes'
 import { MoneyMove } from './../../data_types/MoneyMove'
 import { getBaseCrudOwnEndpoints } from './../Base/getBaseCrudOwnEndpoints'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { createSlice } from '@reduxjs/toolkit'
 
 export const tagTypes = ['moneyMoves']
 
@@ -18,11 +17,4 @@ export const moneyMoveApi = createApi({
   }),
 })
 
-export const moneyMoveSlice = createSlice({
-  name: moneyMoveReducerPath,
-  initialState: defaultMoneyMoveState,
-  reducers: {},
-})
-
 export const moneyMoveApiReducer = moneyMoveApi.reducer
-export const moneyMoveReducer = moneyMoveSlice.reducer

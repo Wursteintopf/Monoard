@@ -1,6 +1,6 @@
 import React from 'react'
 import BudgetMonthList from '../../components/BudgetMonthList/BudgetMonthList'
-import MoneyMoveList from '../../components/BudgetPlanMatrix/MoneyMoveList/MoneyMoveList'
+import MoneyMoveList from '../../components/MoneyMoveList/MoneyMoveList'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import Box from '../../design/components/LayoutElements/Box'
 import { Headline } from '../../design/components/Typography/Typography'

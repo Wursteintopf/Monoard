@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import BankAccountDetailPageHeader from './components/BankAccountDetailPageHeader'
-import MoneyMoveList from '../../../components/BudgetPlanMatrix/MoneyMoveList/MoneyMoveList'
+import MoneyMoveList from '../../../components/MoneyMoveList/MoneyMoveList'
 import BreadCrumbContext, { useBreadCrumbContext } from '../../../components/BreadCrumbContext/BreadCrumbContext'
 import { useParams } from 'react-router-dom'
 import { useMoneyMovesByBankAccount } from '../../../data/Year/YearHooks'

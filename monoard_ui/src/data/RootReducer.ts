@@ -1,7 +1,7 @@
 import { defaultUiState, UiState } from './Ui/UiTypes'
 import { budgetApi, budgetApiReducer, budgetReducer } from './Budgets/BudgetReducer'
-import { moneyMoveApi, moneyMoveApiReducer, moneyMoveReducer } from './MoneyMoves/MoneyMovesReducer'
-import { MoneyMoveApiState, defaultMoneyMoveApiState, MoneyMoveState, defaultMoneyMoveState } from './MoneyMoves/MoneyMoveTypes'
+import { moneyMoveApi, moneyMoveApiReducer } from './MoneyMoves/MoneyMovesReducer'
+import { MoneyMoveApiState, defaultMoneyMoveApiState } from './MoneyMoves/MoneyMoveTypes'
 import { CSVState, defaultCSVState } from './CSV/CSVTypes'
 import { BankAccountApiState, defaultBankAccountApiState } from './BankAccounts/BankAccountTypes'
 import { bankAccountApi, bankAccountApiReducer } from './BankAccounts/BankAccountReducer'
@@ -28,7 +28,6 @@ export interface RootState {
   auth: AuthState
   bankAccountApi: BankAccountApiState
   moneyMoveApi: MoneyMoveApiState
-  moneyMove: MoneyMoveState
   budgetApi: BudgetApiState
   budget: BudgetState
   yearApi: YearApiState
@@ -44,7 +43,6 @@ export const defaultRootState: RootState = {
   auth: defaultAuthState,
   bankAccountApi: defaultBankAccountApiState,
   moneyMoveApi: defaultMoneyMoveApiState,
-  moneyMove: defaultMoneyMoveState,
   budgetApi: defaultBudgetApiState,
   budget: defaultBudgetState,
   yearApi: defaultYearApiState,
@@ -65,7 +63,6 @@ const rootReducer: Reducer<RootState, AnyAction> = (state = defaultRootState, ac
         auth: authReducer(state.auth, action),
         bankAccountApi: bankAccountApiReducer(state.bankAccountApi, action),
         moneyMoveApi: moneyMoveApiReducer(state.moneyMoveApi, action),
-        moneyMove: moneyMoveReducer(state.moneyMove, action),
         budgetApi: budgetApiReducer(state.budgetApi, action),
         budget: budgetReducer(state.budget, action),
         yearApi: yearApiReducer(state.yearApi, action),

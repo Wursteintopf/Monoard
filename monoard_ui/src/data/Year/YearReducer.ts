@@ -1,3 +1,4 @@
+import { moneyMoveApi } from './../MoneyMoves/MoneyMovesReducer'
 import { budgetApi } from './../Budgets/BudgetReducer'
 import { getBaseCrudOwnEndpoints } from './../Base/getBaseCrudOwnEndpoints'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
@@ -25,10 +26,12 @@ export const yearApi = createApi({
 const assignBudgets = (moneyMoves: MoneyMove[], budgets: Budget[]): MoneyMoveWithSubs[] => 
   moneyMoves.map(moneyMove => {
     if (moneyMove.budget) {
+      const budget = typeof moneyMove.budget === 'number' ? budgets.find(b => b.id === moneyMove.budget) : moneyMove.budget
+      
       return {
         ...moneyMove,
         bankAccount: moneyMove.bankAccount as BankAccount,
-        budget: (moneyMove.budget as Budget),
+        budget: (budget as Budget),
       } 
     }
 
@@ -76,6 +79,22 @@ export const yearSlice = createSlice({
       budgetApi.endpoints.deleteOwn.matchFulfilled,
       (state, { payload }) => {
         state.activeYear.budgets = [...state.activeYear.budgets.filter(b => b.id !== payload.id)]
+      },
+    )
+    builder.addMatcher(
+      moneyMoveApi.endpoints.createMultipleOwn.matchFulfilled,
+      (state, { payload }) => {
+        const ids = payload.map(m => m.id)
+        const oldMoves = state.activeYear.moneyMoves.filter(m => !ids.includes(m.id))
+        const newMoves = assignBudgets(payload, state.activeYear.budgets)
+        state.activeYear.moneyMoves = [...oldMoves, ...newMoves]
+      },
+    )
+    builder.addMatcher(
+      moneyMoveApi.endpoints.updateOwn.matchFulfilled,
+      (state, { payload }) => {
+        const newMoves = assignBudgets([payload], state.activeYear.budgets)
+        state.activeYear.moneyMoves = [...state.activeYear.moneyMoves.filter(m => m.id !== payload.id), ...newMoves]
       },
     )
   },
