@@ -109,46 +109,4 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
 
     return await this.repository.save(modelArray)
   }
-
-  public async readByBankAccountInRange (
-    bankAccountSlug: string,
-    userId: number,
-    from: Date,
-    to: Date,
-  ): Promise<MoneyMoveModel[]> {
-    const moneyMoves = await this.repository.find({
-      where: {
-        bankAccount: { slug: bankAccountSlug },
-        user: { id: userId },
-        date: Between(from, to),
-      },
-      order: { date: 'ASC' },
-      relations: ['user', 'bankAccount', 'budget'],
-    })
-    return moneyMoves.map(m => {
-      m.user = undefined
-      m.amount = Number(m.amount)
-      return m
-    })
-  }
-
-  public async readInRange (
-    userId: number,
-    from: Date,
-    to: Date,
-  ): Promise<MoneyMoveModel[]> {
-    const moneyMoves = await this.repository.find({
-      where: {
-        user: { id: userId },
-        date: Between(from, to),
-      },
-      order: { date: 'ASC' },
-      relations: ['user', 'bankAccount', 'budget'],
-    })
-    return moneyMoves.map(m => {
-      m.user = undefined
-      m.amount = Number(m.amount)
-      return m
-    })
-  }
 }

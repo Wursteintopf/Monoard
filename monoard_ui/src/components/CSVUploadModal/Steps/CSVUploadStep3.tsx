@@ -8,7 +8,6 @@ import Box from '../../../design/components/LayoutElements/Box'
 import Flex from '../../../design/components/LayoutElements/Flex'
 import { StepProp } from '../CSVUploadModal'
 import moment from 'moment'
-import { useMoneyMovesByBankAccount } from '../../../data/MoneyMoves/MoneyMovesHooks'
 import { monthArray } from '../../../data_types/Month'
 
 const CSVUploadStep3: React.FC<StepProp & { onClose: () => void }> = ({ setStep, onClose }) => {
@@ -17,7 +16,7 @@ const CSVUploadStep3: React.FC<StepProp & { onClose: () => void }> = ({ setStep,
   const [percentage, setPercentage] = useState(0)
 
   const { bankAccount, refetchCurrentBankAccount } = useCurrentBankAccount()
-  const { refetchCurrentMoneyMoves } = useMoneyMovesByBankAccount()
+
   const [addMultipleMoneyMovesMutation] = moneyMoveApi.endpoints.createMultipleOwn.useMutation()
 
   const parseAsNumber = (input: string): number => {
@@ -67,7 +66,6 @@ const CSVUploadStep3: React.FC<StepProp & { onClose: () => void }> = ({ setStep,
 
       sendDataInChunks().then(() => setPercentage(100)).catch(e => console.log(e))
       refetchCurrentBankAccount()
-      refetchCurrentMoneyMoves()
     }
   }, [])
 

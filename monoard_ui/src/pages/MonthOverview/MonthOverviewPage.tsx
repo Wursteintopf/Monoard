@@ -1,9 +1,7 @@
 import React from 'react'
-import BudgetList from '../../components/BudgetList/BudgetList'
 import BudgetMonthList from '../../components/BudgetMonthList/BudgetMonthList'
 import MoneyMoveList from '../../components/BudgetPlanMatrix/MoneyMoveList/MoneyMoveList'
 import PageHeader from '../../components/PageHeader/PageHeader'
-import { useMoneyMoves } from '../../data/MoneyMoves/MoneyMovesHooks'
 import Box from '../../design/components/LayoutElements/Box'
 import { Headline } from '../../design/components/Typography/Typography'
 import { rootLens } from '../../data/RootLens'
@@ -25,7 +23,6 @@ const MonthOverview: React.FC = () => {
 }
 
 const MonthOverviewPage: React.FC = () => {
-  const { moneyMoves } = useMoneyMoves()
   const selectedMonth = rootLens.ui.selectedMonth
   const activeYear = useActiveYear()
   const month = activeYear.months[selectedMonth.select()]

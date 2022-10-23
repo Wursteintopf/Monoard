@@ -57,12 +57,6 @@ describe('Test MoneyMoveController', () => {
     expect(models.length).toEqual(4)
   })
 
-  it('should only load moneymoves in a specific range', async () => {
-    const models = await controller.readByBankAccountInRange('slug', 1, new Date('1995-02-01T00:00:00'), new Date('1995-03-01T00:00:00'))
-    expect(models.length).toEqual(1)
-    expect(models[0].foreignBankAccount).toEqual('account1')
-  })
-
   it('should mark a related move as internal, if there is a related move on a bankaccount', async () => {
     await controller.createMultipleOwn(
       [
