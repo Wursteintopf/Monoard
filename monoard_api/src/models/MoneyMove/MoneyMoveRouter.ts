@@ -1,5 +1,3 @@
-import { authenticate } from '../../middleware/authenticate'
-import { catchErrors } from '../../middleware/catchErrors'
 import { baseWithUserRouter } from './../BaseModel/BaseWithUserRouter'
 import { MoneyMoveController } from './MoneyMoveController'
 import { MoneyMoveModel } from './MoneyMoveModel'

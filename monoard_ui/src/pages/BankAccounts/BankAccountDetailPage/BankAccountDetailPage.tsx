@@ -10,6 +10,7 @@ const BankAccountPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()
   const currentMonth = rootLens.ui.selectedMonth.select()
   const moneyMoves = useMoneyMovesByBankAccount(slug ?? '', currentMonth)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
   const { setBreadCrumbs } = useBreadCrumbContext()
 

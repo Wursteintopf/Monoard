@@ -1,32 +1,13 @@
 import React from 'react'
 import BudgetMonthList from '../../components/BudgetMonthList/BudgetMonthList'
-import MoneyMoveList from '../../components/MoneyMoveList/MoneyMoveList'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import Box from '../../design/components/LayoutElements/Box'
-import { Headline } from '../../design/components/Typography/Typography'
 import { rootLens } from '../../data/RootLens'
 import { Month, monthArray, monthsReadableGerman } from '../../data_types/Month'
-import { useActiveYear } from '../../data/Year/YearHooks'
-
-const MonthOverview: React.FC = () => {
-  return (
-    <>
-      <Box mb='l'>
-        <BudgetMonthList incomeOrBudgets='incomeBudgets' />
-      </Box>
-
-      <Box mb='l'>
-        <BudgetMonthList incomeOrBudgets='budgets' />
-      </Box>
-    </>
-  )
-}
+import { MoneyMoveMonthList } from '../../components/MoneyMoveMonthList/MoneyMoveMonthList'
 
 const MonthOverviewPage: React.FC = () => {
   const selectedMonth = rootLens.ui.selectedMonth
-  const activeYear = useActiveYear()
-  const month = activeYear.months[selectedMonth.select()]
-  const moves = month.expenses
   
   const monthSelection = {
     value: selectedMonth.select(),
@@ -37,11 +18,17 @@ const MonthOverviewPage: React.FC = () => {
   return (
     <>
       <PageHeader title={`Monatsübersicht - ${monthsReadableGerman[selectedMonth.select()]}`} mainSelects={[monthSelection]} />
-      <MonthOverview />
+
+      <Box mb='l'>
+        <BudgetMonthList incomeOrBudgets='incomeBudgets' />
+      </Box>
+
+      <Box mb='l'>
+        <BudgetMonthList incomeOrBudgets='budgets' />
+      </Box>
 
       <Box>
-        <Headline>Kontobewegungen</Headline>
-        <MoneyMoveList moneyMoves={moves} hideColumns={['iban']} />
+        <MoneyMoveMonthList />
       </Box>
     </>
   )

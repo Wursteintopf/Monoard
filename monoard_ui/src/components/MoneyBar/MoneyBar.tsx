@@ -73,9 +73,9 @@ const MoneyBar: React.FC<BudgetGaugeProps> = ({
         </BarContainer>
         <BarContent>
           <CalculatedAmount overspent={amount > thisMax}>
-            {Math.abs(amount).toFixed(2)}€
+            {amount.toFixed(2)}€
           </CalculatedAmount>
-          <Amount>/ {Math.abs(thisMax).toFixed(2)}€</Amount>
+          <Amount>/ {thisMax.toFixed(2)}€</Amount>
         </BarContent>
       </StyledIncomeBar>
     </Flex>

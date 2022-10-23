@@ -43,7 +43,7 @@ export const useActiveYear = (): YearByMonths => {
       [month]: {
         expenses,
         incomes,
-        sumExpenses: calculateSum(expenses),
+        sumExpenses: -calculateSum(expenses),
         sumIncomes: calculateSum(incomes),
         budgets,
         incomeBudgets,

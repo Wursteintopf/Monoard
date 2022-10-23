@@ -13,15 +13,14 @@ import EditIcon from '@mui/icons-material/Edit'
 import FormButton from '../../design/components/FormElements/FormButton'
 import Form from '../../design/components/FormElements/Form'
 import { Month, monthArray, monthsReadableGerman } from '../../data_types/Month'
-import { BudgetWithSums } from '../../data/Year/YearTypes'
 
 export const FirstCell = styled(TableCell)`
-  width: 9%;
+  width: 12%;
 `
 
 export const MonthCell = styled(TableCell)`
-  width: 6%;
-  padding: 6px 12px;
+  width: 5%;
+  padding: 4px 12px;
 `
 
 export const ButtonCell = styled(TableCell)`
@@ -39,8 +38,8 @@ export const BudgetPlanMatrix: React.FC = () => {
 
   const renderMonthCell = (month: Month, budget: Budget, budgetOrIncome: 'budgets' | 'incomeBudgets') => (
     <MonthCell key={month}>
-      <SmallText>{(activeYear.months[month][budgetOrIncome].find(b => b.slug === budget.slug)?.spent ?? 0).toFixed(2)} € /</SmallText><br />
-      {budget[month].toFixed(2)} €<br />
+      <SmallText>{(activeYear.months[month][budgetOrIncome].find(b => b.slug === budget.slug)?.spent ?? 0).toFixed(2)}€ /</SmallText><br />
+      {(budget[month] ?? 0).toFixed(2)}€<br />
     </MonthCell>
   )
 
@@ -63,6 +62,26 @@ export const BudgetPlanMatrix: React.FC = () => {
             <TableBody>
               <TableRow>
                 <FirstCell>Summe Eingänge</FirstCell>
+                {monthArray.map((month) => (
+                  <MonthCell key={month}>
+                    {activeYear.months[month].sumIncomes.toFixed(2)}{' '}
+                    €
+                  </MonthCell>
+                ))}
+                <ButtonCell />
+              </TableRow>
+              <TableRow>
+                <FirstCell>Summe Ausgänge</FirstCell>
+                {monthArray.map((month) => (
+                  <MonthCell key={month}>
+                    {activeYear.months[month].sumExpenses.toFixed(2)}{' '}
+                    €
+                  </MonthCell>
+                ))}
+                <ButtonCell />
+              </TableRow>
+              <TableRow>
+                <FirstCell>Summe Geplante Eingänge</FirstCell>
                 {monthArray.map((month) => (
                   <MonthCell key={month}>
                     {activeYear.months[month].sumIncomeBudgetsAdded.toFixed(2)}{' '}
