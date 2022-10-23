@@ -1,3 +1,4 @@
+import { defaultUiState, UiState } from './Ui/UiTypes'
 import { budgetApi, budgetApiReducer, budgetReducer } from './Budgets/BudgetReducer'
 import { moneyMoveApi, moneyMoveApiReducer, moneyMoveReducer } from './MoneyMoves/MoneyMovesReducer'
 import { MoneyMoveApiState, defaultMoneyMoveApiState, MoneyMoveState, defaultMoneyMoveState } from './MoneyMoves/MoneyMoveTypes'
@@ -15,6 +16,7 @@ import { csvReducer } from './CSV/CSVReducer'
 import { BudgetApiState, BudgetState, defaultBudgetApiState, defaultBudgetState } from './Budgets/BudgetTypes'
 import { defaultYearApiState, defaultYearState, YearApiState, YearState } from './Year/YearTypes'
 import { yearApi, yearApiReducer, yearReducer } from './Year/YearReducer'
+import { uiReducer } from './Ui/UiReducer'
 
 export const setRootStateAction = createAction<RootState>('SET_ROOT_STATE')
 
@@ -31,6 +33,7 @@ export interface RootState {
   budget: BudgetState
   yearApi: YearApiState
   year: YearState
+  ui: UiState
 }
 
 export const defaultRootState: RootState = {
@@ -46,6 +49,7 @@ export const defaultRootState: RootState = {
   budget: defaultBudgetState,
   yearApi: defaultYearApiState,
   year: defaultYearState,
+  ui: defaultUiState,
 }
 
 const rootReducer: Reducer<RootState, AnyAction> = (state = defaultRootState, action: AnyAction) => {
@@ -66,13 +70,14 @@ const rootReducer: Reducer<RootState, AnyAction> = (state = defaultRootState, ac
         budget: budgetReducer(state.budget, action),
         yearApi: yearApiReducer(state.yearApi, action),
         year: yearReducer(state.year, action),
+        ui: uiReducer(state.ui, action),
       }
   }
 }
 
 export const store = configureStore<RootState>({
   reducer: rootReducer,
-  // @ts-ignore
+  // @ts-expect-error
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
     .concat(bankAccountApi.middleware)
     .concat(authApi.middleware)

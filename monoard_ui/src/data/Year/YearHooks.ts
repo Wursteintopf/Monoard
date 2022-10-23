@@ -55,7 +55,7 @@ export const useActiveYear = (): YearByMonths => {
           slug: b.slug,
           base: index === 0 ? b.base : (prevMonthBudget.base + prevMonthBudget.amount - prevMonthBudget.spent),
           amount: b[month],
-          spent: -calculateSum(moves),
+          spent: budgetOrIncome === 'budgets' ? -calculateSum(moves) : calculateSum(moves),
         }
       })
 
