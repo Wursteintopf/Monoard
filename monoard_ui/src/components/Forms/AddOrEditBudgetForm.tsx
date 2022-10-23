@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useSaveBudget } from '../../data/Budgets/BudgetHooks'
 import { defaultAddBudgetForm } from '../../data/Forms/FormTypes'
 import { rootLens } from '../../data/RootLens'
@@ -23,6 +23,9 @@ import { CopyDownIcon } from '../../design/icons/CopyDownIcon'
 import { IconButton, Tooltip } from '@mui/material'
 import Flex from '../../design/components/LayoutElements/Flex'
 import Box from '../../design/components/LayoutElements/Box'
+import { budgetApi } from '../../data/Budgets/BudgetReducer'
+import LoadingIndicator from '../../design/components/LoadingIndicator/LoadingIndicator'
+import { slugSideEffect } from '../../utils/slugSideEffectUtil'
 
 interface AddOrEditBankAccountFormProps extends FormComponentProps {
   budgetToEdit?: Budget
@@ -37,6 +40,12 @@ const AddOrEditBudgetForm: React.FC<AddOrEditBankAccountFormProps> = ({
   const addBudgetForm = rootLens.form.addBudgetForm
   const isDirty = addBudgetForm.isDirty.select()
   const saveBudget = useSaveBudget()
+  const { data, isLoading } = budgetApi.endpoints.usedSlugs.useQuery()
+
+  const slugSideEffectCallback = useCallback((value: string) => {
+    const snakeCase = data ? slugSideEffect(value, data) : ''
+    addBudgetForm.slug.set(snakeCase)
+  }, [data])
 
   useEffect(() => {
     if (budgetToEdit) {
@@ -93,6 +102,8 @@ const AddOrEditBudgetForm: React.FC<AddOrEditBankAccountFormProps> = ({
     </Flex>
   )
 
+  if (isLoading) return <LoadingIndicator />
+
   return (
     <Form>
       <HorizontalDividerWrapper>
@@ -101,7 +112,9 @@ const AddOrEditBudgetForm: React.FC<AddOrEditBankAccountFormProps> = ({
             lens={addBudgetForm.name}
             label='Name'
             setDirty={addBudgetForm.isDirty}
+            onChangeSideEffect={slugSideEffectCallback}
           />
+          <FormTextInput lens={addBudgetForm.slug} disabled label='Slug' />
           <FormKeywords
             lens={addBudgetForm.keywords}
             header='Filtern nach:'

@@ -22,5 +22,11 @@ export const budgetRouter = () => {
     },
   )
 
+  router.get('/usedSlugs', authenticate([], true), (req, res) => {
+    controller.readUsedSlugs(req.session.userId as number)
+      .then(slugs => res.send(slugs))
+      .catch(e => catchErrors(e, res))
+  })
+
   return router
 }

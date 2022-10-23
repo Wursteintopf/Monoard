@@ -23,8 +23,8 @@ export const useSaveBudget = () => {
   const year = useActiveYear()
 
   return (budget: Budget, edit?: boolean) => {
-    if (edit) editBudgetMutation({ ...budget, year })
-    else addBudgetMutation({ ...budget, year })
+    if (edit) editBudgetMutation({ ...budget, year: year.id })
+    else addBudgetMutation({ ...budget, year: year.id })
   }
 }
 

@@ -5,6 +5,7 @@ import { defaultYearState, yearApiReducerPath, YearApiReducerPath, yearReducerPa
 import { Year } from '../../data_types/Year'
 import { createSlice } from '@reduxjs/toolkit'
 import { Budget } from '../../data_types/Budget'
+import { MoneyMove } from '../../data_types/MoneyMove'
 
 export const yearApi = createApi({
   reducerPath: yearApiReducerPath,
@@ -31,6 +32,7 @@ export const yearSlice = createSlice({
         state.activeYear = {
           ...year,
           budgets: year.budgets as Budget[],
+          moneyMoves: year.moneyMoves as MoneyMove[],
         }
         state.fetched = true
       },

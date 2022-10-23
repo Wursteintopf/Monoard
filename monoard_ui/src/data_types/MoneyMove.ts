@@ -13,7 +13,7 @@ export interface MoneyMove extends Base {
   purpose: string
   amount: number
   isInternalMove: boolean
-  manualBudget?: Budget | number
+  budget?: Budget | number
   bankAccount?: BankAccount | number
   year?: Year | number
   user?: User | number

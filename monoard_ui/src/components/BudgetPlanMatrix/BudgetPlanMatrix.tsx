@@ -3,7 +3,7 @@ import { Button, Dialog, DialogContent, DialogTitle, IconButton, Table, TableBod
 import React, { useState } from 'react'
 import { useActiveYear } from '../../data/Year/YearHooks'
 import Box from '../../design/components/LayoutElements/Box'
-import { Bold, Headline } from '../../design/components/Typography/Typography'
+import { Bold, Headline, SmallText } from '../../design/components/Typography/Typography'
 import AddIcon from '@mui/icons-material/Add'
 import AddOrEditBudgetModal from '../BudgetModals/AddOrEditBudgetModal'
 import { Budget } from '../../data_types/Budget'
@@ -12,7 +12,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import FormButton from '../../design/components/FormElements/FormButton'
 import Form from '../../design/components/FormElements/Form'
-import { monthArray, monthsReadableGerman } from '../../data_types/Month'
+import { Month, monthArray, monthsReadableGerman } from '../../data_types/Month'
+import { BudgetWithSums } from '../../data/Year/YearTypes'
 
 export const FirstCell = styled(TableCell)`
   width: 9%;
@@ -31,13 +32,17 @@ export const BudgetPlanMatrix: React.FC = () => {
   const activeYear = useActiveYear()
   const deleteBudget = useDeleteBudget()
 
-  const expectedIncomes = activeYear.expectedIncomes
-  const budgets = activeYear.budgets
-
   const [budgetToEdit, setBudgetToEdit] = useState<Budget>()
   const [addModalOpen, setAddModalOpen] = useState(false)
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [isIncome, setIsIncome] = useState(false)
+
+  const renderMonthCell = (month: Month, budget: Budget, budgetOrIncome: 'budgets' | 'incomeBudgets') => (
+    <MonthCell key={month}>
+      <SmallText>{(activeYear.months[month][budgetOrIncome].find(b => b.slug === budget.slug)?.spent ?? 0).toFixed(2)} € /</SmallText><br />
+      {budget[month].toFixed(2)} €<br />
+    </MonthCell>
+  )
 
   return (
     <>
@@ -47,8 +52,10 @@ export const BudgetPlanMatrix: React.FC = () => {
             <TableHead>
               <TableRow>
                 <FirstCell />
-                {monthArray.map(month => (
-                  <MonthCell key={month}><Bold>{monthsReadableGerman[month]}</Bold></MonthCell>
+                {monthArray.map((month) => (
+                  <MonthCell key={month}>
+                    <Bold>{monthsReadableGerman[month]}</Bold>
+                  </MonthCell>
                 ))}
                 <ButtonCell />
               </TableRow>
@@ -56,27 +63,28 @@ export const BudgetPlanMatrix: React.FC = () => {
             <TableBody>
               <TableRow>
                 <FirstCell>Summe Eingänge</FirstCell>
-                {monthArray.map(month => (
+                {monthArray.map((month) => (
                   <MonthCell key={month}>
-                    {activeYear.sumIncomes[month].toFixed(2)} €
+                    {activeYear.months[month].sumIncomeBudgetsAdded.toFixed(2)}{' '}
+                    €
                   </MonthCell>
                 ))}
                 <ButtonCell />
               </TableRow>
               <TableRow>
                 <FirstCell>Summe Budgets</FirstCell>
-                {monthArray.map(month => (
+                {monthArray.map((month) => (
                   <MonthCell key={month}>
-                    {activeYear.sumBudgets[month].toFixed(2)} €
+                    {activeYear.months[month].sumBudgetsAdded.toFixed(2)} €
                   </MonthCell>
                 ))}
                 <ButtonCell />
               </TableRow>
               <TableRow>
                 <FirstCell>Differenz</FirstCell>
-                {monthArray.map(month => (
+                {monthArray.map((month) => (
                   <MonthCell key={month}>
-                    {activeYear.sumDifference[month].toFixed(2)} €
+                    {(activeYear.months[month].sumIncomeBudgetsAdded - activeYear.months[month].sumBudgetsAdded).toFixed(2)} €
                   </MonthCell>
                 ))}
                 <ButtonCell />
@@ -85,7 +93,7 @@ export const BudgetPlanMatrix: React.FC = () => {
           </Table>
         </TableContainer>
       </Box>
-      
+
       <Box mb='m'>
         <Headline>Geplante Eingänge</Headline>
         <TableContainer>
@@ -93,24 +101,24 @@ export const BudgetPlanMatrix: React.FC = () => {
             <TableHead>
               <TableRow>
                 <FirstCell />
-                {monthArray.map(month => (
-                  <MonthCell key={month}><Bold>{monthsReadableGerman[month]}</Bold></MonthCell>
+                {monthArray.map((month) => (
+                  <MonthCell key={month}>
+                    <Bold>{monthsReadableGerman[month]}</Bold>
+                  </MonthCell>
                 ))}
                 <ButtonCell />
               </TableRow>
             </TableHead>
             <TableBody>
-              {expectedIncomes.map(income => (
-                <TableRow key={income.id}>
-                  <FirstCell>{income.name}</FirstCell>
-                  {monthArray.map(month => (
-                    <MonthCell key={month}>{income[month].toFixed(2)} €</MonthCell>
-                  ))}
+              {activeYear.incomeBudgets.map((incomeBudget) => (
+                <TableRow key={incomeBudget.id}>
+                  <FirstCell>{incomeBudget.name}</FirstCell>
+                  {monthArray.map((month) => renderMonthCell(month, incomeBudget, 'incomeBudgets'))}
                   <ButtonCell>
                     <IconButton
                       size='small'
                       onClick={() => {
-                        setBudgetToEdit(income)
+                        setBudgetToEdit(incomeBudget)
                         setIsIncome(true)
                         setAddModalOpen(true)
                       }}
@@ -120,7 +128,7 @@ export const BudgetPlanMatrix: React.FC = () => {
                     <IconButton
                       size='small'
                       onClick={() => {
-                        setBudgetToEdit(income)
+                        setBudgetToEdit(incomeBudget)
                         setDeleteModalOpen(true)
                       }}
                     >
@@ -142,7 +150,7 @@ export const BudgetPlanMatrix: React.FC = () => {
                     Hinzufügen
                   </Button>
                 </FirstCell>
-                {monthArray.map(month => (
+                {monthArray.map((month) => (
                   <MonthCell key={month} />
                 ))}
                 <ButtonCell />
@@ -159,19 +167,19 @@ export const BudgetPlanMatrix: React.FC = () => {
             <TableHead>
               <TableRow>
                 <FirstCell />
-                {monthArray.map(month => (
-                  <MonthCell key={month}><Bold>{monthsReadableGerman[month]}</Bold></MonthCell>
+                {monthArray.map((month) => (
+                  <MonthCell key={month}>
+                    <Bold>{monthsReadableGerman[month]}</Bold>
+                  </MonthCell>
                 ))}
                 <ButtonCell />
               </TableRow>
             </TableHead>
             <TableBody>
-              {budgets.map(budget => (
+              {activeYear.budgets.map((budget) => (
                 <TableRow key={budget.id}>
                   <FirstCell>{budget.name}</FirstCell>
-                  {monthArray.map(month => (
-                    <MonthCell key={month}>{budget[month].toFixed(2)} €</MonthCell>
-                  ))}
+                  {monthArray.map((month) => renderMonthCell(month, budget, 'budgets'))}
                   <ButtonCell>
                     <IconButton
                       size='small'
@@ -208,7 +216,7 @@ export const BudgetPlanMatrix: React.FC = () => {
                     Hinzufügen
                   </Button>
                 </FirstCell>
-                {monthArray.map(month => (
+                {monthArray.map((month) => (
                   <MonthCell key={month} />
                 ))}
                 <ButtonCell />
@@ -228,7 +236,9 @@ export const BudgetPlanMatrix: React.FC = () => {
       />
 
       <Dialog open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
-        <DialogTitle>{isIncome ? 'Geplanten Eingang löschen' : 'Budget löschen'}</DialogTitle>
+        <DialogTitle>
+          {isIncome ? 'Geplanten Eingang löschen' : 'Budget löschen'}
+        </DialogTitle>
         <DialogContent>
           <Form>
             <FormButton

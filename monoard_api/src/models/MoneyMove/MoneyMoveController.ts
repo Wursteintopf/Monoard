@@ -123,7 +123,7 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
         date: Between(from, to),
       },
       order: { date: 'ASC' },
-      relations: ['user', 'bankAccount', 'manualBudget'],
+      relations: ['user', 'bankAccount', 'budget'],
     })
     return moneyMoves.map(m => {
       m.user = undefined
@@ -143,7 +143,7 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
         date: Between(from, to),
       },
       order: { date: 'ASC' },
-      relations: ['user', 'bankAccount', 'manualBudget'],
+      relations: ['user', 'bankAccount', 'budget'],
     })
     return moneyMoves.map(m => {
       m.user = undefined

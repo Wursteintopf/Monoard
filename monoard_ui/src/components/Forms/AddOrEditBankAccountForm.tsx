@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useBankAccounts } from '../../data/BankAccounts/BankAccountHooks'
 import { bankAccountApi } from '../../data/BankAccounts/BankAccountReducer'
@@ -13,6 +13,7 @@ import FormNumberInput from '../../design/components/FormElements/FormNumberInpu
 import FormSelectInput from '../../design/components/FormElements/FormSelectInput'
 import FormTextInput from '../../design/components/FormElements/FormTextInput'
 import LoadingIndicator from '../../design/components/LoadingIndicator/LoadingIndicator'
+import { slugSideEffect } from '../../utils/slugSideEffectUtil'
 
 interface AddOrEditBankAccountFormProps extends FormComponentProps {
   forwardToDetailPage?: boolean
@@ -88,28 +89,9 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
     if (additionalSubmitAction) additionalSubmitAction()
   }
 
-  const getSlugNumber = useMemo(() => {
-    return (slug: string, initial: number): number => {
-      return data?.includes(slug + '_' + initial)
-        ? getSlugNumber(slug, initial + 1)
-        : initial
-    }
-  }, [])
-
-  const slugSideEffect = useMemo(() => {
-    return (value: string) => {
-      let snakeCase = value
-        .replace(/\W+/g, ' ')
-        .split(/ |\B(?=[A-Z][a-z])/)
-        .map((word) => word.toLowerCase())
-        .join('_')
-
-      if (data?.includes(snakeCase)) {
-        snakeCase += '_' + getSlugNumber(snakeCase, 1)
-      }
-
-      addBankAccountForm.slug.set(snakeCase)
-    }
+  const slugSideEffectCallback = useCallback((value: string) => {
+    const snakeCase = data ? slugSideEffect(value, data) : ''
+    addBankAccountForm.slug.set(snakeCase)
   }, [data])
 
   if (isLoading) return <LoadingIndicator />
@@ -120,7 +102,7 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
       <FormTextInput
         lens={addBankAccountForm.name}
         label='Name'
-        onChangeSideEffect={slugSideEffect}
+        onChangeSideEffect={slugSideEffectCallback}
         setDirty={addBankAccountForm.isDirty}
       />
       <FormTextInput lens={addBankAccountForm.slug} disabled label='Slug' />

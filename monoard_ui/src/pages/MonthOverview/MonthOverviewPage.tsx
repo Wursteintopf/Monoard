@@ -1,7 +1,7 @@
 import React from 'react'
 import BudgetList from '../../components/BudgetList/BudgetList'
 import IncomeMonthList from '../../components/IncomeMonthList/IncomeMonthList'
-import MoneyMoveList from '../../components/MoneyMoveList/MoneyMoveList'
+import MoneyMoveList from '../../components/BudgetPlanMatrix/MoneyMoveList/MoneyMoveList'
 import MonthInputSidebar from '../../components/MonthInputSidebar/MonthInputSidebar'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import { useMoneyMoves } from '../../data/MoneyMoves/MoneyMovesHooks'

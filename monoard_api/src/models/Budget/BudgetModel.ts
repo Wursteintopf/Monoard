@@ -19,7 +19,7 @@ export class BudgetModel extends BaseWithUserModel implements Budget {
   @ManyToOne(() => UserModel, user => user.budgets)
     user?: UserModel
   
-  @OneToMany(() => MoneyMoveModel, moneyMove => moneyMove.manualBudget)
+  @OneToMany(() => MoneyMoveModel, moneyMove => moneyMove.budget)
     manualBudgets?: MoneyMoveModel[]
 
   @ManyToOne(() => YearModel, year => year.budgets)

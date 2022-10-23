@@ -21,8 +21,8 @@ const findBudget = (moneyMoves: MoneyMove[], budgets: Budget[]): MoneyMoveWithFo
   return moneyMoves.map(moneyMove => {
     let moneyMoveWithBudget = { ...moneyMove, foundBudget: '' }
     budgets.forEach(budget => {
-      if (moneyMove.manualBudget) {
-        moneyMoveWithBudget.foundBudget = (moneyMoveWithBudget.manualBudget as Budget).name
+      if (moneyMove.budget) {
+        moneyMoveWithBudget.foundBudget = (moneyMoveWithBudget.budget as Budget).name
       } else if (
         budget.keywords
           .split(',').filter(k => k !== '')

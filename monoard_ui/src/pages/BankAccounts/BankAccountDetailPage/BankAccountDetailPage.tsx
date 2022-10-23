@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import ContentWithSidebar from '../../../design/layouts/ContentWithSidebar'
 import BankAccountDetailPageHeader from './components/BankAccountDetailPageHeader'
 import MonthInputSidebar from '../../../components/MonthInputSidebar/MonthInputSidebar'
-import MoneyMoveList from '../../../components/MoneyMoveList/MoneyMoveList'
+import MoneyMoveList from '../../../components/BudgetPlanMatrix/MoneyMoveList/MoneyMoveList'
 import { useMoneyMovesByBankAccount } from '../../../data/MoneyMoves/MoneyMovesHooks'
 import BreadCrumbContext, { useBreadCrumbContext } from '../../../components/BreadCrumbContext/BreadCrumbContext'
 
