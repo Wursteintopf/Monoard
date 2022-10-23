@@ -54,7 +54,7 @@ const BudgetName = styled.div`
   font-weight: bold;
 `
 
-const IncomeBar: React.FC<BudgetGaugeProps> = ({
+const MoneyBar: React.FC<BudgetGaugeProps> = ({
   label,
   max,
   thisMax,
@@ -82,4 +82,4 @@ const IncomeBar: React.FC<BudgetGaugeProps> = ({
   )
 }
 
-export default IncomeBar
+export default MoneyBar

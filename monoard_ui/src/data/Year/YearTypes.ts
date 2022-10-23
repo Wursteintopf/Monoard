@@ -4,6 +4,7 @@ import { getDefaultApiState } from '../Base/getDefaultApiState'
 import { EMPTY_YEAR, Year } from '../../data_types/Year'
 import { Budget } from '../../data_types/Budget'
 import { Month } from '../../data_types/Month'
+import { BankAccount } from '../../data_types/BankAccount'
 
 export type YearReducerPath = 'year'
 export const yearReducerPath: YearReducerPath = 'year'
@@ -20,7 +21,7 @@ export type BudgetWithSums = Budget & Record<SumMonth, number>
 
 type YearWithBudgetsAndMoves = Omit<Year, 'budgets' | 'moneyMoves'> & {
   budgets: Budget[]
-  moneyMoves: MoneyMove[]
+  moneyMoves: MoneyMoveWithSubs[]
 }
 
 export type MonthBudget = {
@@ -66,8 +67,9 @@ export type YearByMonths = {
   incomeBudgets: Budget[]
 }
 
-export type MoneyMoveWithBudget = Omit<MoneyMove, 'budget'> & {
+export type MoneyMoveWithSubs = Omit<MoneyMove, 'budget' | 'bankAccount'> & {
   budget?: Budget
+  bankAccount?: BankAccount
 }
 
 export type YearState = {

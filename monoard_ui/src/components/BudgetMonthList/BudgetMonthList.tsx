@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import colors from '../../design/variables/colors'
 import AddIcon from '@mui/icons-material/Add'
 import { Headline } from '../../design/components/Typography/Typography'
-import IncomeBar from '../IncomeBar/IncomeBar'
+import MoneyBar from '../MoneyBar/MoneyBar'
 import { useActiveYear, useGetBudgetById } from '../../data/Year/YearHooks'
 import { rootLens } from '../../data/RootLens'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
@@ -157,7 +157,7 @@ const BudgetMonthList: React.FC<BudgetMonthListProps> = ({ incomeOrBudgets }) =>
       
       <StyledIncomeList>
         {incomeOrBudgets === 'incomeBudgets' && (
-          <IncomeBar
+          <MoneyBar
             label='Summe Einnahmen'
             max={month.sumIncomeBudgetsAdded > month.sumIncomes ? month.sumIncomeBudgetsAdded : month.sumIncomes}
             thisMax={month.sumIncomeBudgetsAdded}
@@ -167,7 +167,7 @@ const BudgetMonthList: React.FC<BudgetMonthListProps> = ({ incomeOrBudgets }) =>
         )}
         
         {!filterList.includes('onlySummary') && budgets.map((incomeBudget, index) => (
-          <IncomeBar
+          <MoneyBar
             key={index}
             label={incomeBudget.name}
             max={maxAmount}

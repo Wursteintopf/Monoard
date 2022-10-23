@@ -1,11 +1,12 @@
 import { budgetApi } from './../Budgets/BudgetReducer'
 import { getBaseCrudOwnEndpoints } from './../Base/getBaseCrudOwnEndpoints'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { defaultYearState, yearApiReducerPath, YearApiReducerPath, yearReducerPath } from './YearTypes'
+import { defaultYearState, MoneyMoveWithSubs, yearApiReducerPath, YearApiReducerPath, yearReducerPath } from './YearTypes'
 import { Year } from '../../data_types/Year'
 import { createSlice } from '@reduxjs/toolkit'
 import { Budget } from '../../data_types/Budget'
 import { MoneyMove } from '../../data_types/MoneyMove'
+import { BankAccount } from '../../data_types/BankAccount'
 
 export const yearApi = createApi({
   reducerPath: yearApiReducerPath,
@@ -21,6 +22,28 @@ export const yearApi = createApi({
   }),
 })
 
+const assignBudgets = (moneyMoves: MoneyMove[], budgets: Budget[]): MoneyMoveWithSubs[] => 
+  moneyMoves.map(moneyMove => {
+    if (moneyMove.budget) {
+      return {
+        ...moneyMove,
+        bankAccount: moneyMove.bankAccount as BankAccount,
+        budget: (moneyMove.budget as Budget),
+      } 
+    }
+
+    const budget = budgets.find(budget => budget.keywords
+      .split(',')
+      .filter(k => k !== '')
+      .some(keyword => (moneyMove.purpose.includes(keyword) || moneyMove.foreignBankAccount.includes(keyword))))
+    
+    return {
+      ...moneyMove,
+      bankAccount: moneyMove.bankAccount as BankAccount,
+      budget,
+    }
+  })
+
 export const yearSlice = createSlice({
   name: yearReducerPath,
   initialState: defaultYearState,
@@ -32,7 +55,7 @@ export const yearSlice = createSlice({
         state.activeYear = {
           ...year,
           budgets: year.budgets as Budget[],
-          moneyMoves: year.moneyMoves as MoneyMove[],
+          moneyMoves: assignBudgets(year.moneyMoves as MoneyMove[], year.budgets as Budget[]),
         }
         state.fetched = true
       },

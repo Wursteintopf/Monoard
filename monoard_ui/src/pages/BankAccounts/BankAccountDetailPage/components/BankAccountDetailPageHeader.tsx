@@ -12,10 +12,13 @@ import AddOrEditBankAccountModal from '../../../../components/BankAccountModals/
 import DeleteBankAccountModal from '../../../../components/BankAccountModals/DeleteBankAccountModal'
 import CSVUploadModal from '../../../../components/CSVUploadModal/CSVUploadModal'
 import { useBreadCrumbContext } from '../../../../components/BreadCrumbContext/BreadCrumbContext'
+import { rootLens } from '../../../../data/RootLens'
+import { Month, monthArray, monthsReadableGerman } from '../../../../data_types/Month'
 
 const BankAccountDetailPageHeader: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()
   const { bankAccount } = useCurrentBankAccount()
+  const selectedMonth = rootLens.ui.selectedMonth
 
   const { breadCrumbs: additionalBreadCrumbsLinks } = useBreadCrumbContext()
 
@@ -25,7 +28,13 @@ const BankAccountDetailPageHeader: React.FC = () => {
 
   const { data, isLoading } = useCurrentBankAccount()
 
-  if (isLoading || !data) return <LoadingIndicator />
+  const mainSelects = [
+    {
+      value: selectedMonth.select(),
+      onChange: (value: Month) => selectedMonth.set(value),
+      options: monthArray.map(m => ({ value: m, label: monthsReadableGerman[m] })),
+    },
+  ]
 
   const mainButtons: PageHeaderMainButtonProps[] = [
     {
@@ -47,6 +56,8 @@ const BankAccountDetailPageHeader: React.FC = () => {
     },
   ]
 
+  if (isLoading || !data) return <LoadingIndicator />
+
   return (
     <>
       <PageHeader
@@ -59,6 +70,7 @@ const BankAccountDetailPageHeader: React.FC = () => {
           },
           ...additionalBreadCrumbsLinks,
         ]}
+        mainSelects={mainSelects}
         mainButtons={mainButtons}
         contextMenu={contextMenu}
       />

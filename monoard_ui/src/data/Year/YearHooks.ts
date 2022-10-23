@@ -1,43 +1,18 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { rootLens } from './../RootLens'
 import { yearApi } from './YearReducer'
 import { Month, monthArray, monthAtIndex, MonthIndices } from '../../data_types/Month'
-import { MoneyMove } from '../../data_types/MoneyMove'
 import { Budget } from '../../data_types/Budget'
-import { Expense, Income, MoneyMoveWithBudget, MonthBudget, MonthData, MonthIncomeBudget, YearByMonths } from './YearTypes'
-
-const assignBudgets = (moneyMoves: MoneyMove[], budgets: Budget[]): MoneyMoveWithBudget[] => 
-  moneyMoves.map(moneyMove => {
-    if (moneyMove.budget) {
-      return {
-        ...moneyMove,
-        budget: (moneyMove.budget as Budget),
-      } 
-    }
-
-    const budget = budgets.find(budget => budget.keywords
-      .split(',')
-      .filter(k => k !== '')
-      .some(keyword => (moneyMove.purpose.includes(keyword) || moneyMove.foreignBankAccount.includes(keyword))))
-    
-    return {
-      ...moneyMove,
-      budget,
-    }
-  })
+import { Expense, Income, MonthBudget, MonthData, MonthIncomeBudget, YearByMonths } from './YearTypes'
 
 const calculateSum = (array: Array<Expense | Income | MonthBudget | MonthIncomeBudget>) => array.reduce((sum, el) => (sum += el.amount), 0)
 
 export const useActiveYear = (): YearByMonths => {
-  const [fetch] = yearApi.endpoints.readActive.useLazyQuery()
-
-  useEffect(() => {
-    fetch()
-  }, [])
+  yearApi.endpoints.readActive.useQuery()
 
   const activeYear = rootLens.year.activeYear.select()
 
-  const moneyMoves = assignBudgets(activeYear.moneyMoves.filter(m => !m.isInternalMove), activeYear.budgets)
+  const moneyMoves = activeYear.moneyMoves.filter(m => !m.isInternalMove)
 
   const months = monthArray.reduce((monthObj, month, index) => { 
     const monthMoneyMoves = moneyMoves.filter(m => m.month === month)
@@ -93,4 +68,12 @@ export const useGetBudgetById = () => {
   return useCallback((id: number) => {
     return budgets.find(b => b.id === id)
   }, [budgets])
+}
+
+export const useMoneyMovesByBankAccount = (slug: string, month: Month) => {
+  yearApi.endpoints.readActive.useQuery()
+
+  const moneyMoves = rootLens.year.activeYear.moneyMoves.select()
+
+  return moneyMoves.filter(m => m.month === month && m.bankAccount?.slug === slug)
 }

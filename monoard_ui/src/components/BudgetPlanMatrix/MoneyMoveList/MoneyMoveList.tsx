@@ -11,12 +11,12 @@ import colors from '../../../design/variables/colors'
 import { MoneyMoveWithFoundBudget } from '../../../data/MoneyMoves/MoneyMoveTypes'
 import EditMoneyMoveModal from '../../EditMoneyMoveModal/EditMoneyMoveModal'
 import EditIcon from '@mui/icons-material/Edit'
-import { MoneyMoveWithBudget } from '../../../data/Year/YearTypes'
+import { MoneyMoveWithSubs } from '../../../data/Year/YearTypes'
 
 type MoneyMoveListColumns = 'date' | 'iban' | 'bankAccount' | 'purpose' | 'budget' | 'amount' | 'edit'
 
 interface MoneyMoveListProps {
-  moneyMoves: MoneyMoveWithBudget[]
+  moneyMoves: MoneyMoveWithSubs[]
   shortened?: boolean
   linkToDetailpage?: boolean
   hideColumns?: MoneyMoveListColumns[]
