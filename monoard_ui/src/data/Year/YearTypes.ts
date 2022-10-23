@@ -24,6 +24,7 @@ type YearWithBudgetsAndMoves = Omit<Year, 'budgets' | 'moneyMoves'> & {
 }
 
 export type MonthBudget = {
+  id: number
   name: string
   slug: string
   base: number

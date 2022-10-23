@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { rootLens } from './../RootLens'
 import { yearApi } from './YearReducer'
 import { Month, monthArray, monthAtIndex, MonthIndices } from '../../data_types/Month'
@@ -37,12 +37,12 @@ export const useActiveYear = (): YearByMonths => {
 
   const activeYear = rootLens.year.activeYear.select()
 
-  const moneyMoves = assignBudgets(activeYear.moneyMoves, activeYear.budgets)
+  const moneyMoves = assignBudgets(activeYear.moneyMoves.filter(m => !m.isInternalMove), activeYear.budgets)
 
   const months = monthArray.reduce((monthObj, month, index) => { 
     const monthMoneyMoves = moneyMoves.filter(m => m.month === month)
-    const expenses = monthMoneyMoves.filter(m => m.amount > 0)
-    const incomes = monthMoneyMoves.filter(m => m.amount < 0)
+    const expenses = monthMoneyMoves.filter(m => m.amount < 0)
+    const incomes = monthMoneyMoves.filter(m => m.amount > 0)
 
     const prepareBudgets = (budgets: Budget[], budgetOrIncome: 'budgets' | 'incomeBudgets'): MonthBudget[] => budgets
       .sort((a, b) => (a.id ?? 0) - (b.id ?? 0))
@@ -51,9 +51,10 @@ export const useActiveYear = (): YearByMonths => {
         const prevMonthBudget = index > 0 ? monthObj[monthAtIndex[index - 1 as MonthIndices]][budgetOrIncome].find(search => search.slug === b.slug) as MonthBudget : { base: 0, amount: 0, spent: 0 }
 
         return {
+          id: b.id as number,
           name: b.name,
           slug: b.slug,
-          base: index === 0 ? b.base : (prevMonthBudget.base + prevMonthBudget.amount - prevMonthBudget.spent),
+          base: index === 0 || budgetOrIncome === 'incomeBudgets' ? b.base : (prevMonthBudget.base + prevMonthBudget.amount - prevMonthBudget.spent),
           amount: b[month],
           spent: budgetOrIncome === 'budgets' ? -calculateSum(moves) : calculateSum(moves),
         }
@@ -84,4 +85,12 @@ export const useActiveYear = (): YearByMonths => {
     incomeBudgets: activeYear.budgets.filter(b => b.isIncome),
     months,
   }
+}
+
+export const useGetBudgetById = () => {
+  const budgets = rootLens.year.activeYear.budgets.select()
+  
+  return useCallback((id: number) => {
+    return budgets.find(b => b.id === id)
+  }, [budgets])
 }

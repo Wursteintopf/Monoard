@@ -1,4 +1,17 @@
-export type AvaiableColors = 'baseGreen' | 'lightBlue' | 'baseBlue' | 'darkBlue' | 'baseGrey' | 'middleGrey' | 'darkGrey' | 'white' | 'black' | 'signalYellow' | 'signalRed' 
+export type AvaiableColors =
+  'baseGreen' |
+  'lightBlue' |
+  'baseBlue' |
+  'darkBlue' |
+  'baseGrey' |
+  'lightGrey' |
+  'middleGrey' |
+  'darkGrey' |
+  'veryDarkGrey' |
+  'white' |
+  'black' |
+  'signalYellow' |
+  'signalRed' 
 
 export type RGB = `rgb(${number}, ${number}, ${number})`
 export type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`

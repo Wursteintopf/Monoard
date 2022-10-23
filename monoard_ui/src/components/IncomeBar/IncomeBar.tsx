@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { BudgetWithCalculatedAmount } from '../../data/MoneyMoves/MoneyMoveTypes'
 import Bar from '../../design/components/BaseVisualizations/Bar'
 import Box from '../../design/components/LayoutElements/Box'
 import Flex from '../../design/components/LayoutElements/Flex'
@@ -8,27 +7,31 @@ import { Color } from '../../design/types'
 import colors from '../../design/variables/colors'
 
 interface BudgetGaugeProps {
-  budget: BudgetWithCalculatedAmount
+  label: string
+  max: number
+  thisMax: number
+  amount: number
   color: Color
-  onClick: () => void
+  onClick?: () => void
 }
 
 const BarContainer = styled.div`
   position: absolute;
+  width: 100%;
 `
 
-const StyledIncomeBar = styled.div`
-  width: 400px;
-  height: 50px;
+const StyledIncomeBar = styled.div<{ onClick?: () => void }>`
+  width: 100%;
+  height: 40px;
   position: relative;
-  cursor: pointer;
+  ${props => props.onClick && 'cursor: pointer;'};
 `
 
 const BarContent = styled.div`
   position: relative;
   z-index: 1;
-  width: 400px;
-  height: 42px;
+  width: 100%;
+  height: 33px;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
@@ -36,13 +39,14 @@ const BarContent = styled.div`
 `
 
 const CalculatedAmount = styled.div<{ overspent: boolean }>`
-  font-size: 1.5em;
+  font-size: 1.1em;
   font-weight: bold;
   ${props => props.overspent && `color: ${colors.signalRed};`}
 `
 
 const Amount = styled.div`
-  font-size: 1.2em;
+  font-size: 0.9em;
+  margin-left: 5px;
 `
 
 const BudgetName = styled.div`
@@ -51,27 +55,27 @@ const BudgetName = styled.div`
 `
 
 const IncomeBar: React.FC<BudgetGaugeProps> = ({
-  budget,
+  label,
+  max,
+  thisMax,
+  amount,
   color,
   onClick,
 }) => {
-  // const percentage = (budget.calculatedAmount / budget.amount) * 100
-  const percentage = 50 // TODO: Fix this
-
   return (
-    <Flex flexDirection='column'>
-      <Box mb='s'>
-        <BudgetName>{budget.name}</BudgetName>
+    <Flex alignItems='center'>
+      <Box width='200px'>
+        <BudgetName>{label}</BudgetName>
       </Box>
       <StyledIncomeBar onClick={onClick}>
         <BarContainer>
-          <Bar color={color} percentage={percentage} />
+          <Bar color={color} max={max} thisMax={thisMax} amount={amount} />
         </BarContainer>
         <BarContent>
-          <CalculatedAmount overspent={percentage > 100}>
-            {Math.abs(budget.calculatedAmount).toFixed(2)}€/
+          <CalculatedAmount overspent={amount > thisMax}>
+            {Math.abs(amount).toFixed(2)}€
           </CalculatedAmount>
-          <Amount>{Math.abs(50).toFixed(2)}€</Amount> {/** Fix this */}
+          <Amount>/ {Math.abs(thisMax).toFixed(2)}€</Amount>
         </BarContent>
       </StyledIncomeBar>
     </Flex>

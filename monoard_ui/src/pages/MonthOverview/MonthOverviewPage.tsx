@@ -1,23 +1,23 @@
 import React from 'react'
 import BudgetList from '../../components/BudgetList/BudgetList'
-import IncomeMonthList from '../../components/IncomeMonthList/IncomeMonthList'
+import BudgetMonthList from '../../components/BudgetMonthList/BudgetMonthList'
 import MoneyMoveList from '../../components/BudgetPlanMatrix/MoneyMoveList/MoneyMoveList'
-import MonthInputSidebar from '../../components/MonthInputSidebar/MonthInputSidebar'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import { useMoneyMoves } from '../../data/MoneyMoves/MoneyMovesHooks'
 import Box from '../../design/components/LayoutElements/Box'
 import { Headline } from '../../design/components/Typography/Typography'
-import ContentWithSidebar from '../../design/layouts/ContentWithSidebar'
+import { rootLens } from '../../data/RootLens'
+import { Month, monthArray, monthsReadableGerman } from '../../data_types/Month'
 
 const MonthOverview: React.FC = () => {
   return (
     <>
       <Box mb='l'>
-        <IncomeMonthList />
+        <BudgetMonthList incomeOrBudgets='incomeBudgets' />
       </Box>
 
       <Box mb='l'>
-        <BudgetList />
+        <BudgetMonthList incomeOrBudgets='budgets' />
       </Box>
     </>
   )
@@ -25,11 +25,18 @@ const MonthOverview: React.FC = () => {
 
 const MonthOverviewPage: React.FC = () => {
   const { moneyMoves } = useMoneyMoves()
+  const selectedMonth = rootLens.ui.selectedMonth
   
+  const monthSelection = {
+    value: selectedMonth.select(),
+    onChange: (value: Month) => selectedMonth.set(value),
+    options: monthArray.map(m => ({ value: m, label: monthsReadableGerman[m] })),
+  }
+
   return (
     <>
-      <PageHeader title='Monatsübersicht' />
-      <ContentWithSidebar content={<MonthOverview />} sidebar={MonthInputSidebar} />
+      <PageHeader title={`Monatsübersicht - ${monthsReadableGerman[selectedMonth.select()]}`} mainSelects={[monthSelection]} />
+      <MonthOverview />
 
       <Box>
         <Headline>Kontobewegungen</Headline>

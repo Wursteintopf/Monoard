@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Button } from '@mui/material'
+import { Button, InputBase, MenuItem, Select } from '@mui/material'
 import React, { Fragment, ReactNode, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Box from '../../design/components/LayoutElements/Box'
@@ -19,6 +19,15 @@ interface PageHeaderButtonProps {
   isLink?: boolean
 }
 
+interface PageHeaderSelectProps {
+  value: any // TODO: Fix this any
+  onChange: (value: any) => void // TODO: Fix this any
+  options: {
+    label: string
+    value: any // TODO: Fix this any
+  }[]
+}
+
 export interface PageHeaderMainButtonProps extends PageHeaderButtonProps {
   iconOnly?: boolean
 }
@@ -30,6 +39,7 @@ interface PageHeaderProps {
   title: string
   breadcrumbs?: BreadCrumbLink[]
   mainButtons?: PageHeaderMainButtonProps[]
+  mainSelects?: PageHeaderSelectProps[]
   contextMenu?: (PageHeaderContextMenuButtonProps | 'divider')[]
   mb?: Spacing
 }
@@ -78,10 +88,24 @@ const ContextMenu = styled.div`
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
 `
 
+const StyledInput = styled(InputBase)(() => ({
+  '& .MuiInputBase-input': {
+    border: `1px solid ${colors.lightBlue}`,
+    padding: '8px 20px',
+    fontSize: 14,
+    textTransform: 'uppercase',
+    color: colors.baseBlue,
+    '&:focus': {
+      borderColor: colors.lightBlue,
+    },
+  },
+}))
+
 const PageHeader: React.FC<PageHeaderProps> = ({
   title,
   breadcrumbs,
   mainButtons,
+  mainSelects,
   contextMenu,
   mb = 'm',
 }) => {
@@ -96,6 +120,17 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         {breadcrumbs && <Breadcrumbs breadcrumbs={breadcrumbs} title={title} />}
       </Box>
       <ButtonArea gap='s' height='40px'>
+        {mainSelects?.map((select, index) => (
+          <Select
+            key={index}
+            value={select.value}
+            onChange={event => select.onChange(event.target.value)}
+            color='primary'
+            input={<StyledInput />}
+          >
+            {select.options.map(option => <MenuItem key={option.label} value={option.value}>{option.label}</MenuItem>)}
+          </Select>
+        ))}
         {mainButtons?.map((button, index) => (
           <MenuButton key={index} button={button} variant='outlined' />
         ))}
