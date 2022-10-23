@@ -36,6 +36,7 @@ export type MonthIncomeBudget = MonthBudget
 
 export type Expense = {
   date: Date
+  month: Month
   foreignBankAccount: string
   foreignBankAccountIban: string
   purpose: string

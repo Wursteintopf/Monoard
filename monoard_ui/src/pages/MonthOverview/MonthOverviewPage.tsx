@@ -8,6 +8,7 @@ import Box from '../../design/components/LayoutElements/Box'
 import { Headline } from '../../design/components/Typography/Typography'
 import { rootLens } from '../../data/RootLens'
 import { Month, monthArray, monthsReadableGerman } from '../../data_types/Month'
+import { useActiveYear } from '../../data/Year/YearHooks'
 
 const MonthOverview: React.FC = () => {
   return (
@@ -26,6 +27,9 @@ const MonthOverview: React.FC = () => {
 const MonthOverviewPage: React.FC = () => {
   const { moneyMoves } = useMoneyMoves()
   const selectedMonth = rootLens.ui.selectedMonth
+  const activeYear = useActiveYear()
+  const month = activeYear.months[selectedMonth.select()]
+  const moves = month.expenses
   
   const monthSelection = {
     value: selectedMonth.select(),
@@ -40,7 +44,7 @@ const MonthOverviewPage: React.FC = () => {
 
       <Box>
         <Headline>Kontobewegungen</Headline>
-        <MoneyMoveList moneyMoves={moneyMoves} hideColumns={['iban']} />
+        <MoneyMoveList moneyMoves={moves} hideColumns={['iban']} />
       </Box>
     </>
   )

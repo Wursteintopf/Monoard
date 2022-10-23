@@ -104,7 +104,7 @@ const BudgetMonthList: React.FC<BudgetMonthListProps> = ({ incomeOrBudgets }) =>
   }
 
   const budgets = month[incomeOrBudgets]
-    .filter(i => filterList.includes('emptyHidden') ? i.base + i.amount !== 0 : true)
+    .filter(i => filterList.includes('emptyHidden') ? (i.base + i.amount !== 0 || i.spent !== 0) : true)
     .sort((a, b) => (b.base + b.amount) - (a.base + a.amount))
 
   const { variousColors } = colors

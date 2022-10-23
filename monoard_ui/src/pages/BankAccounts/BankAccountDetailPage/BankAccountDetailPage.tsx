@@ -16,7 +16,7 @@ const BankAccountPage: React.FC = () => {
 
   return (
     <>
-      <MoneyMoveList moneyMoves={moneyMoves} />
+      <MoneyMoveList moneyMoves={[]} /> {/** TODO: Fix this */}
     </>
   )
 }

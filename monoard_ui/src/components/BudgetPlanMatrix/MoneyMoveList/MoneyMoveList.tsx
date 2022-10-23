@@ -11,11 +11,12 @@ import colors from '../../../design/variables/colors'
 import { MoneyMoveWithFoundBudget } from '../../../data/MoneyMoves/MoneyMoveTypes'
 import EditMoneyMoveModal from '../../EditMoneyMoveModal/EditMoneyMoveModal'
 import EditIcon from '@mui/icons-material/Edit'
+import { MoneyMoveWithBudget } from '../../../data/Year/YearTypes'
 
 type MoneyMoveListColumns = 'date' | 'iban' | 'bankAccount' | 'purpose' | 'budget' | 'amount' | 'edit'
 
 interface MoneyMoveListProps {
-  moneyMoves: MoneyMoveWithFoundBudget[]
+  moneyMoves: MoneyMoveWithBudget[]
   shortened?: boolean
   linkToDetailpage?: boolean
   hideColumns?: MoneyMoveListColumns[]
@@ -101,7 +102,7 @@ const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, shortened, li
                 {!hideColumns?.includes('iban') && <TableCell>{move.foreignBankAccountIban}</TableCell>}
                 {!hideColumns?.includes('bankAccount') && <DetailCell showTooltip={move.foreignBankAccount.length > 25} detail={move.foreignBankAccount}>{clampText(move.foreignBankAccount, 25)}</DetailCell>}
                 {!hideColumns?.includes('purpose') && <DetailCell showTooltip={move.purpose.length > 25} detail={move.purpose}>{clampText(move.purpose, 25)}</DetailCell>}
-                {!hideColumns?.includes('budget') && <TableCell>{move.foundBudget}</TableCell>}
+                {!hideColumns?.includes('budget') && <TableCell>{move.budget?.name ?? ''}</TableCell>}
                 {!hideColumns?.includes('amount') && <TableCell>{move.amount.toFixed(2)} €</TableCell>}
                 {!hideColumns?.includes('edit') &&
                   <TableCell>
@@ -109,7 +110,7 @@ const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, shortened, li
                       size='small'
                       onClick={() => {
                         setIsOpenEditModal(true)
-                        setMoveToEdit(move)
+                        // setMoveToEdit(move) // TODO: Fix this
                       }}
                     >
                       <EditIcon />
