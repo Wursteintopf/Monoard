@@ -3,6 +3,7 @@ import { useSelectedMonth } from '../../data/Ui/UiHooks'
 import { useActiveYear } from '../../data/Year/YearHooks'
 import Box from '../../design/components/LayoutElements/Box'
 import { Headline } from '../../design/components/Typography/Typography'
+import { useSavedState } from '../../hooks/useSavedState'
 import { FilterBar } from '../FilterBar/FilterBar'
 import MoneyMoveList from '../MoneyMoveList/MoneyMoveList'
 
@@ -19,7 +20,7 @@ export const MoneyMoveMonthList: React.FC = () => {
   const activeYear = useActiveYear()
   const month = activeYear.months[selectedMonth.select()]
   
-  const [filterList, setFilterList] = useState<Filter[]>([])
+  const [filterList, setFilterList] = useSavedState<Filter[]>([], 'moneyMoveMonthListFilter')
   
   const moves = [...(!filterList.includes('hideExpenses') ? month.expenses : []), ...(!filterList.includes('hideIncomes') ? month.incomes : [])]
     .filter(m => !filterList.includes('hideWithBudget') || !m.budget)
