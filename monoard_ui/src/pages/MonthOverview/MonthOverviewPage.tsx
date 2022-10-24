@@ -2,12 +2,12 @@ import React from 'react'
 import BudgetMonthList from '../../components/BudgetMonthList/BudgetMonthList'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import Box from '../../design/components/LayoutElements/Box'
-import { rootLens } from '../../data/RootLens'
 import { Month, monthArray, monthsReadableGerman } from '../../data_types/Month'
 import { MoneyMoveMonthList } from '../../components/MoneyMoveMonthList/MoneyMoveMonthList'
+import { useSelectedMonth } from '../../data/Ui/UiHooks'
 
 const MonthOverviewPage: React.FC = () => {
-  const selectedMonth = rootLens.ui.selectedMonth
+  const selectedMonth = useSelectedMonth()
   
   const monthSelection = {
     value: selectedMonth.select(),

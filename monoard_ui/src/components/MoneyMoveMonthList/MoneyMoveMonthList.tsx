@@ -1,6 +1,5 @@
-import moment from 'moment'
 import React, { useState } from 'react'
-import { rootLens } from '../../data/RootLens'
+import { useSelectedMonth } from '../../data/Ui/UiHooks'
 import { useActiveYear } from '../../data/Year/YearHooks'
 import Box from '../../design/components/LayoutElements/Box'
 import { Headline } from '../../design/components/Typography/Typography'
@@ -16,7 +15,7 @@ const filterOptions: Record<Filter, string> = {
 } // TODO: In the future this should be replaced with proper localization
 
 export const MoneyMoveMonthList: React.FC = () => {
-  const selectedMonth = rootLens.ui.selectedMonth
+  const selectedMonth = useSelectedMonth()
   const activeYear = useActiveYear()
   const month = activeYear.months[selectedMonth.select()]
   

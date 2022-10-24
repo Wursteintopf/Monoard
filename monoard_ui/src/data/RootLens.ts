@@ -10,7 +10,8 @@ export type Lens<A> = {
   __path: string[]
 } & (A extends Record<string, any> ? {
   [Key in keyof A]-?: Lens<A[Key]>
-} : Record<string, never>)
+  // eslint-disable-next-line
+} : {})
 
 const lensAtPath = <A>(path: string[]): Lens<A> => {
   const getRootState = (): RootState => {

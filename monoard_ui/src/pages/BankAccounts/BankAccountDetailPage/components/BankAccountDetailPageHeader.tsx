@@ -12,13 +12,13 @@ import AddOrEditBankAccountModal from '../../../../components/BankAccountModals/
 import DeleteBankAccountModal from '../../../../components/BankAccountModals/DeleteBankAccountModal'
 import CSVUploadModal from '../../../../components/CSVUploadModal/CSVUploadModal'
 import { useBreadCrumbContext } from '../../../../components/BreadCrumbContext/BreadCrumbContext'
-import { rootLens } from '../../../../data/RootLens'
 import { Month, monthArray, monthsReadableGerman } from '../../../../data_types/Month'
+import { useSelectedMonth } from '../../../../data/Ui/UiHooks'
 
 const BankAccountDetailPageHeader: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()
   const { bankAccount } = useCurrentBankAccount()
-  const selectedMonth = rootLens.ui.selectedMonth
+  const selectedMonth = useSelectedMonth()
 
   const { breadCrumbs: additionalBreadCrumbsLinks } = useBreadCrumbContext()
 

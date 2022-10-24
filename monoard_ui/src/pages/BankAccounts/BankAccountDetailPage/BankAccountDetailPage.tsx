@@ -4,11 +4,11 @@ import MoneyMoveList from '../../../components/MoneyMoveList/MoneyMoveList'
 import BreadCrumbContext, { useBreadCrumbContext } from '../../../components/BreadCrumbContext/BreadCrumbContext'
 import { useParams } from 'react-router-dom'
 import { useMoneyMovesByBankAccount } from '../../../data/Year/YearHooks'
-import { rootLens } from '../../../data/RootLens'
+import { useSelectedMonth } from '../../../data/Ui/UiHooks'
 
 const BankAccountPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()
-  const currentMonth = rootLens.ui.selectedMonth.select()
+  const currentMonth = useSelectedMonth().select()
   const moneyMoves = useMoneyMovesByBankAccount(slug ?? '', currentMonth)
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import { useOutsideClick } from '../../design/hooks/useOutsideClick'
 import colors from '../../design/variables/colors'
 import CloseIcon from '@mui/icons-material/Close'
@@ -8,7 +8,7 @@ import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 
 interface FilterBarProps<Type extends string> {
   filterList: Type[]
-  setFilterList: Dispatch<SetStateAction<Type[]>>
+  setFilterList: (newList: Type[]) => void
   options: Record<Type, string>
 }
 

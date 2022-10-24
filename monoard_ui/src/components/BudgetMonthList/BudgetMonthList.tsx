@@ -6,11 +6,12 @@ import AddIcon from '@mui/icons-material/Add'
 import { Headline } from '../../design/components/Typography/Typography'
 import MoneyBar from '../MoneyBar/MoneyBar'
 import { useActiveYear, useGetBudgetById } from '../../data/Year/YearHooks'
-import { rootLens } from '../../data/RootLens'
 import { max } from 'd3-array'
 import AddOrEditBudgetModal from '../BudgetModals/AddOrEditBudgetModal'
 import { Budget } from '../../data_types/Budget'
 import { FilterBar } from '../FilterBar/FilterBar'
+import { useSavedState } from '../../hooks/useSavedState'
+import { useSelectedMonth } from '../../data/Ui/UiHooks'
 
 const StyledIncomeList = styled.div`
   margin-top: 20px;
@@ -36,10 +37,10 @@ interface BudgetMonthListProps {
 const BudgetMonthList: React.FC<BudgetMonthListProps> = ({ incomeOrBudgets }) => {
   const activeYear = useActiveYear()
   const getBudgetById = useGetBudgetById()
-  const selectedMonth = rootLens.ui.selectedMonth.select()
+  const selectedMonth = useSelectedMonth().select()
   const month = activeYear.months[selectedMonth]
 
-  const [filterList, setFilterList] = useState<Filter[]>(['emptyHidden'])
+  const [filterList, setFilterList] = useSavedState<Filter[]>(['emptyHidden'], `filter_${incomeOrBudgets}`)
   const [addModalOpen, setAddModalOpen] = useState(false)
   const [budgetToEdit, setBudgetToEdit] = useState<Budget>()
 
