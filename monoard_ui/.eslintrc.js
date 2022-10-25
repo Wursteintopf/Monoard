@@ -10,6 +10,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'standard',
     'standard-jsx',
+    'plugin:react-hooks/recommended',
   ],
   globals: {
     Atomics: 'readonly',

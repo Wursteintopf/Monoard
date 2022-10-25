@@ -16,7 +16,7 @@ export const userRouter = () => {
     controller,
     {
       createAccess: [Role.ADMIN],
-      readAccess: [Role.ADMIN],
+      readAccess: [Role.ADMIN, Role.UNAUTHENTICATED],
       updateAccess: [Role.ADMIN],
       deleteAccess: [Role.ADMIN],
     },
@@ -30,7 +30,7 @@ export const userRouter = () => {
     if (userRepoLength !== 0) res.send(403)
     else {
       const account = new UserModel()
-      account.setAll(req.body)
+      account.set(req.body)
 
       const { salt, hash } = generateSaltAndHash(req.body.password)
 
@@ -54,10 +54,10 @@ export const userRouter = () => {
     }
   })
 
-  userRouter.put('/create', authenticate([Role.ADMIN]), (req, res) => {
+  userRouter.put('/create', authenticate([Role.ADMIN, Role.UNAUTHENTICATED]), (req, res) => {
     const account = new UserModel()
     // TODO: Check for some parameters, account shouldnt be created without password eg
-    account.setAll(req.body)
+    account.set(req.body)
 
     const { salt, hash } = generateSaltAndHash(req.body.password)
 

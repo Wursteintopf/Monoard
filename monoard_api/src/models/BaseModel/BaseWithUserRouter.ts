@@ -34,9 +34,8 @@ export const baseWithUserRouter = <Model extends BaseWithUserModel>(
 
   if (!overrideRoutes.includes('/createOwn')) {
     router.put('/createOwn', authenticate([], accessRights.createOwn), (req, res) => {
-      console.log(req.body)
       controller.createOwn(req.body, req.session.userId as number)
-        .then(() => res.status(200).send({ status: 'OK' }))
+        .then(model => res.status(200).send(model))
         .catch(e => catchErrors(e, res))
     })
   }
@@ -45,7 +44,7 @@ export const baseWithUserRouter = <Model extends BaseWithUserModel>(
     router.put('/createMultipleOwn', authenticate([], accessRights.createOwn), (req, res) => {
       controller
         .createMultipleOwn(req.body, req.session.userId as number)
-        .then(() => res.status(200).send({ status: 'OK' }))
+        .then(models => res.status(200).send(models))
         .catch(e => catchErrors(e, res))
     })
   }
@@ -86,7 +85,7 @@ export const baseWithUserRouter = <Model extends BaseWithUserModel>(
   if (!overrideRoutes.includes('/updateOwn')) {
     router.post('/updateOwn', authenticate([], accessRights.updateOwn), checkForId, (req, res) => {
       controller.updateOwn(req.body, req.session.userId as number)
-        .then(() => res.status(200).send({ status: 'OK' }))
+        .then(model => res.status(200).send(model))
         .catch(e => catchErrors(e, res))
     })
   }
@@ -94,7 +93,7 @@ export const baseWithUserRouter = <Model extends BaseWithUserModel>(
   if (!overrideRoutes.includes('/deleteOwn')) {
     router.delete('/deleteOwn', authenticate([], accessRights.deleteOwn), checkForId, (req, res) => {
       controller.deleteOwn(req.body.id, req.session.userId as number)
-        .then(() => res.status(200).send({ status: 'OK' }))
+        .then(id => res.status(200).send({ id }))
         .catch(e => catchErrors(e, res))
     })
   }

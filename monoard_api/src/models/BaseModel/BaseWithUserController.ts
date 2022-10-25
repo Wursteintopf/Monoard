@@ -1,21 +1,20 @@
 import { EntityNotFoundError } from 'typeorm'
-import { Nullable } from '../../../data_types/UtilTypes'
 import { BaseController } from './BaseController'
 import { BaseUserModel } from './BaseUserModel'
 import { BaseWithUserModel } from './BaseWithUserModel'
 
 export class BaseWithUserController<Model extends BaseWithUserModel> extends BaseController<Model> {
-  public async createOwn (params: Nullable<Model>, userId: number) {
+  public async createOwn (params: Partial<Model>, userId: number): Promise<Model> {
     const model = new this.ModelConstructor()
-    model.setAll(params)
+    model.set(params)
     model.user = userId as unknown as BaseUserModel
-    await this.repository.save(model)
+    return await this.repository.save(model)
   }
 
-  public async createMultipleOwn (params: Nullable<Model>[], userId: number) {
+  public async createMultipleOwn (params: Partial<Model>[], userId: number): Promise<Model[]> {
     const models = params.map(param => {
       const model = new this.ModelConstructor()
-      model.setAll(param)
+      model.set(param)
       model.user = userId as unknown as BaseUserModel
       return model
     })
@@ -33,25 +32,26 @@ export class BaseWithUserController<Model extends BaseWithUserModel> extends Bas
     return models.map(model => ({ ...model, user: undefined }))
   }
   
-  public async readByOwn (params: Nullable<Model>, userId: number): Promise<Model[]> {
+  public async readByOwn (params: Partial<Model>, userId: number): Promise<Model[]> {
     const models = await this.repository.find({ where: { user: { id: userId }, ...params } as any, relations: ['user'] })
     return models.map(model => ({ ...model, user: undefined }))
   }
   
-  public async readOneByOwn (params: Nullable<Model>, userId: number): Promise<Model> {
+  public async readOneByOwn (params: Partial<Model>, userId: number): Promise<Model> {
     const model = await this.repository.findOne({ where: { user: { id: userId }, ...params } as any, relations: ['user'] })
     if (!model) throw new EntityNotFoundError(this.ModelConstructor, '')
-    return { ...model, user: undefined }
+    return new this.ModelConstructor().set({ ...model, user: undefined })
   }
   
-  public async updateOwn (params: Nullable<Model> & { id: number }, userId: number) {
+  public async updateOwn (params: Partial<Model> & { id: number }, userId: number): Promise<Model> {
     const model = await this.read(params.id)
-    model.setAll(params)
+    model.set(params)
     model.user = userId as unknown as BaseUserModel
-    await this.repository.save(model)
+    return await this.repository.save(model)
   }
   
-  public async deleteOwn (id: number, userId: number) {
+  public async deleteOwn (id: number, userId: number): Promise<number> {
     await this.repository.delete({ id, user: { id: userId } } as any)
+    return id
   }
 }

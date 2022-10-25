@@ -4,6 +4,8 @@ import BankAccountIcon from '@mui/icons-material/AccountBalance'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import SettingsIcon from '@mui/icons-material/Settings'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import AssessmentIcon from '@mui/icons-material/Assessment'
+import SavingsIcon from '@mui/icons-material/Savings'
 
 const Dashboard = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ './pages/Dashboard/DashboardPage'))
 const Konten = React.lazy(() => import(/* webpackChunkName: 'Konten' */ './pages/BankAccounts/BankAccountPage'))
@@ -11,6 +13,8 @@ const Settings = React.lazy(() => import(/* webpackChunkName: 'Settings' */ './p
 const BankAccountListPage = React.lazy(() => import(/* webpackChunkName: 'BankAccountListPage' */ './pages/BankAccounts/BankAccountListPage/BankAccountListPage')) 
 const BankAccountDetailPage = React.lazy(() => import(/* webpackChunkName: 'BankAccountDetailPage' */ './pages/BankAccounts/BankAccountDetailPage/BankAccountDetailPage'))
 const MonthOverview = React.lazy(() => import(/* webpackChunkName: 'MonthOverview Page' */ './pages/MonthOverview/MonthOverviewPage'))
+const Budget = React.lazy(() => import(/* webpackChunkName: 'Budget Page' */ './pages/Budget/BudgetPage'))
+const Report = React.lazy(() => import(/* webpackChunkName: 'Report Page' */ './pages/Report/ReportPage'))
 
 export interface PageRoute {
   path: string
@@ -29,10 +33,22 @@ export const routes: PageRoute[] = [
     icon: <DashboardIcon />,
   },
   {
+    path: 'reports',
+    title: 'Reports',
+    element: <Report />,
+    icon: <AssessmentIcon />,
+  },
+  {
     path: 'month',
     title: 'Monatsübersicht',
     element: <MonthOverview />,
     icon: <CalendarMonthIcon />,
+  },
+  {
+    path: 'budget',
+    title: 'Budgetplanung',
+    element: <Budget />,
+    icon: <SavingsIcon />,
   },
   {
     path: 'bankaccount',

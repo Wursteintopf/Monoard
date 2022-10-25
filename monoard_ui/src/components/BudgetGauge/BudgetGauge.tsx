@@ -1,15 +1,14 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import { BudgetWithCalculatedAmount } from '../../data/MoneyMoves/MoneyMoveTypes'
+import { Budget } from '../../data_types/Budget'
 import Gauge from '../../design/components/BaseVisualizations/Gauge'
 import Box from '../../design/components/LayoutElements/Box'
 import Flex from '../../design/components/LayoutElements/Flex'
-import { Bold } from '../../design/components/Typography/Typography'
 import { Color } from '../../design/types'
 import colors from '../../design/variables/colors'
 
 interface BudgetGaugeProps {
-  budget: BudgetWithCalculatedAmount
+  budget: Budget
   color: Color
   onClick: () => void
 }
@@ -55,7 +54,7 @@ const BudgetGauge: React.FC<BudgetGaugeProps> = ({
   color,
   onClick,
 }) => {
-  const percentage = (budget.calculatedAmount / budget.amount) * 100
+  const percentage = 50 // TODO: Fix this
 
   return (
     <Flex flexDirection='column'>
@@ -68,9 +67,9 @@ const BudgetGauge: React.FC<BudgetGaugeProps> = ({
         </GaugeContainer>
         <GaugeContent>
           <CalculatedAmount overspent={percentage > 100}>
-            {Math.abs(budget.calculatedAmount).toFixed(2)}€/
+            {Math.abs(1337).toFixed(2)}€/ {/** TODO: Fix this */}
           </CalculatedAmount>
-          <Amount>{Math.abs(budget.amount).toFixed(2)}€</Amount>
+          <Amount>{Math.abs(1337).toFixed(2)}€</Amount>{/** TODO: Fix this */}
         </GaugeContent>
       </StyledBudgetGauge>
     </Flex>

@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react'
-import ContentWithSidebar from '../../../design/layouts/ContentWithSidebar'
 import BankAccountDetailPageHeader from './components/BankAccountDetailPageHeader'
-import MonthInputSidebar from '../../../components/MonthInputSidebar/MonthInputSidebar'
 import MoneyMoveList from '../../../components/MoneyMoveList/MoneyMoveList'
-import { useMoneyMovesByBankAccount } from '../../../data/MoneyMoves/MoneyMovesHooks'
 import BreadCrumbContext, { useBreadCrumbContext } from '../../../components/BreadCrumbContext/BreadCrumbContext'
+import { useParams } from 'react-router-dom'
+import { useMoneyMovesByBankAccount } from '../../../data/Year/YearHooks'
+import { useSelectedMonth } from '../../../data/Ui/UiHooks'
 
 const BankAccountPage: React.FC = () => {
-  const { moneyMoves } = useMoneyMovesByBankAccount()
+  const { slug } = useParams<{ slug: string }>()
+  const currentMonth = useSelectedMonth().select()
+  const moneyMoves = useMoneyMovesByBankAccount(slug ?? '', currentMonth)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+
   const { setBreadCrumbs } = useBreadCrumbContext()
 
   useEffect(() => {
@@ -26,11 +30,7 @@ const BankAccountDetailPage: React.FC = () => {
     <>
       <BreadCrumbContext>
         <BankAccountDetailPageHeader />
-
-        <ContentWithSidebar
-          content={<BankAccountPage />}
-          sidebar={MonthInputSidebar}
-        />
+        <BankAccountPage />
       </BreadCrumbContext>
     </>
   )

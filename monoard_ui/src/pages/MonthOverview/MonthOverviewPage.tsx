@@ -1,39 +1,34 @@
 import React from 'react'
-import BudgetList from '../../components/BudgetList/BudgetList'
-import IncomeList from '../../components/IncomeList/IncomeList'
-import MoneyMoveList from '../../components/MoneyMoveList/MoneyMoveList'
-import MonthInputSidebar from '../../components/MonthInputSidebar/MonthInputSidebar'
+import BudgetMonthList from '../../components/BudgetMonthList/BudgetMonthList'
 import PageHeader from '../../components/PageHeader/PageHeader'
-import { useMoneyMoves } from '../../data/MoneyMoves/MoneyMovesHooks'
 import Box from '../../design/components/LayoutElements/Box'
-import { Headline } from '../../design/components/Typography/Typography'
-import ContentWithSidebar from '../../design/layouts/ContentWithSidebar'
-
-const MonthOverview: React.FC = () => {
-  return (
-    <>
-      <Box mb='l'>
-        <IncomeList />
-      </Box>
-
-      <Box mb='l'>
-        <BudgetList />
-      </Box>
-    </>
-  )
-}
+import { Month, monthArray, monthsReadableGerman } from '../../data_types/Month'
+import { MoneyMoveMonthList } from '../../components/MoneyMoveMonthList/MoneyMoveMonthList'
+import { useSelectedMonth } from '../../data/Ui/UiHooks'
 
 const MonthOverviewPage: React.FC = () => {
-  const { moneyMoves } = useMoneyMoves()
+  const selectedMonth = useSelectedMonth()
   
+  const monthSelection = {
+    value: selectedMonth.select(),
+    onChange: (value: Month) => selectedMonth.set(value),
+    options: monthArray.map(m => ({ value: m, label: monthsReadableGerman[m] })),
+  }
+
   return (
     <>
-      <PageHeader title='Monatsübersicht' />
-      <ContentWithSidebar content={<MonthOverview />} sidebar={MonthInputSidebar} />
+      <PageHeader title={`Monatsübersicht - ${monthsReadableGerman[selectedMonth.select()]}`} mainSelects={[monthSelection]} />
+
+      <Box mb='l'>
+        <BudgetMonthList incomeOrBudgets='incomeBudgets' />
+      </Box>
+
+      <Box mb='l'>
+        <BudgetMonthList incomeOrBudgets='budgets' />
+      </Box>
 
       <Box>
-        <Headline>Kontobewegungen</Headline>
-        <MoneyMoveList moneyMoves={moneyMoves} hideColumns={['iban']} />
+        <MoneyMoveMonthList />
       </Box>
     </>
   )

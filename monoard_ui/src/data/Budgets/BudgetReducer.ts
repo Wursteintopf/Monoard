@@ -15,6 +15,9 @@ export const budgetApi = createApi({
     readInMonth: builder.query<Budget[], SearchInMonthParams>({
       query: params => `readInMonth?search=${JSON.stringify(params)}`,
     }),
+    usedSlugs: builder.query<string[], void>({
+      query: () => 'usedSlugs',
+    }),
   }),
 })
 

@@ -5,6 +5,7 @@ import { User } from '../../../data_types/User'
 import { BankAccountModel } from '../BankAccount/BankAccountModel'
 import { MoneyMoveModel } from '../MoneyMove/MoneyMoveModel'
 import { BaseUserModel } from '../BaseModel/BaseUserModel'
+import { YearModel } from '../Year/YearModel'
 
 @Entity()
 export class UserModel extends BaseUserModel implements User {
@@ -28,4 +29,7 @@ export class UserModel extends BaseUserModel implements User {
 
   @OneToMany(() => MoneyMoveModel, (moneyMove) => moneyMove.user)
     moneyMoves: MoneyMoveModel[]
+    
+  @OneToMany(() => YearModel, (year) => year.user)
+    years: YearModel[]
 }

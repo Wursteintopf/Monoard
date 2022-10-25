@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useBankAccounts } from '../../data/BankAccounts/BankAccountHooks'
 import { bankAccountApi } from '../../data/BankAccounts/BankAccountReducer'
 import { defaultAddBankAccountForm } from '../../data/Forms/FormTypes'
 import { rootLens } from '../../data/RootLens'
+import { BankAccount } from '../../data_types/BankAccount'
 import ConditionalElement from '../../design/components/ConditionalElement/ConditionalElement'
 import Form, { FormComponentProps } from '../../design/components/FormElements/Form'
 import FormButton from '../../design/components/FormElements/FormButton'
@@ -12,6 +13,7 @@ import FormNumberInput from '../../design/components/FormElements/FormNumberInpu
 import FormSelectInput from '../../design/components/FormElements/FormSelectInput'
 import FormTextInput from '../../design/components/FormElements/FormTextInput'
 import LoadingIndicator from '../../design/components/LoadingIndicator/LoadingIndicator'
+import { slugSideEffect } from '../../utils/slugSideEffectUtil'
 
 interface AddOrEditBankAccountFormProps extends FormComponentProps {
   forwardToDetailPage?: boolean
@@ -29,8 +31,8 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
 
   const addBankAccountForm = rootLens.form.addBankAccountForm
 
-  const [addBankAccountMutation] = bankAccountApi.endpoints.addOwn.useMutation()
-  const [editBankAccountMutation] = bankAccountApi.endpoints.editOwn.useMutation()
+  const [addBankAccountMutation] = bankAccountApi.endpoints.createOwn.useMutation()
+  const [editBankAccountMutation] = bankAccountApi.endpoints.updateOwn.useMutation()
   const [loadBankAccount] = bankAccountApi.endpoints.readOneByOwn.useLazyQuery()
   const [reloadBankAccounts] = bankAccountApi.endpoints.readAllOwn.useLazyQuery()
   const { data, isLoading } = bankAccountApi.endpoints.usedSlugs.useQuery()
@@ -65,7 +67,8 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
 
   const submit = async () => {
     try {
-      const account = addBankAccountForm.get()
+      const account: BankAccount = { ...addBankAccountForm.get() }
+      account.connectedBankAccount = account.connectedBankAccount === -1 ? undefined : account.connectedBankAccount
 
       if (editMode) {
         await editBankAccountMutation(account).unwrap()
@@ -86,28 +89,9 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
     if (additionalSubmitAction) additionalSubmitAction()
   }
 
-  const getSlugNumber = useMemo(() => {
-    return (slug: string, initial: number): number => {
-      return data?.includes(slug + '_' + initial)
-        ? getSlugNumber(slug, initial + 1)
-        : initial
-    }
-  }, [])
-
-  const slugSideEffect = useMemo(() => {
-    return (value: string) => {
-      let snakeCase = value
-        .replace(/\W+/g, ' ')
-        .split(/ |\B(?=[A-Z])/)
-        .map((word) => word.toLowerCase())
-        .join('_')
-
-      if (data?.includes(snakeCase)) {
-        snakeCase += '_' + getSlugNumber(snakeCase, 1)
-      }
-
-      addBankAccountForm.slug.set(snakeCase)
-    }
+  const slugSideEffectCallback = useCallback((value: string) => {
+    const snakeCase = data ? slugSideEffect(value, data) : ''
+    addBankAccountForm.slug.set(snakeCase)
   }, [data])
 
   if (isLoading) return <LoadingIndicator />
@@ -118,7 +102,7 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
       <FormTextInput
         lens={addBankAccountForm.name}
         label='Name'
-        onChangeSideEffect={slugSideEffect}
+        onChangeSideEffect={slugSideEffectCallback}
         setDirty={addBankAccountForm.isDirty}
       />
       <FormTextInput lens={addBankAccountForm.slug} disabled label='Slug' />
@@ -128,7 +112,7 @@ const AddOrEditBankAccountForm: React.FC<AddOrEditBankAccountFormProps> = ({
       </ConditionalElement>
       <FormNumberInput
         lens={addBankAccountForm.balance}
-        label='Initialer Kontostand'
+        label='Kontostand'
       />
       <FormButton onClick={submit} label='Konto hinzufügen' disabled={!canBeSubmitted} />
     </Form>
