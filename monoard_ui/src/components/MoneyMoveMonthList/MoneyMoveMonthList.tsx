@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelectedMonth } from '../../data/Ui/UiHooks'
 import { useActiveYear } from '../../data/Year/YearHooks'
 import Box from '../../design/components/LayoutElements/Box'
@@ -25,8 +25,6 @@ export const MoneyMoveMonthList: React.FC = () => {
   const moves = [...(!filterList.includes('hideExpenses') ? month.expenses : []), ...(!filterList.includes('hideIncomes') ? month.incomes : [])]
     .filter(m => !filterList.includes('hideWithBudget') || !m.budget)
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-
-  console.log(moves)
   
   return (
     <>

@@ -54,6 +54,7 @@ export const userRouter = () => {
     }
   })
 
+  // TODO: Unauthenticated sollte keinen Zugriff auf die Create Route haben
   userRouter.put('/create', authenticate([Role.ADMIN, Role.UNAUTHENTICATED]), (req, res) => {
     const account = new UserModel()
     // TODO: Check for some parameters, account shouldnt be created without password eg
