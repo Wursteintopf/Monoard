@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { Button, Dialog, DialogContent, DialogTitle, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import React, { useState } from 'react'
-import { useActiveYear } from '../../data/Year/YearHooks'
 import Box from '../../design/components/LayoutElements/Box'
 import { Bold, Headline, SmallText } from '../../design/components/Typography/Typography'
 import AddIcon from '@mui/icons-material/Add'
@@ -13,6 +12,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import FormButton from '../../design/components/FormElements/FormButton'
 import Form from '../../design/components/FormElements/Form'
 import { Month, monthArray, monthsReadableGerman } from '../../data_types/Month'
+import { useActiveYear } from '../../data/Year/hooks/useActiveYear'
 
 export const FirstCell = styled(TableCell)`
   width: 12%;

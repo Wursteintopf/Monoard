@@ -16,9 +16,16 @@ export const yearApi = createApi({
     credentials: 'include',
   }),
   endpoints: builder => ({
-    ...getBaseCrudOwnEndpoints<Year, YearApiReducerPath>(builder),
+    ...getBaseCrudOwnEndpoints<Year, YearApiReducerPath>(builder, ['allYears']),
     readActive: builder.query<Year, void>({
       query: () => 'readActive',
+      // @ts-expect-error
+      providesTags: ['activeYear'],
+    }),
+    activateYear: builder.mutation<void, number>({
+      query: (year: number) => ({ url: 'setActive', method: 'POST', body: { year } }),
+      // @ts-expect-error
+      invalidatesTags: ['allYears', 'activeYear'],
     }),
   }),
 })

@@ -3,8 +3,8 @@ import BankAccountDetailPageHeader from './components/BankAccountDetailPageHeade
 import MoneyMoveList from '../../../components/MoneyMoveList/MoneyMoveList'
 import BreadCrumbContext, { useBreadCrumbContext } from '../../../components/BreadCrumbContext/BreadCrumbContext'
 import { useParams } from 'react-router-dom'
-import { useMoneyMovesByBankAccount } from '../../../data/Year/YearHooks'
 import { useSelectedMonth } from '../../../data/Ui/UiHooks'
+import { useMoneyMovesByBankAccount } from '../../../data/Year/hooks/useMoneyMovesByBankAccount'
 
 const BankAccountPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()

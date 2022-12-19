@@ -1,6 +1,6 @@
 import { budgetApi } from './BudgetReducer'
 import { Budget } from '../../data_types/Budget'
-import { useActiveYear } from '../Year/YearHooks'
+import { useActiveYear } from '../Year/hooks/useActiveYear'
 
 export const useSaveBudget = () => {
   const [addBudgetMutation] = budgetApi.endpoints.createOwn.useMutation()

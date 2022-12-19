@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelectedMonth } from '../../data/Ui/UiHooks'
-import { useActiveYear } from '../../data/Year/YearHooks'
+import { useActiveYear } from '../../data/Year/hooks/useActiveYear'
 import Box from '../../design/components/LayoutElements/Box'
 import { Headline } from '../../design/components/Typography/Typography'
 import { useSavedState } from '../../hooks/useSavedState'

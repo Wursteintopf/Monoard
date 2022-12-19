@@ -1,3 +1,4 @@
+import { checkForParameters } from './../../middleware/checkForParameters'
 import { appDataSource } from './../../config/typeOrmDataSource'
 import { authenticate } from '../../middleware/authenticate'
 import { catchErrors } from '../../middleware/catchErrors'
@@ -27,6 +28,15 @@ export const yearRouter = () => {
     controller
       .readActiveYear(req.session.userId as number)
       .then(activeYear => res.send(activeYear))
+      .catch(e => catchErrors(e, res))
+  })
+
+  router.post('/setActive', authenticate([], true), checkForParameters(['year']), (req, res) => {
+    const year = req.body.year
+
+    controller
+      .activateYear(year, req.session.userId as number)
+      .then(() => res.sendStatus(200))
       .catch(e => catchErrors(e, res))
   })
 

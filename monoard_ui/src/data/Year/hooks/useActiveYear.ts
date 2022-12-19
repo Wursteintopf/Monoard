@@ -1,9 +1,8 @@
-import { useCallback } from 'react'
-import { rootLens } from './../RootLens'
-import { yearApi } from './YearReducer'
-import { Month, monthArray, monthAtIndex, MonthIndices } from '../../data_types/Month'
-import { Budget } from '../../data_types/Budget'
-import { Expense, Income, MonthBudget, MonthData, MonthIncomeBudget, YearByMonths } from './YearTypes'
+import { Budget } from '../../../data_types/Budget'
+import { Month, monthArray, monthAtIndex, MonthIndices } from '../../../data_types/Month'
+import { rootLens } from '../../RootLens'
+import { yearApi } from '../YearReducer'
+import { Expense, Income, MonthBudget, MonthData, MonthIncomeBudget, YearByMonths } from '../YearTypes'
 
 const calculateSum = (array: Array<Expense | Income | MonthBudget | MonthIncomeBudget>) => array.reduce((sum, el) => (sum += el.amount), 0)
 
@@ -60,20 +59,4 @@ export const useActiveYear = (): YearByMonths => {
     incomeBudgets: activeYear.budgets.filter(b => b.isIncome),
     months,
   }
-}
-
-export const useGetBudgetById = () => {
-  const budgets = rootLens.year.activeYear.budgets.select()
-  
-  return useCallback((id: number) => {
-    return budgets.find(b => b.id === id)
-  }, [budgets])
-}
-
-export const useMoneyMovesByBankAccount = (slug: string, month: Month) => {
-  yearApi.endpoints.readActive.useQuery()
-
-  const moneyMoves = rootLens.year.activeYear.moneyMoves.select()
-
-  return moneyMoves.filter(m => m.month === month && m.bankAccount?.slug === slug)
 }

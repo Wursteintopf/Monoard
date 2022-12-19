@@ -5,7 +5,7 @@ import { CSVHeaderConfig } from '../../data_types/CSVHeaderConfig'
 
 export type DefaultFormTypes = {
   isDirty: boolean
-}
+};
 
 export const defaultForm: DefaultFormTypes = {
   isDirty: false,
@@ -14,7 +14,7 @@ export const defaultForm: DefaultFormTypes = {
 export type LoginForm = DefaultFormTypes & {
   username: string
   password: string
-}
+};
 
 export const defaultLoginForm: LoginForm = {
   username: '',
@@ -22,9 +22,10 @@ export const defaultLoginForm: LoginForm = {
   ...defaultForm,
 }
 
-export type AddBankAccountForm = DefaultFormTypes & Omit<BankAccount, 'connectedBankAccount'> & {
-  connectedBankAccount: number
-}
+export type AddBankAccountForm = DefaultFormTypes &
+  Omit<BankAccount, 'connectedBankAccount'> & {
+    connectedBankAccount: number
+  };
 
 export const defaultAddBankAccountForm: AddBankAccountForm = {
   ...EMPTY_BANKACCOUNT,
@@ -32,14 +33,14 @@ export const defaultAddBankAccountForm: AddBankAccountForm = {
   ...defaultForm,
 }
 
-export type AddBudgetForm = Budget & DefaultFormTypes
+export type AddBudgetForm = Budget & DefaultFormTypes;
 
 export const defaultAddBudgetForm: AddBudgetForm = {
   ...EMPTY_BUDGET,
   ...defaultForm,
 }
 
-export type SelectHeaderForm = CSVHeaderConfig & DefaultFormTypes
+export type SelectHeaderForm = CSVHeaderConfig & DefaultFormTypes;
 
 export const defaultSelectHeaderForm: SelectHeaderForm = {
   date: '',
@@ -53,7 +54,7 @@ export const defaultSelectHeaderForm: SelectHeaderForm = {
 
 export type YearSidebarForm = DefaultFormTypes & {
   year: number
-}
+};
 
 export const defaultYearSidebarForm: YearSidebarForm = {
   year: moment().year(),
@@ -64,12 +65,21 @@ export type FirstSetUpForm = DefaultFormTypes & {
   username: string
   password: string
   passwordAgain: string
-}
+};
 
 export const defaultFirstSetUpForm: FirstSetUpForm = {
   username: '',
   password: '',
   passwordAgain: '',
+  ...defaultForm,
+}
+
+export type AddYearForm = DefaultFormTypes & {
+  year: number
+};
+
+export const defaultAddYearForm: AddYearForm = {
+  year: moment().year(),
   ...defaultForm,
 }
 
@@ -80,6 +90,7 @@ export interface FormState {
   selectHeaderForm: SelectHeaderForm
   yearSidebarForm: YearSidebarForm
   firstSetUpForm: FirstSetUpForm
+  addYearForm: AddYearForm
 }
 
 export const defaultFormState: FormState = {
@@ -89,4 +100,5 @@ export const defaultFormState: FormState = {
   selectHeaderForm: defaultSelectHeaderForm,
   yearSidebarForm: defaultYearSidebarForm,
   firstSetUpForm: defaultFirstSetUpForm,
+  addYearForm: defaultAddYearForm,
 }

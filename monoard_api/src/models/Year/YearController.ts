@@ -28,7 +28,7 @@ export class YearController extends BaseWithUserController<YearModel> {
   public async activateYear (year: number, userId: number): Promise<void> {
     const yearModel = await this.readOneByOwn({ year }, userId)
     if (!yearModel) throw new EntityNotFoundError(YearModel, '')
-    this.deactivateYear(userId)
+    await this.deactivateYear(userId)
     this.repository.update({ year, user: { id: userId } }, { active: true })
   }
 }
