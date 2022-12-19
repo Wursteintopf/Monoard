@@ -1,3 +1,4 @@
+import { appDataSource } from './../../config/typeOrmDataSource'
 import { BankAccountController } from './BankAccountController'
 import { authenticate } from './../../middleware/authenticate'
 import { BankAccountModel } from './BankAccountModel'
@@ -5,7 +6,7 @@ import { baseWithUserRouter } from './../BaseModel/BaseWithUserRouter'
 import { catchErrors } from '../../middleware/catchErrors'
 
 export const bankAccountRouter = () => {
-  const controller = new BankAccountController(BankAccountModel)
+  const controller = new BankAccountController(BankAccountModel, appDataSource)
 
   const router = baseWithUserRouter(
     controller,

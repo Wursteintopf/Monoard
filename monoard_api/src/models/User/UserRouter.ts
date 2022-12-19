@@ -2,15 +2,15 @@ import { checkForParameters } from '../../middleware/checkForParameters'
 import { catchErrors } from '../../middleware/catchErrors'
 import { appDataSource } from '../../config/typeOrmDataSource'
 import { authenticate } from '../../middleware/authenticate'
-import { baseRouter } from '../BaseModel/BaseRouter'
 import { Role } from '../../../data_types/Role'
 import { UserModel } from './UserModel'
 import { comparePasswords, generateSaltAndHash } from './UserUtility'
 import { UserController } from './UserController'
+import { baseRouter } from '@wursteintopf/crudpress'
 
 export const userRouter = () => {
   const repository = appDataSource.getRepository(UserModel)
-  const controller = new UserController(UserModel)
+  const controller = new UserController(UserModel, appDataSource)
 
   const userRouter = baseRouter(
     controller,
@@ -23,6 +23,7 @@ export const userRouter = () => {
     [
       '/create',
     ],
+    authenticate,
   )
 
   userRouter.put('/firstSetUp', async (req, res) => {

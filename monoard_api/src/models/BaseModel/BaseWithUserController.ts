@@ -1,5 +1,5 @@
+import { BaseController } from '@wursteintopf/crudpress'
 import { EntityNotFoundError } from 'typeorm'
-import { BaseController } from './BaseController'
 import { BaseUserModel } from './BaseUserModel'
 import { BaseWithUserModel } from './BaseWithUserModel'
 

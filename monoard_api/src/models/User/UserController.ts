@@ -1,4 +1,4 @@
-import { BaseController } from '../BaseModel/BaseController'
+import { BaseController } from '@wursteintopf/crudpress'
 import { UserModel } from './UserModel'
 
 export class UserController extends BaseController<UserModel> {

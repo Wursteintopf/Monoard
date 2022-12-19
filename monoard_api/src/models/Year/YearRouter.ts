@@ -1,3 +1,4 @@
+import { appDataSource } from './../../config/typeOrmDataSource'
 import { authenticate } from '../../middleware/authenticate'
 import { catchErrors } from '../../middleware/catchErrors'
 import { baseWithUserRouter } from '../BaseModel/BaseWithUserRouter'
@@ -5,7 +6,7 @@ import { YearController } from './YearController'
 import { YearModel } from './YearModel'
 
 export const yearRouter = () => {
-  const controller = new YearController(YearModel)
+  const controller = new YearController(YearModel, appDataSource)
 
   const router = baseWithUserRouter(
     controller,

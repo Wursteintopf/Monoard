@@ -22,6 +22,7 @@ services:
       - ./monoard_api/package.json:/monoard_api/package.json
       - ./monoard_api/tsconfig.json:/monoard_api/tsconfig.json
       - ./monoard_api/yarn.lock:/monoard_api/yarn.lock
+      - ./libraries:/libraries
     depends_on:
       - database
 

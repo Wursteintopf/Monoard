@@ -1,11 +1,12 @@
+import { appDataSource } from './../../config/typeOrmDataSource'
 import { BaseWithUserController } from './BaseWithUserController'
 import { authenticate } from './../../middleware/authenticate'
 import bodyParser from 'body-parser'
 import { catchErrors } from '../../middleware/catchErrors'
 import { BaseWithUserModel } from './BaseWithUserModel'
-import { AccessRights, baseRouter } from './BaseRouter'
 import { checkForId } from '../../middleware/checkForId'
 import { Role } from '../../../data_types/Role'
+import { AccessRights, baseRouter } from '@wursteintopf/crudpress'
 
 declare module 'express-session' {
   export interface SessionData {
@@ -28,7 +29,7 @@ export const baseWithUserRouter = <Model extends BaseWithUserModel>(
   accessRights: AccessWithUserRights,
   overrideRoutes: string[] = [],
 ) => {
-  const router = baseRouter<Model>(new BaseWithUserController(ModelConstructor), accessRights, overrideRoutes)
+  const router = baseRouter<Model>(new BaseWithUserController(ModelConstructor, appDataSource), accessRights, overrideRoutes, authenticate)
 
   router.use(bodyParser.json())
 

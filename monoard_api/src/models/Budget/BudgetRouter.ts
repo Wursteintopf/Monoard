@@ -1,3 +1,4 @@
+import { appDataSource } from './../../config/typeOrmDataSource'
 import { authenticate } from '../../middleware/authenticate'
 import { catchErrors } from '../../middleware/catchErrors'
 import { baseWithUserRouter } from './../BaseModel/BaseWithUserRouter'
@@ -5,7 +6,7 @@ import { BudgetController } from './BudgetController'
 import { BudgetModel } from './BudgetModel'
 
 export const budgetRouter = () => {
-  const controller = new BudgetController(BudgetModel)
+  const controller = new BudgetController(BudgetModel, appDataSource)
 
   const router = baseWithUserRouter(
     controller,

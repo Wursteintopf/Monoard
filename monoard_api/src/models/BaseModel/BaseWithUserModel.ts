@@ -1,5 +1,5 @@
+import { BaseModel } from '@wursteintopf/crudpress'
 import { Entity } from 'typeorm'
-import { BaseModel } from './BaseModel'
 import { BaseUserModel } from './BaseUserModel'
 
 @Entity()

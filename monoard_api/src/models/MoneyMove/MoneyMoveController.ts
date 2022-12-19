@@ -1,3 +1,4 @@
+import { appDataSource } from './../../config/typeOrmDataSource'
 import { UserModel } from './../User/UserModel'
 import { MoneyMoveModel } from './MoneyMoveModel'
 import { BaseWithUserController } from './../BaseModel/BaseWithUserController'
@@ -15,8 +16,8 @@ export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> 
     userId: number,
   ): Promise<MoneyMoveModel[]> {
     const modelArray: MoneyMoveModel[] = []
-    const bankAccountController = new BankAccountController(BankAccountModel)
-    const yearController = new YearController(YearModel)
+    const bankAccountController = new BankAccountController(BankAccountModel, appDataSource)
+    const yearController = new YearController(YearModel, appDataSource)
 
     const ibans = await bankAccountController.readAllIBans(userId)
     const activeYear = await yearController.readActiveYear(userId)

@@ -1,6 +1,6 @@
+import { BaseModel } from '@wursteintopf/crudpress'
 import { Column, Entity, OneToOne } from 'typeorm'
 import { BankAccountModel } from '../BankAccount/BankAccountModel'
-import { BaseModel } from '../BaseModel/BaseModel'
 import { CSVHeaderConfig } from './../../../data_types/CSVHeaderConfig'
 
 @Entity()
