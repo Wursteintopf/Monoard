@@ -3,12 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { useCurrentBankAccount } from '../../../data/BankAccounts/BankAccountHooks'
 import { moneyMoveApi } from '../../../data/MoneyMoves/MoneyMovesReducer'
 import { rootLens } from '../../../data/RootLens'
-import { MoneyMove } from '../../../data_types/MoneyMove'
 import Box from '../../../design/components/LayoutElements/Box'
 import Flex from '../../../design/components/LayoutElements/Flex'
 import { StepProp } from '../CSVUploadModal'
 import moment from 'moment'
-import { monthArray } from '../../../data_types/Month'
+import { MoneyMove, monthArray } from '@wursteintopf/monoard_data_models'
 
 const CSVUploadStep3: React.FC<StepProp & { onClose: () => void }> = ({ setStep, onClose }) => {
   const parsedCsv = rootLens.csv.parsedData.select()

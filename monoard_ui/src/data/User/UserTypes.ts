@@ -1,5 +1,4 @@
-import { User } from '../../data_types/User'
-import { Role } from '../../data_types/Role'
+import { Role, User } from '@wursteintopf/monoard_data_models'
 
 export interface UserState {
   self: User

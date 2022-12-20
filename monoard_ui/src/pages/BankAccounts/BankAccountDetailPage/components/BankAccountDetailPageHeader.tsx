@@ -12,8 +12,8 @@ import AddOrEditBankAccountModal from '../../../../components/BankAccountModals/
 import DeleteBankAccountModal from '../../../../components/BankAccountModals/DeleteBankAccountModal'
 import CSVUploadModal from '../../../../components/CSVUploadModal/CSVUploadModal'
 import { useBreadCrumbContext } from '../../../../components/BreadCrumbContext/BreadCrumbContext'
-import { Month, monthArray, monthsReadableGerman } from '../../../../data_types/Month'
 import { useSelectedMonth } from '../../../../data/Ui/UiHooks'
+import { Month, monthArray, monthsReadableGerman } from '@wursteintopf/monoard_data_models'
 
 const BankAccountDetailPageHeader: React.FC = () => {
   const { slug } = useParams<{ slug: string }>()

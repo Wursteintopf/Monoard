@@ -1,4 +1,4 @@
-import { Month, monthAtIndex, MonthIndices } from '../../data_types/Month'
+import { Month, monthAtIndex, MonthIndices } from '@wursteintopf/monoard_data_models'
 import moment from 'moment'
 
 export type UiState = {

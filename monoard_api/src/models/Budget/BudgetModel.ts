@@ -1,9 +1,9 @@
 import { UserModel } from '../User/UserModel'
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
-import { Budget } from '../../../data_types/Budget'
 import { BaseWithUserModel } from '../BaseModel/BaseWithUserModel'
 import { MoneyMoveModel } from '../MoneyMove/MoneyMoveModel'
 import { YearModel } from '../Year/YearModel'
+import { Budget } from '@wursteintopf/monoard_data_models'
 
 @Entity()
 export class BudgetModel extends BaseWithUserModel implements Budget {

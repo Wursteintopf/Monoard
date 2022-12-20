@@ -1,11 +1,10 @@
-import { Role } from '../../../data_types/Role'
 import { Entity, Column, OneToMany } from 'typeorm'
 import { BudgetModel } from '../Budget/BudgetModel'
-import { User } from '../../../data_types/User'
 import { BankAccountModel } from '../BankAccount/BankAccountModel'
 import { MoneyMoveModel } from '../MoneyMove/MoneyMoveModel'
 import { BaseUserModel } from '../BaseModel/BaseUserModel'
 import { YearModel } from '../Year/YearModel'
+import { Role, User } from '@wursteintopf/monoard_data_models'
 
 @Entity()
 export class UserModel extends BaseUserModel implements User {

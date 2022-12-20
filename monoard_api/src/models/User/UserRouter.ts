@@ -2,11 +2,11 @@ import { checkForParameters } from '../../middleware/checkForParameters'
 import { catchErrors } from '../../middleware/catchErrors'
 import { appDataSource } from '../../config/typeOrmDataSource'
 import { authenticate } from '../../middleware/authenticate'
-import { Role } from '../../../data_types/Role'
 import { UserModel } from './UserModel'
 import { comparePasswords, generateSaltAndHash } from './UserUtility'
 import { UserController } from './UserController'
 import { baseRouter } from '@wursteintopf/crudpress'
+import { Role } from '@wursteintopf/monoard_data_models'
 
 export const userRouter = () => {
   const repository = appDataSource.getRepository(UserModel)

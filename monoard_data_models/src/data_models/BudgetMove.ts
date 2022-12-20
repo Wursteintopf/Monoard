@@ -3,7 +3,7 @@ import { Budget } from './Budget'
 import { Month } from './Month'
 import { User } from './User'
 
-export interface BudgetCategory extends Base {
+export interface BudgetMove extends Base {
   amount: number
   month: Month
   from?: Budget | number

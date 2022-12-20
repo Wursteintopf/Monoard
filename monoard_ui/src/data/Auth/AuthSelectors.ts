@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { createSelector } from '@reduxjs/toolkit'
-import { Role } from '../../data_types/Role'
 import { RootState } from './../RootReducer'
+import { Role } from '@wursteintopf/monoard_data_models'
 
 const authState = (state: RootState) => state.auth
 

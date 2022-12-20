@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle } from '@mui/material'
+import { Budget } from '@wursteintopf/monoard_data_models'
 import React from 'react'
-import { Budget } from '../../data_types/Budget'
 import { ModalProps } from '../../types/ModalProps'
 import AddOrEditBudgetForm from '../Forms/AddOrEditBudgetForm'
 

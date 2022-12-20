@@ -7,12 +7,12 @@ import { Headline } from '../../design/components/Typography/Typography'
 import MoneyBar from '../MoneyBar/MoneyBar'
 import { max } from 'd3-array'
 import AddOrEditBudgetModal from '../BudgetModals/AddOrEditBudgetModal'
-import { Budget } from '../../data_types/Budget'
 import { FilterBar } from '../FilterBar/FilterBar'
 import { useSavedState } from '../../hooks/useSavedState'
 import { useSelectedMonth } from '../../data/Ui/UiHooks'
 import { useActiveYear } from '../../data/Year/hooks/useActiveYear'
 import { useGetBudgetById } from '../../data/Year/hooks/useGetBudgetById'
+import { Budget } from '@wursteintopf/monoard_data_models'
 
 const StyledIncomeList = styled.div`
   margin-top: 20px;

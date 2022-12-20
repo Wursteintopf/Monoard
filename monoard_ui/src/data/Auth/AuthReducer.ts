@@ -4,12 +4,12 @@ import { defaultAuthState } from './AuthTypes'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { LoginForm } from '../Forms/FormTypes'
 import { createSlice } from '@reduxjs/toolkit'
-import { User } from '../../data_types/User'
+import { User } from '@wursteintopf/monoard_data_models'
 
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL + '/user/',
+    baseUrl: import.meta.env.VITE_API_URL + '/user/',
     credentials: 'include',
   }),
   endpoints: builder => ({

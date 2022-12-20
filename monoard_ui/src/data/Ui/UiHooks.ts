@@ -1,6 +1,6 @@
 import { Lens, rootLens } from './../RootLens'
 import { useEffect } from 'react'
-import { Month } from '../../data_types/Month'
+import { Month } from '@wursteintopf/monoard_data_models'
 
 export const useSelectedMonth = (): Lens<Month> => {
   const selectedMonth = rootLens.ui.selectedMonth

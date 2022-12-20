@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
+import { Budget } from '@wursteintopf/monoard_data_models'
 import React from 'react'
-import { Budget } from '../../data_types/Budget'
 import Gauge from '../../design/components/BaseVisualizations/Gauge'
 import Box from '../../design/components/LayoutElements/Box'
 import Flex from '../../design/components/LayoutElements/Flex'

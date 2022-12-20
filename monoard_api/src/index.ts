@@ -1,7 +1,6 @@
 import { moneyMoveRouter } from './models/MoneyMove/MoneyMoveRouter'
 import { budgetRouter } from './models/Budget/BudgetRouter'
 import { userRouter } from './models/User/UserRouter'
-import { Role } from '../data_types/Role'
 import { appDataSource } from './config/typeOrmDataSource'
 import { corsConfig } from './config/corsConfig'
 import express from 'express'
@@ -14,6 +13,7 @@ import { connection } from './config/databaseConnection'
 import { bankAccountRouter } from './models/BankAccount/BankAccountRouter'
 import { yearRouter } from './models/Year/YearRouter'
 import Database from 'better-sqlite3'
+import { Role } from '@wursteintopf/monoard_data_models'
 
 declare module 'express-session' {
   export interface SessionData {

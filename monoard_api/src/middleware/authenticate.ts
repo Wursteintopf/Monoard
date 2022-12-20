@@ -1,5 +1,5 @@
+import { Role } from '@wursteintopf/monoard_data_models'
 import { NextFunction, Request, Response } from 'express'
-import { Role } from '../../data_types/Role'
 
 export const authenticate = (accessRights: Role[], own?: boolean) => {
   return (req: Request, res: Response, next: NextFunction) => {

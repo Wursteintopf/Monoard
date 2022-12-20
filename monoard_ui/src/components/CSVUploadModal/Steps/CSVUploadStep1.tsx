@@ -9,7 +9,7 @@ import LoadingIndicator from '../../../design/components/LoadingIndicator/Loadin
 import { rootLens } from '../../../data/RootLens'
 import { StepProp } from '../CSVUploadModal'
 import { useCurrentBankAccount } from '../../../data/BankAccounts/BankAccountHooks'
-import { CSVHeaderConfig } from '../../../data_types/CSVHeaderConfig'
+import { CSVHeaderConfig } from '@wursteintopf/monoard_data_models'
 
 const StyledUploadArea = styled.div`
   border: 1px dashed ${colors.darkGrey};

@@ -1,12 +1,12 @@
 import { bankAccountReducerPath, BankAccountReducerPath } from './BankAccountTypes'
 import { getBaseCrudOwnEndpoints } from './../Base/getBaseCrudOwnEndpoints'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { BankAccount } from '../../data_types/BankAccount'
+import { BankAccount } from '@wursteintopf/monoard_data_models'
 
 export const bankAccountApi = createApi({
   reducerPath: bankAccountReducerPath,
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL + '/bankAccount/',
+    baseUrl: import.meta.env.VITE_API_URL + '/bankAccount/',
     credentials: 'include',
   }),
   endpoints: builder => ({

@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { authApi } from '../../data/Auth/AuthReducer'
 import { rootLens } from '../../data/RootLens'
-import { Role } from '../../data_types/Role'
 import BackgroundGradient from '../../design/components/BackgroundGradient/BackgroundGradient'
 import Card from '../../design/components/Card/Card'
 import Center from '../../design/components/LayoutElements/Center'
 import LoadingIndicator from '../../design/components/LoadingIndicator/LoadingIndicator'
 import LoginForm from '../../components/Forms/LoginForm'
 import FirstSetUpForm from '../../components/Forms/FirstSetUpForm'
+import { Role } from '@wursteintopf/monoard_data_models'
 
 const Login: React.FC = () => {
   const navigate = useNavigate()

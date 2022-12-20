@@ -5,8 +5,8 @@ import bodyParser from 'body-parser'
 import { catchErrors } from '../../middleware/catchErrors'
 import { BaseWithUserModel } from './BaseWithUserModel'
 import { checkForId } from '../../middleware/checkForId'
-import { Role } from '../../../data_types/Role'
 import { AccessRights, baseRouter } from '@wursteintopf/crudpress'
+import { Role } from '@wursteintopf/monoard_data_models'
 
 declare module 'express-session' {
   export interface SessionData {

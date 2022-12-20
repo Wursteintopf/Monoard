@@ -1,5 +1,4 @@
-import { Role } from '../../data_types/Role'
-import { User } from './../../data_types/User'
+import { Role, User } from '@wursteintopf/monoard_data_models'
 import { authApiReducer } from './AuthReducer'
 
 export type AuthApiState = ReturnType<typeof authApiReducer>

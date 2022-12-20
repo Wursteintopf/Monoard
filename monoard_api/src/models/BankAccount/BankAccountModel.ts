@@ -1,9 +1,9 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm'
-import { BankAccount } from '../../../data_types/BankAccount'
 import { BaseWithUserModel } from '../BaseModel/BaseWithUserModel'
 import { MoneyMoveModel } from '../MoneyMove/MoneyMoveModel'
 import { UserModel } from '../User/UserModel'
 import { CSVHeaderConfigModel } from '../CSVHeaderConfig/CSVHeaderConfigModel'
+import { BankAccount } from '@wursteintopf/monoard_data_models'
 
 @Entity()
 export class BankAccountModel extends BaseWithUserModel implements BankAccount {

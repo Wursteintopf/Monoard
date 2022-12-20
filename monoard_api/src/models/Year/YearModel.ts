@@ -1,6 +1,6 @@
 import { BaseModel } from '@wursteintopf/crudpress'
+import { Year } from '@wursteintopf/monoard_data_models'
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
-import { Year } from '../../../data_types/Year'
 import { BudgetModel } from '../Budget/BudgetModel'
 import { MoneyMoveModel } from '../MoneyMove/MoneyMoveModel'
 import { UserModel } from '../User/UserModel'

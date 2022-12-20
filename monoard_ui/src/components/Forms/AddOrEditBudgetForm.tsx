@@ -2,12 +2,6 @@ import React, { useCallback, useEffect } from 'react'
 import { useSaveBudget } from '../../data/Budgets/BudgetHooks'
 import { defaultAddBudgetForm } from '../../data/Forms/FormTypes'
 import { rootLens } from '../../data/RootLens'
-import { Budget } from '../../data_types/Budget'
-import {
-  Month,
-  monthArray,
-  monthsReadableGerman,
-} from '../../data_types/Month'
 import Form, {
   FormComponentProps,
 } from '../../design/components/FormElements/Form'
@@ -26,6 +20,7 @@ import Box from '../../design/components/LayoutElements/Box'
 import { budgetApi } from '../../data/Budgets/BudgetReducer'
 import LoadingIndicator from '../../design/components/LoadingIndicator/LoadingIndicator'
 import { slugSideEffect } from '../../utils/slugSideEffectUtil'
+import { Budget, Month, monthArray, monthsReadableGerman } from '@wursteintopf/monoard_data_models'
 
 interface AddOrEditBankAccountFormProps extends FormComponentProps {
   budgetToEdit?: Budget

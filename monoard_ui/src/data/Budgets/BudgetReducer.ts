@@ -1,13 +1,13 @@
 import { BudgetApiReducerPath, budgetApiReducerPath, budgetReducerPath, defaultBudgetState, SearchInMonthParams } from './BudgetTypes'
 import { getBaseCrudOwnEndpoints } from './../Base/getBaseCrudOwnEndpoints'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Budget } from '../../data_types/Budget'
 import { createSlice } from '@reduxjs/toolkit'
+import { Budget } from '@wursteintopf/monoard_data_models'
 
 export const budgetApi = createApi({
   reducerPath: budgetApiReducerPath,
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL + '/budget/',
+    baseUrl: import.meta.env.VITE_API_URL + '/budget/',
     credentials: 'include',
   }),
   endpoints: builder => ({

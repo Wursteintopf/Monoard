@@ -23,6 +23,7 @@ services:
       - ./monoard_api/tsconfig.json:/monoard_api/tsconfig.json
       - ./monoard_api/yarn.lock:/monoard_api/yarn.lock
       - ./libraries:/libraries
+      - ./monoard_data_models:/monoard_data_models
     depends_on:
       - database
 
@@ -33,9 +34,5 @@ services:
     restart: unless-stopped
     env_file: .env
     volumes:
-      - ./monoard_ui/src:/monoard_ui/src
-      - ./monoard_ui/public:/monoard_ui/public
-      - ./monoard_ui/package.json:/monoard_ui/package.json
-      - ./monoard_ui/tsconfig.json:/monoard_ui/tsconfig.json
-      - ./monoard_ui/yarn.lock:/monoard_ui/yarn.lock
-      - ./monoard_ui/.eslintrc.js:/monoard_ui/.eslintrc.js
+      - ./monoard_ui:/monoard_ui
+      - ./monoard_data_models:/monoard_data_models

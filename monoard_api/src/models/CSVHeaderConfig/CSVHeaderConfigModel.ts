@@ -1,7 +1,7 @@
 import { BaseModel } from '@wursteintopf/crudpress'
+import { CSVHeaderConfig } from '@wursteintopf/monoard_data_models'
 import { Column, Entity, OneToOne } from 'typeorm'
 import { BankAccountModel } from '../BankAccount/BankAccountModel'
-import { CSVHeaderConfig } from './../../../data_types/CSVHeaderConfig'
 
 @Entity()
 export class CSVHeaderConfigModel extends BaseModel implements CSVHeaderConfig {

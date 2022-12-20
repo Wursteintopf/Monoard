@@ -1,5 +1,4 @@
-import { Budget } from '../../../data_types/Budget'
-import { Month, monthArray, monthAtIndex, MonthIndices } from '../../../data_types/Month'
+import { Budget, Month, monthArray, monthAtIndex, MonthIndices } from '@wursteintopf/monoard_data_models'
 import { rootLens } from '../../RootLens'
 import { yearApi } from '../YearReducer'
 import { Expense, Income, MonthBudget, MonthData, MonthIncomeBudget, YearByMonths } from '../YearTypes'

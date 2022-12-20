@@ -1,7 +1,5 @@
+import { BankAccount, Budget, CSVHeaderConfig, EMPTY_BANKACCOUNT, EMPTY_BUDGET } from '@wursteintopf/monoard_data_models'
 import moment from 'moment'
-import { BankAccount, EMPTY_BANKACCOUNT } from '../../data_types/BankAccount'
-import { Budget, EMPTY_BUDGET } from '../../data_types/Budget'
-import { CSVHeaderConfig } from '../../data_types/CSVHeaderConfig'
 
 export type DefaultFormTypes = {
   isDirty: boolean

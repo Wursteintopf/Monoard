@@ -3,16 +3,13 @@ import { budgetApi } from './../Budgets/BudgetReducer'
 import { getBaseCrudOwnEndpoints } from './../Base/getBaseCrudOwnEndpoints'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { defaultYearState, MoneyMoveWithSubs, yearApiReducerPath, YearApiReducerPath, yearReducerPath } from './YearTypes'
-import { Year } from '../../data_types/Year'
 import { createSlice } from '@reduxjs/toolkit'
-import { Budget } from '../../data_types/Budget'
-import { MoneyMove } from '../../data_types/MoneyMove'
-import { BankAccount } from '../../data_types/BankAccount'
+import { BankAccount, Budget, MoneyMove, Year } from '@wursteintopf/monoard_data_models'
 
 export const yearApi = createApi({
   reducerPath: yearApiReducerPath,
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL + '/year/',
+    baseUrl: import.meta.env.VITE_API_URL + '/year/',
     credentials: 'include',
   }),
   endpoints: builder => ({

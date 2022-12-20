@@ -6,6 +6,7 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import AssessmentIcon from '@mui/icons-material/Assessment'
 import SavingsIcon from '@mui/icons-material/Savings'
+import MenuBookIcon from '@mui/icons-material/MenuBook'
 
 const Dashboard = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ './pages/Dashboard/DashboardPage'))
 const Konten = React.lazy(() => import(/* webpackChunkName: 'Konten' */ './pages/BankAccounts/BankAccountPage'))
@@ -15,6 +16,7 @@ const BankAccountDetailPage = React.lazy(() => import(/* webpackChunkName: 'Bank
 const MonthOverview = React.lazy(() => import(/* webpackChunkName: 'MonthOverview Page' */ './pages/MonthOverview/MonthOverviewPage'))
 const Budget = React.lazy(() => import(/* webpackChunkName: 'Budget Page' */ './pages/Budget/BudgetPage'))
 const Report = React.lazy(() => import(/* webpackChunkName: 'Report Page' */ './pages/Report/ReportPage'))
+const EurHelper = React.lazy(() => import(/* webpackChunkName: 'EÜR Helper' */ './pages/EurHelper/EurHelper'))
 
 export interface PageRoute {
   path: string
@@ -43,6 +45,12 @@ export const routes: PageRoute[] = [
     title: 'Monatsübersicht',
     element: <MonthOverview />,
     icon: <CalendarMonthIcon />,
+  },
+  {
+    path: 'eurhelper',
+    title: 'EÜR Helper',
+    element: <EurHelper />,
+    icon: <MenuBookIcon />,
   },
   {
     path: 'budget',

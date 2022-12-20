@@ -1,4 +1,4 @@
-import { Month } from '../../../data_types/Month'
+import { Month } from '@wursteintopf/monoard_data_models'
 import { rootLens } from '../../RootLens'
 import { yearApi } from '../YearReducer'
 

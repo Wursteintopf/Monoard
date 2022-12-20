@@ -8,7 +8,7 @@ import { BankAccountModel } from '../BankAccount/BankAccountModel'
 import moment from 'moment'
 import { YearController } from '../Year/YearController'
 import { YearModel } from '../Year/YearModel'
-import { monthArray } from '../../../data_types/Month'
+import { monthArray } from '@wursteintopf/monoard_data_models'
 
 export class MoneyMoveController extends BaseWithUserController<MoneyMoveModel> {
   public async createMultipleOwn (

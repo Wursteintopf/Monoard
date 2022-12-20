@@ -2,9 +2,9 @@ import React from 'react'
 import BudgetMonthList from '../../components/BudgetMonthList/BudgetMonthList'
 import PageHeader from '../../components/PageHeader/PageHeader'
 import Box from '../../design/components/LayoutElements/Box'
-import { Month, monthArray, monthsReadableGerman } from '../../data_types/Month'
 import { MoneyMoveMonthList } from '../../components/MoneyMoveMonthList/MoneyMoveMonthList'
 import { useSelectedMonth } from '../../data/Ui/UiHooks'
+import { Month, monthArray, monthsReadableGerman } from '@wursteintopf/monoard_data_models'
 
 const MonthOverviewPage: React.FC = () => {
   const selectedMonth = useSelectedMonth()

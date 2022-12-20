@@ -1,10 +1,6 @@
-import { MoneyMove } from './../../data_types/MoneyMove'
 import { yearApiReducer } from './YearReducer'
 import { getDefaultApiState } from '../Base/getDefaultApiState'
-import { EMPTY_YEAR, Year } from '../../data_types/Year'
-import { Budget } from '../../data_types/Budget'
-import { Month } from '../../data_types/Month'
-import { BankAccount } from '../../data_types/BankAccount'
+import { BankAccount, Budget, EMPTY_YEAR, MoneyMove, Month, Year } from '@wursteintopf/monoard_data_models'
 
 export type YearReducerPath = 'year'
 export const yearReducerPath: YearReducerPath = 'year'

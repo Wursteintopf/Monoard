@@ -1,6 +1,6 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, FetchBaseQueryMeta } from '@reduxjs/toolkit/dist/query'
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions'
-import { Base } from '../../data_types/Base'
+import { Base } from '@wursteintopf/monoard_data_models'
 
 export const getBaseCrudOwnEndpoints = <Type extends Base, ReducerPath extends string>(
   builder: EndpointBuilder<BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, Record<string, unknown>, FetchBaseQueryMeta>, any, ReducerPath>,

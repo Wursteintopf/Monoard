@@ -1,4 +1,4 @@
-import { Budget } from '../../data_types/Budget'
+import { Budget } from '@wursteintopf/monoard_data_models'
 import { getDefaultApiState } from '../Base/getDefaultApiState'
 import { budgetApiReducer } from './BudgetReducer'
 

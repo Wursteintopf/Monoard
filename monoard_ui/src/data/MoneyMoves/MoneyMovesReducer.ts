@@ -1,14 +1,14 @@
 import { MoneyMoveApiReducerPath, moneyMoveApiReducerPath } from './MoneyMoveTypes'
-import { MoneyMove } from './../../data_types/MoneyMove'
 import { getBaseCrudOwnEndpoints } from './../Base/getBaseCrudOwnEndpoints'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { MoneyMove } from '@wursteintopf/monoard_data_models'
 
 export const tagTypes = ['moneyMoves']
 
 export const moneyMoveApi = createApi({
   reducerPath: moneyMoveApiReducerPath,
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL + '/moneyMove/',
+    baseUrl: import.meta.env.VITE_API_URL + '/moneyMove/',
     credentials: 'include',
   }),
   tagTypes,

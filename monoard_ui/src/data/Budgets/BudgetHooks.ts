@@ -1,6 +1,6 @@
 import { budgetApi } from './BudgetReducer'
-import { Budget } from '../../data_types/Budget'
 import { useActiveYear } from '../Year/hooks/useActiveYear'
+import { Budget } from '@wursteintopf/monoard_data_models'
 
 export const useSaveBudget = () => {
   const [addBudgetMutation] = budgetApi.endpoints.createOwn.useMutation()

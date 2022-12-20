@@ -5,14 +5,13 @@ import Box from '../../design/components/LayoutElements/Box'
 import { Bold, Headline, SmallText } from '../../design/components/Typography/Typography'
 import AddIcon from '@mui/icons-material/Add'
 import AddOrEditBudgetModal from '../BudgetModals/AddOrEditBudgetModal'
-import { Budget } from '../../data_types/Budget'
 import { useDeleteBudget } from '../../data/Budgets/BudgetHooks'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import FormButton from '../../design/components/FormElements/FormButton'
 import Form from '../../design/components/FormElements/Form'
-import { Month, monthArray, monthsReadableGerman } from '../../data_types/Month'
 import { useActiveYear } from '../../data/Year/hooks/useActiveYear'
+import { Budget, Month, monthArray, monthsReadableGerman } from '@wursteintopf/monoard_data_models'
 
 export const FirstCell = styled(TableCell)`
   width: 12%;
