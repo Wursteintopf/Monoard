@@ -13,9 +13,10 @@ type MoneyMoveListColumns = 'date' | 'iban' | 'bankAccount' | 'purpose' | 'budge
 interface MoneyMoveListProps {
   moneyMoves: MoneyMoveWithSubs[]
   hideColumns?: MoneyMoveListColumns[]
+  cutTextLength?: number
 }
 
-const DetailCell = styled(TableCell) <{ showTooltip: boolean, detail: string }>`
+const DetailCell = styled(TableCell) <{ abbreviation: boolean, detail: string }>`
   position: relative;
 
   &:before {
@@ -51,17 +52,17 @@ const DetailCell = styled(TableCell) <{ showTooltip: boolean, detail: string }>`
   }
 
   &:hover::after {
-    ${props => props.showTooltip && 'visibility: visible;'}
-    ${props => props.showTooltip && 'opacity: 1;'}
+    ${props => props.abbreviation && 'visibility: visible;'}
+    ${props => props.abbreviation && 'opacity: 1;'}
   }
 
   &:hover::before {
-    ${props => props.showTooltip && 'visibility: visible;'}
-    ${props => props.showTooltip && 'opacity: 1;'}
+    ${props => props.abbreviation && 'visibility: visible;'}
+    ${props => props.abbreviation && 'opacity: 1;'}
   }
 `
 
-const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, hideColumns }) => {
+const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, hideColumns, cutTextLength = 25 }) => {
   const [isOpenEditModal, setIsOpenEditModal] = useState(false)
   const [moveToEdit, setMoveToEdit] = useState<MoneyMoveWithSubs>()
 
@@ -85,8 +86,8 @@ const MoneyMoveList: React.FC<MoneyMoveListProps> = ({ moneyMoves, hideColumns }
               <TableRow key={index}>
                 {!hideColumns?.includes('date') && <TableCell>{moment(move.date).format('DD.MM.YYYY')}</TableCell>}
                 {!hideColumns?.includes('iban') && <TableCell>{move.foreignBankAccountIban}</TableCell>}
-                {!hideColumns?.includes('bankAccount') && <DetailCell showTooltip={move.foreignBankAccount.length > 25} detail={move.foreignBankAccount}>{clampText(move.foreignBankAccount, 25)}</DetailCell>}
-                {!hideColumns?.includes('purpose') && <DetailCell showTooltip={move.purpose.length > 25} detail={move.purpose}>{clampText(move.purpose, 25)}</DetailCell>}
+                {!hideColumns?.includes('bankAccount') && <DetailCell abbreviation={move.foreignBankAccount.length > cutTextLength} detail={move.foreignBankAccount}>{clampText(move.foreignBankAccount, cutTextLength)}</DetailCell>}
+                {!hideColumns?.includes('purpose') && <DetailCell abbreviation={move.purpose.length > cutTextLength} detail={move.purpose}>{clampText(move.purpose, cutTextLength)}</DetailCell>}
                 {!hideColumns?.includes('budget') && <TableCell>{move.budget?.name ?? ''}</TableCell>}
                 {!hideColumns?.includes('amount') && <TableCell>{move.amount.toFixed(2)} €</TableCell>}
                 {!hideColumns?.includes('edit') &&

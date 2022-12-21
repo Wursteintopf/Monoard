@@ -9,7 +9,8 @@ import { Button, Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 interface FilterBarProps<Type extends string> {
   filterList: Type[]
   setFilterList: (newList: Type[]) => void
-  options: Record<Type, string>
+  options?: Record<Type, string>
+  hideDropdown?: boolean
 }
 
 const StyledFilterBar = styled.div`
@@ -68,6 +69,7 @@ export const FilterBar = <T extends string>({
   filterList,
   setFilterList,
   options,
+  hideDropdown = false,
 }: FilterBarProps<T>) => {
   const [filterDropDownOpen, setFilterDropDownOpen] = useState(false)
   const ref = useOutsideClick(() => setFilterDropDownOpen(false))
@@ -82,34 +84,39 @@ export const FilterBar = <T extends string>({
       {filterList.map(filter => (
         <FilterItem
           key={filter}
-          filter={options[filter]}
+          filter={options ? options[filter] : filter}
           onDelete={() => toggleFilter(filter)}
         />
       ))}
-      <Button
-        ref={ref}
-        size='small'
-        variant='outlined'
-        endIcon={<ArrowDropDownIcon />}
-        onClick={() => setFilterDropDownOpen(!filterDropDownOpen)}
-      >
-        Filter
-      </Button>
-      {filterDropDownOpen && (
-        <FilterDropDown>
-          <FormGroup>
-            {Object.keys(options).map((key) => (
-              <FormControlLabel
-                key={key}
-                checked={filterList.includes(key as T)}
-                onChange={() => toggleFilter(key as T)}
-                control={<Checkbox />}
-                label={options[key as T]}
-              />
-            ))}
-          </FormGroup>
-        </FilterDropDown>
+      {!hideDropdown && (
+        <>
+          <Button
+            ref={ref}
+            size='small'
+            variant='outlined'
+            endIcon={<ArrowDropDownIcon />}
+            onClick={() => setFilterDropDownOpen(!filterDropDownOpen)}
+          >
+            Filter
+          </Button>
+          {filterDropDownOpen && options && (
+            <FilterDropDown>
+              <FormGroup>
+                {Object.keys(options).map((key) => (
+                  <FormControlLabel
+                    key={key}
+                    checked={filterList.includes(key as T)}
+                    onChange={() => toggleFilter(key as T)}
+                    control={<Checkbox />}
+                    label={options[key as T]}
+                  />
+                ))}
+              </FormGroup>
+            </FilterDropDown>
+          )}
+        </>
       )}
+      
     </StyledFilterBar>
   )
 }
